@@ -1,0 +1,52 @@
+/* style.css */
+:root {
+    /* Base Colors - Change these in future */
+    --primary-color: #0c1b33; /* Dark Navy Blue (Premium look) */
+    --secondary-color: #d4af37; /* Premium Gold/Mustard */
+    
+    /* Text & Backgrounds */
+    --text-dark: #333333;
+    --text-light: #ffffff;
+    --text-muted: #6c757d;
+    --bg-light: #f8f9fc;
+    --bg-white: #ffffff;
+    
+    /* Hover & Animations */
+    --transition-smooth: all 0.3s ease-in-out;
+    --box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    --box-shadow-hover: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+body {
+    font-family: 'Poppins', sans-serif; /* Premium modern font */
+    color: var(--text-dark);
+    background-color: var(--bg-light);
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+/* Example of using root variables */
+.btn-primary {
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
+    padding: 12px 30px;
+    border: none;
+    font-weight: 600;
+    transition: var(--transition-smooth);
+    border-radius: 4px;
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-color);
+    color: var(--text-light);
+}
+
+.section-title {
+    color: var(--primary-color);
+    text-transform: uppercase;
+    font-weight: 700;
+}
+.section-title span {
+    color: var(--secondary-color);
+}
