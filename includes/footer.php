@@ -1,46 +1,67 @@
-<footer class="pt-5 pb-3" style="background: var(--primary-color); color: var(--text-light);">
+<footer class="winnors-footer">
     <div class="container">
-        <div class="row mb-4">
-            <div class="col-md-4">
-                <h3 style="color: var(--secondary-color);">WINNORS</h3>
-                <p class="text-white-50 mt-3">Leading exporters of premium whole spices, ensuring quality, aroma, and authenticity in every shipment.</p>
+        <div class="row">
+            
+            <div class="col-lg-4 col-md-6 mb-5 winnors-footer-col">
+                <a href="index.php" class="footer-brand d-block mb-3">Winnors<span class="dot">.</span></a>
+                <p class="pe-lg-4">Delivering nature's finest whole spices directly to your kitchen. We ensure premium quality, authentic taste, and rich aromas in every single batch.</p>
+                
+                <div>
+                    <a href="#" class="social-icon"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="#" class="social-icon"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#" class="social-icon"><i class="fa-brands fa-twitter"></i></a>
+                    <a href="#" class="social-icon"><i class="fa-brands fa-linkedin-in"></i></a>
+                </div>
             </div>
-            <div class="col-md-4">
-                <h5>Contact Info</h5>
-                <ul class="list-unstyled text-white-50 mt-3">
-                    <li class="mb-2"><i class="fas fa-map-marker-alt me-2 text-warning"></i> 56 Usha Nagar, Nr Iskon Temple, Gotri Road, Vadodara - 390021</li>
-                    <li class="mb-2"><i class="fas fa-phone me-2 text-warning"></i> +91 89804 01525</li>
-                    <li class="mb-2"><i class="fas fa-envelope me-2 text-warning"></i> ghatge.ghatge@gmail.com</li>
-                </ul>
-            </div>
-            <div class="col-md-4">
+
+            <div class="col-lg-2 col-md-6 mb-5 winnors-footer-col">
                 <h5>Quick Links</h5>
-                <ul class="list-unstyled text-white-50 mt-3">
-                    <li><a href="#" class="text-white-50 text-decoration-none">Home</a></li>
-                    <li><a href="#" class="text-white-50 text-decoration-none">About Us</a></li>
-                    <li><a href="#" class="text-white-50 text-decoration-none">Our Products</a></li>
-                </ul>
+                <div class="d-flex flex-column">
+                    <a href="index.php" class="footer-link"><i class="fa-solid fa-chevron-right"></i> Home</a>
+                    <a href="about.php" class="footer-link"><i class="fa-solid fa-chevron-right"></i> About Us</a>
+                    <a href="products.php" class="footer-link"><i class="fa-solid fa-chevron-right"></i> Our Spices</a>
+                    <a href="quality.php" class="footer-link"><i class="fa-solid fa-chevron-right"></i> Quality Standard</a>
+                    <a href="contact.php" class="footer-link"><i class="fa-solid fa-chevron-right"></i> Contact Us</a>
+                </div>
             </div>
+
+            <div class="col-lg-3 col-md-6 mb-5 winnors-footer-col">
+                <h5>Get In Touch</h5>
+                <div class="contact-item">
+                    <i class="fa-solid fa-location-dot"></i>
+                    <p>56 Usha Nagar,<br>Nr Iskon Temple, Gotri Road,<br>Vadodara 390021</p>
+                </div>
+                <div class="contact-item">
+                    <i class="fa-solid fa-phone"></i>
+                    <a href="tel:+918980401525">+91 89804 01525</a>
+                </div>
+                <div class="contact-item">
+                    <i class="fa-solid fa-envelope"></i>
+                    <a href="mailto:ghatge.ghatge@gmail.com">ghatge.ghatge@gmail.com</a>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-6 mb-5 winnors-footer-col">
+                <h5>Newsletter</h5>
+                <p>Subscribe to get updates on our latest premium spice collections and offers.</p>
+                <form class="newsletter-form d-flex mt-3">
+                    <input type="email" class="form-control" placeholder="Email Address" required>
+                    <button type="submit" class="btn"><i class="fa-solid fa-paper-plane"></i></button>
+                </form>
+            </div>
+
         </div>
-        <hr class="border-secondary">
-        <div class="text-center text-white-50">
-            <small>&copy; <?php echo date("Y"); ?> Winnors. All Rights Reserved.</small>
+    </div>
+
+    <div class="footer-bottom text-center">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <p class="mb-0">&copy; <?php echo date("Y"); ?> <strong>Winnors</strong>. All Rights Reserved. Crafted with <i class="fa-solid fa-heart text-danger"></i> for Premium Quality.</p>
+                </div>
+            </div>
         </div>
     </div>
 </footer>
-
-
-
-<!-- Bootstrap & AOS JS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-<script>
-    // Initialize Smooth Animations
-    AOS.init({
-        duration: 800,
-        once: true
-    });
-</script>
 </body>
-
 </html>
