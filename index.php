@@ -5,19 +5,24 @@
     <div id="winnorsHeroSlider" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="5000">
         <!-- Indicators -->
         <div class="carousel-indicators">
-            <button type="button" data-bs-target="#winnorsHeroSlider" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-            <button type="button" data-bs-target="#winnorsHeroSlider" data-bs-slide-to="1" aria-label="Slide 2"></button>
-            <button type="button" data-bs-target="#winnorsHeroSlider" data-bs-slide-to="2" aria-label="Slide 3"></button>
+            <button type="button" data-bs-target="#winnorsHeroSlider" data-bs-slide-to="0" class="active"
+                aria-current="true" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#winnorsHeroSlider" data-bs-slide-to="1"
+                aria-label="Slide 2"></button>
+            <button type="button" data-bs-target="#winnorsHeroSlider" data-bs-slide-to="2"
+                aria-label="Slide 3"></button>
         </div>
 
         <div class="carousel-inner">
             <!-- Slide 1 -->
             <div class="carousel-item active">
-                <img src="https://images.pexels.com/photos/2802527/pexels-photo-2802527.jpeg?auto=compress&cs=tinysrgb&w=1920&q=80" alt="Premium Whole Spices">
+                <img src="https://images.pexels.com/photos/2802527/pexels-photo-2802527.jpeg?auto=compress&cs=tinysrgb&w=1920&q=80"
+                    alt="Premium Whole Spices">
                 <div class="hero-overlay"></div>
                 <div class="carousel-caption">
                     <h1 class="hero-title">Premium <span>Whole Spices</span></h1>
-                    <p class="hero-subtitle">Bringing nature's finest and most authentic flavors directly to your kitchen.</p>
+                    <p class="hero-subtitle">Bringing nature's finest and most authentic flavors directly to your
+                        kitchen.</p>
                     <div class="hero-buttons">
                         <a href="products.php" class="btn btn-premium">Explore Spices</a>
                         <a href="contact.php" class="btn btn-outline-premium">Contact Us</a>
@@ -30,7 +35,8 @@
                 <div class="hero-overlay"></div>
                 <div class="carousel-caption">
                     <h1 class="hero-title">Rich Aromas, <span>Pure Quality</span></h1>
-                    <p class="hero-subtitle">Carefully handpicked, sun-dried, and packed to preserve the true essence.</p>
+                    <p class="hero-subtitle">Carefully handpicked, sun-dried, and packed to preserve the true essence.
+                    </p>
                     <div class="hero-buttons">
                         <a href="about.php" class="btn btn-premium">Our Story</a>
                     </div>
@@ -38,11 +44,13 @@
             </div>
             <!-- Slide 3 -->
             <div class="carousel-item">
-                <img src="https://images.pexels.com/photos/1340116/pexels-photo-1340116.jpeg?auto=compress&cs=tinysrgb&w=1920&q=80" alt="Wholesale Spices">
+                <img src="https://images.pexels.com/photos/1340116/pexels-photo-1340116.jpeg?auto=compress&cs=tinysrgb&w=1920&q=80"
+                    alt="Wholesale Spices">
                 <div class="hero-overlay"></div>
                 <div class="carousel-caption">
                     <h1 class="hero-title">Your Trusted <span>Spice Partner</span></h1>
-                    <p class="hero-subtitle">Top-grade whole spices for businesses and homes. Quality that speaks for itself.</p>
+                    <p class="hero-subtitle">Top-grade whole spices for businesses and homes. Quality that speaks for
+                        itself.</p>
                     <div class="hero-buttons">
                         <a href="contact.php" class="btn btn-premium">Get a Quote</a>
                     </div>
@@ -67,11 +75,12 @@
 <section class="about-section">
     <div class="container">
         <div class="row align-items-center gx-lg-5">
-            
+
             <!-- Left Side: Image with Floating Badge -->
             <div class="col-lg-6 mb-5 mb-lg-0">
                 <div class="about-img-wrapper">
-                    <img src="assets/images/products/psyllium.webp" alt="Winnors Premium Spices" class="img-fluid about-main-img">
+                    <img src="assets/images/products/psyllium.webp" alt="Winnors Premium Spices"
+                        class="img-fluid about-main-img">
                     <div class="quality-badge d-none d-sm-block">
                         <h3>100%</h3>
                         <p>Pure & Natural</p>
@@ -85,9 +94,11 @@
                     <span class="about-subtitle"><i class="fa-solid fa-leaf me-2"></i> Welcome to Winnors</span>
                     <h2 class="about-title">The True Essence of Authentic Indian Spices</h2>
                     <p class="about-desc">
-                        At Winnors, we believe that the secret to a great meal lies in the purity of its ingredients. Sourced directly from the finest farms, our whole spices are carefully handpicked, sun-dried, and hygienically packed to retain their natural oils, rich aroma, and robust flavors.
+                        At Winnors, we believe that the secret to a great meal lies in the purity of its ingredients.
+                        Sourced directly from the finest farms, our whole spices are carefully handpicked, sun-dried,
+                        and hygienically packed to retain their natural oils, rich aroma, and robust flavors.
                     </p>
-                    
+
                     <!-- Features -->
                     <ul class="feature-list">
                         <li><i class="fa-solid fa-check"></i> Premium Quality Whole Spices</li>
@@ -96,7 +107,8 @@
                     </ul>
 
                     <!-- Button (Uses the premium button class from Hero Section) -->
-                    <a href="about.php" class="btn btn-premium mt-2">Discover Our Story <i class="fa-solid fa-arrow-right ms-2"></i></a>
+                    <a href="about.php" class="btn btn-premium mt-2">Discover Our Story <i
+                            class="fa-solid fa-arrow-right ms-2"></i></a>
                 </div>
             </div>
 
@@ -107,7 +119,7 @@
 
 <!-- Services / Products Section Start -->
 <section class="services-section">
-    <div class="container">    
+    <div class="container">
         <!-- Section Header -->
         <div class="section-header">
             <span class="section-subtitle">Our Offerings</span>
@@ -115,7 +127,7 @@
         </div>
 
         <div class="row g-4">
-            
+
             <!-- Card 1: Black Pepper -->
             <div class="col-lg-4 col-md-6">
                 <div class="spice-card">
@@ -125,10 +137,12 @@
                     </div>
                     <div class="spice-card-body">
                         <h4 class="spice-card-title">Premium Chickpeas</h4>
-                        <p class="spice-card-desc">Bold, aromatic, and intense. Our sun-dried black peppercorns add a rich depth of flavor and heat to any culinary dish.</p>
-                        
+                        <p class="spice-card-desc">Bold, aromatic, and intense. Our sun-dried black peppercorns add a
+                            rich depth of flavor and heat to any culinary dish.</p>
+
                         <div class="spice-card-footer">
-                            <a href="product-details.php" class="view-link">View Details <i class="fa-solid fa-arrow-right"></i></a>
+                            <a href="service-details.php" class="view-link">View Details <i
+                                    class="fa-solid fa-arrow-right"></i></a>
                             <a href="contact.php" class="btn-quote">Get Quote</a>
                         </div>
                     </div>
@@ -144,10 +158,12 @@
                     </div>
                     <div class="spice-card-body">
                         <h4 class="spice-card-title">Green Cardamom</h4>
-                        <p class="spice-card-desc">Handpicked directly from organic farms, these vibrant green pods bring a sweet, floral, and highly aromatic essence.</p>
-                        
+                        <p class="spice-card-desc">Handpicked directly from organic farms, these vibrant green pods
+                            bring a sweet, floral, and highly aromatic essence.</p>
+
                         <div class="spice-card-footer">
-                            <a href="product-details.php" class="view-link">View Details <i class="fa-solid fa-arrow-right"></i></a>
+                            <a href="service-details.php" class="view-link">View Details <i
+                                    class="fa-solid fa-arrow-right"></i></a>
                             <a href="contact.php" class="btn-quote">Get Quote</a>
                         </div>
                     </div>
@@ -159,14 +175,17 @@
                 <div class="spice-card">
                     <div class="card-img-wrapper">
                         <span class="badge-premium">Organic</span>
-                        <img src="https://images.pexels.com/photos/2802527/pexels-photo-2802527.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Cinnamon Sticks">
+                        <img src="https://images.pexels.com/photos/2802527/pexels-photo-2802527.jpeg?auto=compress&cs=tinysrgb&w=600"
+                            alt="Cinnamon Sticks">
                     </div>
                     <div class="spice-card-body">
                         <h4 class="spice-card-title">Cinnamon Sticks</h4>
-                        <p class="spice-card-desc">Sweet and warm, our authentic cinnamon sticks are perfect for curries, desserts, and brewing premium spiced teas.</p>
-                        
+                        <p class="spice-card-desc">Sweet and warm, our authentic cinnamon sticks are perfect for
+                            curries, desserts, and brewing premium spiced teas.</p>
+
                         <div class="spice-card-footer">
-                            <a href="product-details.php" class="view-link">View Details <i class="fa-solid fa-arrow-right"></i></a>
+                            <a href="service-details.php" class="view-link">View Details <i
+                                    class="fa-solid fa-arrow-right"></i></a>
                             <a href="contact.php" class="btn-quote">Get Quote</a>
                         </div>
                     </div>
@@ -174,10 +193,11 @@
             </div>
 
         </div>
-        
+
         <!-- View All Button -->
         <div class="text-center mt-5">
-            <a href="products.php" class="btn btn-premium">Explore All Spices <i class="fa-solid fa-arrow-right ms-2"></i></a>
+            <a href="services.php" class="btn btn-premium">Explore All Spices <i
+                    class="fa-solid fa-arrow-right ms-2"></i></a>
         </div>
 
     </div>
@@ -296,7 +316,7 @@
                 </div>
             </div>
         </div>
-        
+
     </div>
 </section>
 <!-- PRODUCTS PRICING SECTION END -->
@@ -318,9 +338,12 @@
                 <div class="testimonial-card">
                     <i class="fa-solid fa-quote-right quote-icon"></i>
                     <div class="rating">
-                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i
+                            class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i
+                            class="fa-solid fa-star"></i>
                     </div>
-                    <p class="client-review">"The quality of their black pepper is unmatched. The aroma hits you as soon as you open the packet. Truly premium quality spices!"</p>
+                    <p class="client-review">"The quality of their black pepper is unmatched. The aroma hits you as soon
+                        as you open the packet. Truly premium quality spices!"</p>
                     <div class="client-info">
                         <div class="client-avatar">R</div>
                         <div class="client-details">
@@ -336,9 +359,12 @@
                 <div class="testimonial-card">
                     <i class="fa-solid fa-quote-right quote-icon"></i>
                     <div class="rating">
-                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i>
+                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i
+                            class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i
+                            class="fa-solid fa-star-half-stroke"></i>
                     </div>
-                    <p class="client-review">"I have been buying whole spices from Winnors for months now. The cinnamon sticks and cloves are incredibly fresh and flavorful."</p>
+                    <p class="client-review">"I have been buying whole spices from Winnors for months now. The cinnamon
+                        sticks and cloves are incredibly fresh and flavorful."</p>
                     <div class="client-info">
                         <div class="client-avatar">A</div>
                         <div class="client-details">
@@ -354,9 +380,12 @@
                 <div class="testimonial-card">
                     <i class="fa-solid fa-quote-right quote-icon"></i>
                     <div class="rating">
-                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i
+                            class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i
+                            class="fa-solid fa-star"></i>
                     </div>
-                    <p class="client-review">"Excellent packaging and timely delivery in Vadodara. You can easily tell the difference between store-bought and Winnors spices."</p>
+                    <p class="client-review">"Excellent packaging and timely delivery in Vadodara. You can easily tell
+                        the difference between store-bought and Winnors spices."</p>
                     <div class="client-info">
                         <div class="client-avatar">V</div>
                         <div class="client-details">
@@ -386,12 +415,15 @@
                 <div class="blog-card">
                     <div class="blog-img">
                         <span class="blog-date">12 Aug 2026</span>
-                        <img src="https://images.pexels.com/photos/1340116/pexels-photo-1340116.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Turmeric Benefits">
+                        <img src="https://images.pexels.com/photos/1340116/pexels-photo-1340116.jpeg?auto=compress&cs=tinysrgb&w=600"
+                            alt="Turmeric Benefits">
                     </div>
                     <div class="blog-content">
                         <h4 class="blog-title">The Hidden Health Benefits of Pure Spices</h4>
-                        <p class="blog-desc">Discover how authentic whole spices can boost your immunity and improve digestion naturally.</p>
-                        <a href="#" class="blog-link">Read Article <i class="fa-solid fa-arrow-right"></i></a>
+                        <p class="blog-desc">Discover how authentic whole spices can boost your immunity and improve
+                            digestion naturally.</p>
+                        <a href="blog-details.php" class="blog-link">Read Article <i
+                                class="fa-solid fa-arrow-right"></i></a>
                     </div>
                 </div>
             </div>
@@ -405,8 +437,10 @@
                     </div>
                     <div class="blog-content">
                         <h4 class="blog-title">Why Whole Spices are Better Than Powdered</h4>
-                        <p class="blog-desc">Learn why chefs prefer whole spices for that perfect aroma and long-lasting flavor retention.</p>
-                        <a href="#" class="blog-link">Read Article <i class="fa-solid fa-arrow-right"></i></a>
+                        <p class="blog-desc">Learn why chefs prefer whole spices for that perfect aroma and long-lasting
+                            flavor retention.</p>
+                        <a href="blog-details.php" class="blog-link">Read Article <i
+                                class="fa-solid fa-arrow-right"></i></a>
                     </div>
                 </div>
             </div>
@@ -416,18 +450,21 @@
                 <div class="blog-card">
                     <div class="blog-img">
                         <span class="blog-date">28 Jul 2026</span>
-                        <img src="https://images.pexels.com/photos/2802527/pexels-photo-2802527.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Sourcing Spices">
+                        <img src="https://images.pexels.com/photos/2802527/pexels-photo-2802527.jpeg?auto=compress&cs=tinysrgb&w=600"
+                            alt="Sourcing Spices">
                     </div>
                     <div class="blog-content">
                         <h4 class="blog-title">From Farm to Kitchen: Our Sourcing Journey</h4>
-                        <p class="blog-desc">Take a look at how we handpick the finest spices directly from Indian farmers for you.</p>
-                        <a href="#" class="blog-link">Read Article <i class="fa-solid fa-arrow-right"></i></a>
+                        <p class="blog-desc">Take a look at how we handpick the finest spices directly from Indian
+                            farmers for you.</p>
+                        <a href="blog-details.php" class="blog-link">Read Article <i
+                                class="fa-solid fa-arrow-right"></i></a>
                     </div>
                 </div>
             </div>
         </div>
         <div class="text-center mt-5">
-            <a href="blog.php" class="btn btn-outline-premium text-dark border-dark">View All Posts</a>
+            <a href="blogs.php" class="btn btn-outline-premium text-dark border-dark">View All Posts</a>
         </div>
     </div>
 </section>
@@ -441,7 +478,8 @@
         <div class="row justify-content-center">
             <div class="col-lg-8 cta-content">
                 <h2>Join the Winnors Family</h2>
-                <p>Subscribe to our newsletter and get exclusive discounts, secret recipes, and updates on our fresh spice arrivals.</p>
+                <p>Subscribe to our newsletter and get exclusive discounts, secret recipes, and updates on our fresh
+                    spice arrivals.</p>
                 <form class="cta-form">
                     <input type="email" class="form-control" placeholder="Enter your email address..." required>
                     <button type="submit" class="btn-subscribe">Subscribe Now</button>

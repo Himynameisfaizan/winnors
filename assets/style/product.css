@@ -1,0 +1,308 @@
+/* Products Section Styling (Reused from Home Page for consistency) */
+.shop-section {
+    background-color: #FFFFFF;
+    padding: 80px 0;
+}
+
+.shop-section .container {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+/* Image-based Card Design */
+.shop-card {
+    background: #FFFFFF;
+    border: 1px solid #F0EAE1;
+    border-radius: 12px;
+    overflow: hidden;
+    text-align: center;
+    padding-bottom: 25px;
+    transition: all 0.3s ease;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.shop-card:hover {
+    border-color: #E67E22;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.06);
+    transform: translateY(-5px);
+}
+
+.shop-img-wrapper {
+    width: 100%;
+    height: 220px;
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+
+.shop-img-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.shop-card:hover .shop-img-wrapper img {
+    transform: scale(1.08);
+    /* Smooth image zoom */
+}
+
+.shop-title {
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: #2C1E16;
+    margin: 0 15px 10px;
+}
+
+.shop-price {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #E67E22;
+    margin-bottom: 15px;
+}
+
+.shop-price del {
+    font-size: 0.9rem;
+    color: #A9A096;
+    font-weight: 500;
+    margin-left: 8px;
+}
+
+.btn-view-details {
+    display: block;
+    margin: auto auto 0;
+    /* Pushes to bottom */
+    width: 85%;
+    padding: 12px 0;
+    background-color: #FAFAFA;
+    border: 1px solid #EAE3D9;
+    border-radius: 6px;
+    color: #2C1E16;
+    font-weight: 700;
+    font-size: 0.95rem;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+/* Hover effect matching the image's active button */
+.shop-card:hover .btn-view-details {
+    background-color: #F5E4D8;
+    /* Light warm peach/orange */
+    border-color: #F5E4D8;
+    color: #2C1E16;
+}
+
+/* Scroll Animation */
+.reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.7s ease-out;
+}
+
+.reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+
+/* =================== */
+/* PRODUCTS DETAILS PAGE STYLING  */
+/* =================== */
+
+.details-section {
+    padding: 80px 0 40px;
+    background-color: #FFFFFF;
+}
+
+.product-gallery {
+    background-color: #FDFBF7;
+    border-radius: 16px;
+    padding: 20px;
+}
+
+.main-image {
+    width: 100%;
+    border-radius: 12px;
+    object-fit: cover;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+}
+
+.product-title {
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: #2C1E16;
+    margin-bottom: 10px;
+}
+
+.product-price {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #E67E22;
+    margin-bottom: 20px;
+}
+
+.product-price del {
+    font-size: 1.1rem;
+    color: #999;
+    font-weight: 400;
+    margin-left: 10px;
+}
+
+.short-desc {
+    color: #6C5B51;
+    font-size: 1.05rem;
+    line-height: 1.7;
+    margin-bottom: 30px;
+}
+
+.btn-lg-premium {
+    background-color: #E67E22;
+    color: #FFF;
+    padding: 12px 35px;
+    border-radius: 30px;
+    font-weight: 600;
+    text-transform: uppercase;
+    border: 2px solid #E67E22;
+    transition: all 0.3s;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+}
+
+.btn-lg-premium:hover {
+    background-color: #2C1E16;
+    border-color: #2C1E16;
+    color: #FFF;
+}
+
+/* ================= Bottom Full Description Tabs ================= */
+.full-desc-section {
+    padding: 40px 0 80px;
+    background-color: #FFFFFF;
+}
+
+.custom-tabs .nav-link {
+    color: #6C5B51;
+    font-weight: 600;
+    font-size: 1.1rem;
+    border: none;
+    border-bottom: 3px solid transparent;
+    padding: 10px 25px;
+    margin-right: 15px;
+    background: transparent;
+}
+
+.custom-tabs .nav-link.active {
+    color: #E67E22;
+    border-bottom-color: #E67E22;
+    background: transparent;
+}
+
+.custom-tabs .nav-link:hover {
+    color: #E67E22;
+}
+
+.tab-content {
+    padding: 30px;
+    background: #FDFBF7;
+    border-radius: 12px;
+    margin-top: 15px;
+    color: #4A3B32;
+    line-height: 1.8;
+}
+
+/* ================= Related Products Styles ================= */
+.related-products-section {
+    padding: 80px 0;
+    background-color: #FAFAFA;
+    border-top: 1px solid #EAE3D9;
+}
+
+.section-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #2C1E16;
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+/* Reusing the shop-card from products.php */
+.shop-card {
+    background: #FFFFFF;
+    border: 1px solid #F0EAE1;
+    border-radius: 12px;
+    overflow: hidden;
+    text-align: center;
+    padding-bottom: 25px;
+    transition: all 0.3s ease;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.shop-card:hover {
+    border-color: #E67E22;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.06);
+    transform: translateY(-5px);
+}
+
+.shop-img-wrapper {
+    width: 100%;
+    height: 220px;
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+
+.shop-img-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.shop-card:hover .shop-img-wrapper img {
+    transform: scale(1.08);
+}
+
+.shop-title-sm {
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: #2C1E16;
+    margin: 0 15px 10px;
+}
+
+.shop-price-sm {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #E67E22;
+    margin-bottom: 15px;
+}
+
+.shop-price-sm del {
+    font-size: 0.9rem;
+    color: #A9A096;
+    font-weight: 500;
+    margin-left: 8px;
+}
+
+.btn-view-details {
+    display: block;
+    margin: auto auto 0;
+    width: 85%;
+    padding: 12px 0;
+    background-color: #FAFAFA;
+    border: 1px solid #EAE3D9;
+    border-radius: 6px;
+    color: #2C1E16;
+    font-weight: 700;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.shop-card:hover .btn-view-details {
+    background-color: #F5E4D8;
+    border-color: #F5E4D8;
+    color: #2C1E16;
+}
