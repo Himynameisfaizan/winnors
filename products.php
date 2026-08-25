@@ -15,7 +15,7 @@ include 'includes/breadcrumb.php';
                         <img src="assets/images/products/fennel.webp" alt="Cumin Seeds">
                     </div>
                     <h4 class="shop-title">Premium Fennel Seeds</h4>
-                    <div class="shop-price">₹350 / kg <del>₹420</del></div>
+                    <!-- <div class="shop-price">₹350 / kg <del>₹420</del></div> -->
                     <a href="product-details.php" class="btn-view-details">View Details</a>
                 </div>
             </div>
@@ -27,7 +27,7 @@ include 'includes/breadcrumb.php';
                         <img src="assets/images/products/groundnut.webp" alt="Castor">
                     </div>
                     <h4 class="shop-title">Groundnut Seeds</h4>
-                    <div class="shop-price">₹1,150 / kg <del>₹1,300</del></div>
+                    <!-- <div class="shop-price">₹1,150 / kg <del>₹1,300</del></div> -->
                     <a href="product-details.php" class="btn-view-details">View Details</a>
                 </div>
             </div>
@@ -39,7 +39,7 @@ include 'includes/breadcrumb.php';
                         <img src="assets/images/products/mustard.webp" alt="Fennel Seeds">
                     </div>
                     <h4 class="shop-title">Mustard Seeds</h4>
-                    <div class="shop-price">₹280 / kg <del>₹320</del></div>
+                    <!-- <div class="shop-price">₹280 / kg <del>₹320</del></div> -->
                     <a href="product-details.php" class="btn-view-details">View Details</a>
                 </div>
             </div>
@@ -51,7 +51,7 @@ include 'includes/breadcrumb.php';
                         <img src="assets/images/products/psyllium.webp" alt="Psyllium Husk">
                     </div>
                     <h4 class="shop-title">Psyllium Husk</h4>
-                    <div class="shop-price">₹750 / kg <del>₹850</del></div>
+                    <!-- <div class="shop-price">₹750 / kg <del>₹850</del></div> -->
                     <a href="product-details.php" class="btn-view-details">View Details</a>
                 </div>
             </div>
@@ -67,7 +67,7 @@ include 'includes/breadcrumb.php';
                         <img src="assets/images/products/chilli.webp" alt="Cumin Seeds">
                     </div>
                     <h4 class="shop-title">Premium Chilli</h4>
-                    <div class="shop-price">₹350 / kg <del>₹420</del></div>
+                    <!-- <div class="shop-price">₹350 / kg <del>₹420</del></div> -->
                     <a href="product-details.php" class="btn-view-details">View Details</a>
                 </div>
             </div>
@@ -79,7 +79,7 @@ include 'includes/breadcrumb.php';
                         <img src="assets/images/products/castor.webp" alt="Castor">
                     </div>
                     <h4 class="shop-title">Castor Seeds</h4>
-                    <div class="shop-price">₹1,150 / kg <del>₹1,300</del></div>
+                    <!-- <div class="shop-price">₹1,150 / kg <del>₹1,300</del></div> -->
                     <a href="product-details.php" class="btn-view-details">View Details</a>
                 </div>
             </div>
@@ -91,7 +91,7 @@ include 'includes/breadcrumb.php';
                         <img src="assets/images/products/carom.webp" alt="Fennel Seeds">
                     </div>
                     <h4 class="shop-title">Carom Seeds</h4>
-                    <div class="shop-price">₹280 / kg <del>₹320</del></div>
+                    <!-- <div class="shop-price">₹280 / kg <del>₹320</del></div> -->
                     <a href="product-details.php" class="btn-view-details">View Details</a>
                 </div>
             </div>
@@ -103,7 +103,7 @@ include 'includes/breadcrumb.php';
                         <img src="assets/images/products/ajwain.webp" alt="Psyllium Husk">
                     </div>
                     <h4 class="shop-title">Ajwain Husk</h4>
-                    <div class="shop-price">₹750 / kg <del>₹850</del></div>
+                    <!-- <div class="shop-price">₹750 / kg <del>₹850</del></div> -->
                     <a href="product-details.php" class="btn-view-details">View Details</a>
                 </div>
             </div>

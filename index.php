@@ -268,7 +268,7 @@
                     </div>
                     <div class="product-body">
                         <h4 class="product-title">Premium Cumin Seeds</h4>
-                        <div class="product-price">₹350 / kg <span>₹420</span></div>
+                        <!-- <div class="product-price">₹350 / kg <span>₹420</span></div> -->
                         <a href="product-details.php?id=1" class="btn-details">View Details</a>
                     </div>
                 </div>
@@ -282,7 +282,7 @@
                     </div>
                     <div class="product-body">
                         <h4 class="product-title">Castor</h4>
-                        <div class="product-price">₹1,150 / kg <span>₹1,300</span></div>
+                        <!-- <div class="product-price">₹1,150 / kg <span>₹1,300</span></div> -->
                         <a href="product-details.php?id=2" class="btn-details">View Details</a>
                     </div>
                 </div>
@@ -296,7 +296,7 @@
                     </div>
                     <div class="product-body">
                         <h4 class="product-title">Fennel Seeds</h4>
-                        <div class="product-price">₹280 / kg <span>₹320</span></div>
+                        <!-- <div class="product-price">₹280 / kg <span>₹320</span></div> -->
                         <a href="product-details.php?id=3" class="btn-details">View Details</a>
                     </div>
                 </div>
@@ -310,7 +310,7 @@
                     </div>
                     <div class="product-body">
                         <h4 class="product-title">Psyllium Husk</h4>
-                        <div class="product-price">₹750 / kg <span>₹850</span></div>
+                        <!-- <div class="product-price">₹750 / kg <span>₹850</span></div> -->
                         <a href="product-details.php?id=4" class="btn-details">View Details</a>
                     </div>
                 </div>
@@ -320,7 +320,6 @@
     </div>
 </section>
 <!-- PRODUCTS PRICING SECTION END -->
-
 
 <!-- =========================================
      TESTIMONIALS SECTION START

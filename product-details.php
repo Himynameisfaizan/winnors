@@ -16,7 +16,7 @@ include 'includes/breadcrumb.php';
             </div>
             <div class="col-lg-7">
                 <h1 class="product-title">Premium Cumin Seeds (Jeera)</h1>
-                <div class="product-price">₹350 / kg <del>₹420 / kg</del></div>
+                <!-- <div class="product-price">₹350 / kg <del>₹420 / kg</del></div> -->
                 <p class="short-desc">
                     Carefully harvested from the finest farms in Gujarat, our premium cumin seeds offer a robust, warm,
                     and earthy flavor. Essential for authentic Indian curries, tadkas, and spice blends. 100% pure and
@@ -105,7 +105,7 @@ include 'includes/breadcrumb.php';
                         <img src="assets/images/products/castor.webp" alt="Castor">
                     </div>
                     <h4 class="shop-title-sm">Castor Seeds</h4>
-                    <div class="shop-price-sm">₹1,150 / kg <del>₹1,300</del></div>
+                    <!-- <div class="shop-price-sm">₹1,150 / kg <del>₹1,300</del></div> -->
                     <a href="#" class="btn-view-details">View Details</a>
                 </div>
             </div>
@@ -117,7 +117,7 @@ include 'includes/breadcrumb.php';
                         <img src="assets/images/products/fennel.webp" alt="Fennel">
                     </div>
                     <h4 class="shop-title-sm">Fennel Seeds</h4>
-                    <div class="shop-price-sm">₹280 / kg <del>₹320</del></div>
+                    <!-- <div class="shop-price-sm">₹280 / kg <del>₹320</del></div> -->
                     <a href="#" class="btn-view-details">View Details</a>
                 </div>
             </div>
@@ -129,7 +129,7 @@ include 'includes/breadcrumb.php';
                         <img src="assets/images/products/psyllium.webp" alt="Psyllium Husk">
                     </div>
                     <h4 class="shop-title-sm">Psyllium Husk</h4>
-                    <div class="shop-price-sm">₹750 / kg <del>₹850</del></div>
+                    <!-- <div class="shop-price-sm">₹750 / kg <del>₹850</del></div> -->
                     <a href="#" class="btn-view-details">View Details</a>
                 </div>
             </div>
@@ -141,7 +141,7 @@ include 'includes/breadcrumb.php';
                         <img src="assets/images/products/mustard.webp" alt="Black Pepper">
                     </div>
                     <h4 class="shop-title-sm">Mustard Seeds</h4>
-                    <div class="shop-price-sm">₹850 / kg <del>₹950</del></div>
+                    <!-- <div class="shop-price-sm">₹850 / kg <del>₹950</del></div> -->
                     <a href="#" class="btn-view-details">View Details</a>
                 </div>
             </div>
