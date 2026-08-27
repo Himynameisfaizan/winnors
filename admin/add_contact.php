@@ -6,48 +6,46 @@ include "db-conn.php";
 
 // Handle form submission
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // Retrieve and sanitize form values
-    $company_name = mysqli_real_escape_string($conn, $_POST['company_name']);
-    $copyright = mysqli_real_escape_string($conn, $_POST['copyright']);
-    $address = mysqli_real_escape_string($conn, $_POST['address']);
-    $address2 = mysqli_real_escape_string($conn, $_POST['address2']);
-    $phone = mysqli_real_escape_string($conn, $_POST['phone']);
-    $wp_number = mysqli_real_escape_string($conn, $_POST['wp_number']);
-    $telephone = mysqli_real_escape_string($conn, $_POST['telephone']);
-    $email = mysqli_real_escape_string($conn, $_POST['email']);
-    $working_hours = mysqli_real_escape_string($conn, $_POST['working_hours'] ?? null);
-    $facebook = mysqli_real_escape_string($conn, $_POST['facebook'] ?? null);
-    $instagram = mysqli_real_escape_string($conn, $_POST['instagram'] ?? null);
-    $twitter = mysqli_real_escape_string($conn, $_POST['twitter'] ?? null);
-    $linkdin = mysqli_real_escape_string($conn, $_POST['linkdin'] ?? null);
-    $map = mysqli_real_escape_string($conn, $_POST['map'] ?? null);
-    $contact_email = mysqli_real_escape_string($conn, $_POST['contact_email'] ?? null);
+    $company_name = trim($_POST['company_name'] ?? '');
+    $copyright = trim($_POST['copyright'] ?? '');
+    $address = trim($_POST['address'] ?? '');
+    $address2 = trim($_POST['address2'] ?? '');
+    $phone = trim($_POST['phone'] ?? '');
+    $wp_number = trim($_POST['wp_number'] ?? '');
+    $telephone = trim($_POST['telephone'] ?? '');
+    $email = trim($_POST['email'] ?? '');
+    $working_hours = trim($_POST['working_hours'] ?? '');
+    $facebook = trim($_POST['facebook'] ?? '');
+    $instagram = trim($_POST['instagram'] ?? '');
+    $twitter = trim($_POST['twitter'] ?? '');
+    $linkdin = trim($_POST['linkdin'] ?? '');
+    $map = trim($_POST['map'] ?? '');
+    $contact_email = trim($_POST['contact_email'] ?? '');
 
-    // Fetch the existing contact record
-    $check = $conn->query("SELECT id FROM contacts LIMIT 1");
+    // Check if contact record exists
+    $check = $conn->query("SELECT id FROM contacts ORDER BY id ASC LIMIT 1");
 
     if ($check && $check->num_rows > 0) {
         $row = $check->fetch_assoc();
-        $contact_id = $row['id'];
+        $contact_id = (int) $row['id'];
 
-        // Update query
-        $stmt = $conn->prepare("UPDATE contacts 
-            SET company_name = ?, 
-                copyright = ?,
-                address = ?,
-                address2 = ?,
-                phone = ?, 
-                wp_number = ?,
-                telephone = ?,
-                email = ?, 
-                working_hours = ?, 
-                facebook = ?, 
-                instagram = ?, 
-                twitter = ?, 
-                linkdin = ?,
-                map = ?, 
-                contact_email = ?,
-                updated_at = NOW()
+        $stmt = $conn->prepare("UPDATE contacts SET 
+            company_name = ?, 
+            copyright = ?, 
+            address = ?, 
+            address2 = ?, 
+            phone = ?, 
+            wp_number = ?, 
+            telephone = ?, 
+            email = ?, 
+            working_hours = ?, 
+            facebook = ?, 
+            instagram = ?, 
+            twitter = ?, 
+            linkdin = ?, 
+            map = ?, 
+            contact_email = ?, 
+            updated_at = NOW() 
             WHERE id = ?");
 
         $stmt->bind_param(
@@ -70,15 +68,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $contact_id
         );
     } else {
-        // Insert new record
         $stmt = $conn->prepare("INSERT INTO contacts 
-            (company_name, copytright, address, address2, phone, wp_number, telephone, email, working_hours, facebook, instagram, twitter, linkdin, map, contact_email) 
+            (company_name, copyright, address, address2, phone, wp_number, telephone, email, working_hours, facebook, instagram, twitter, linkdin, map, contact_email) 
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
         $stmt->bind_param(
             'sssssssssssssss',
             $company_name,
-            $copytright,
+            $copyright,
             $address,
             $address2,
             $phone,
@@ -95,20 +92,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         );
     }
 
-    // Execute the statement
-    if ($stmt->execute()) {
+    if ($stmt && $stmt->execute()) {
         $_SESSION['success_message'] = "Contact information updated successfully!";
         header("Location: " . $_SERVER['PHP_SELF']);
         exit();
     } else {
-        $_SESSION['error_message'] = "Error updating information: " . $stmt->error;
+        $_SESSION['error_message'] = "Error updating information: " . ($stmt ? $stmt->error : $conn->error);
     }
 }
 
 // Fetch existing data
-$result = $conn->query("SELECT * FROM contacts LIMIT 1");
-$data = $result ? $result->fetch_assoc() : [];
+$result = $conn->query("SELECT * FROM contacts ORDER BY id ASC LIMIT 1");
+$data = ($result && $result->num_rows > 0) ? $result->fetch_assoc() : [];
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 

@@ -25,14 +25,14 @@ if (!isset($_SESSION['admin_logged_in'])) {
         <li><a href="index.php"><i class="fas fa-tachometer-alt" style="color: #3498db;"></i> <span>Dashboard</span></a>
         </li>
 
-        <!-- <li>
+        <li>
             <a class="has-arrow" href="#"><i class="fas fa-home" style="color: #e74c3c;"></i> <span>Home
                     Content</span></a>
             <ul>
                 <li><a href="home-items.php">Add Logo</a></li>
-                <li><a href="add-banner.php">Add Banners</a></li>
+                <!-- <li><a href="add-banner.php">Add Banners</a></li> -->
             </ul>
-        </li> -->
+        </li>
 
         <li>
             <a class="has-arrow" href="#"><i class="fas fa-layer-group" style="color: #2ecc71;"></i>
@@ -72,13 +72,13 @@ if (!isset($_SESSION['admin_logged_in'])) {
             </ul>
         </li>
 
-        <li>
+        <!-- <li>
             <a class="has-arrow" href="#"><i class="fas fa-award" style="color: #1abc9c;"></i> <span>Country Export</span></a>
             <ul>
                 <li><a href="add-country.php">Add Country</a></li>
                 <li><a href="view-country.php">View Country</a></li>
             </ul>
-        </li>
+        </li> -->
 
         <!-- <li>
             <a class="has-arrow" href="#"><i class="fas fa-info-circle" style="color: #d35400;"></i> <span>About Us
@@ -90,14 +90,14 @@ if (!isset($_SESSION['admin_logged_in'])) {
         </li> -->
 
 
-        <!-- <li>
+        <li>
             <a class="has-arrow" href="#"><i class="fas fa-envelope" style="color: #27ae60;"></i> <span>Contact
                     Page</span></a>
             <ul>
                 <li><a href="add_contact.php">Edit Contact Info</a></li>
-                <li><a href="new-leads.php">Inquiries</a></li>
+                <!-- <li><a href="new-leads.php">Inquiries</a></li> -->
             </ul>
-        </li> -->
+        </li>
 
         <!-- <li>
             <a href="about_us.php">
@@ -118,14 +118,14 @@ if (!isset($_SESSION['admin_logged_in'])) {
                 <i class="fa-solid fa-inbox" style="color: #3cc008;"></i>
                 <span>Inquiries</span>
             </a>
-        </li>
+        </li> -->
 
         <li>
             <a href="add-gallery.php">
                 <i class="fas fa-images" style="color: #8e44ad;"></i>
                 <span>Gallery</span>
             </a>
-        </li> -->
+        </li>
 
         <li>
             <a class="has-arrow" href="#"><i class="fas fa-quote-left" style="color: #16a085;"></i>
@@ -167,7 +167,7 @@ if (!isset($_SESSION['admin_logged_in'])) {
 </nav>
 
 <script>
-    document.getElementById('sidebarSearch').addEventListener('input', function () {
+    document.getElementById('sidebarSearch').addEventListener('input', function() {
         let filter = this.value.toLowerCase();
         document.querySelectorAll('#sidebar_menu li').forEach(item => {
             let text = item.textContent.toLowerCase();

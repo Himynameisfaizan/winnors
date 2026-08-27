@@ -1,15 +1,35 @@
 <?php
-$pageTitle = "Our Whole Spices";
+include('admin/db-conn.php');
+$pageTitle = "Our Services";
 include 'includes/header.php';
 include 'includes/breadcrumb.php';
+// include 'db_connection.php'; // Ensure your DB connection is included
+
+// --- Pagination Logic ---
+$limit = 9; // Set limit to 9 services per page
+$page = isset($_GET['page']) && is_numeric($_GET['page']) ? (int)$_GET['page'] : 1;
+$offset = ($page - 1) * $limit;
+
+// 1. Get total number of services to calculate total pages
+$total_query = "SELECT COUNT(id) AS total FROM services";
+$total_result = mysqli_query($conn, $total_query);
+$total_row = mysqli_fetch_assoc($total_result);
+$total_services = $total_row['total'];
+
+// Calculate total pages required
+$total_pages = ceil($total_services / $limit);
+
+// 2. Fetch services for the current page
+$query = "SELECT * FROM services ORDER BY id DESC LIMIT $offset, $limit";
+$result = mysqli_query($conn, $query);
 ?>
 
-
-<section class="products-page">
+<section class="services-page" style="padding: 60px 0;">
     <div class="container">
-        <!-- Filter/Sorting Bar (Optional for Premium Look) -->
+        <!-- Filter/Sorting Bar -->
         <div class="d-flex justify-content-between align-items-center mb-5 reveal">
-            <p class="text-muted mb-0">Showing all 6 premium spices</p>
+            <!-- Dynamically showing total counts -->
+            <p class="text-muted mb-0">Showing page <?php echo $page; ?> of <?php echo $total_pages ?: 1; ?> (Total <?php echo $total_services; ?> services)</p>
             <select class="form-select w-auto border-0 shadow-sm" style="background-color: #FFF;">
                 <option>Default Sorting</option>
                 <option>Sort by Popularity</option>
@@ -18,136 +38,95 @@ include 'includes/breadcrumb.php';
         </div>
 
         <div class="row g-4">
-            <!-- Product 1 -->
-            <div class="col-lg-4 col-md-6 reveal">
-                <div class="spice-card">
-                    <div class="card-img-wrapper">
-                        <span class="badge-premium">Best Seller</span>
-                        <img src="assets/images/products/ajwain.webp" alt="Ajwain">
-                    </div>
-                    <div class="spice-card-body">
-                        <h4 class="spice-card-title">Premium Ajwain</h4>
-                        <p class="spice-card-desc">Bold, aromatic, and intense. Sourced from the finest farms.</p>
-                        <div class="spice-card-footer">
-                            <a href="service-details.php" class="view-link">View Details <i
-                                    class="fa-solid fa-arrow-right"></i></a>
-                            <a href="contact.php" class="btn-quote">Get Quote</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <?php
+            // Check if services exist
+            if (mysqli_num_rows($result) > 0) {
+                $counter = 0; // Initialize counter for animation delays
 
-            <!-- Product 2 -->
-            <div class="col-lg-4 col-md-6 reveal" style="transition-delay: 0.1s;">
-                <div class="spice-card">
-                    <div class="card-img-wrapper">
-                        <span class="badge-premium">Export Quality</span>
-                        <img src="assets/images/products/carom.webp" alt="Carom">
-                    </div>
-                    <div class="spice-card-body">
-                        <h4 class="spice-card-title">Carom Seeds</h4>
-                        <p class="spice-card-desc">Vibrant green pods with a sweet, floral, and aromatic essence.</p>
-                        <div class="spice-card-footer">
-                            <a href="service-details.php" class="view-link">View Details <i
-                                    class="fa-solid fa-arrow-right"></i></a>
-                            <a href="contact.php" class="btn-quote">Get Quote</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                while ($row = mysqli_fetch_assoc($result)) {
+                    // Image Path
+                    $imagePath = "admin/assets/img/uploads/" . $row['img_path'];
 
-            <!-- Product 3 -->
-            <div class="col-lg-4 col-md-6 reveal" style="transition-delay: 0.2s;">
-                <div class="spice-card">
-                    <div class="card-img-wrapper">
-                        <span class="badge-premium">Organic</span>
-                        <img src="https://images.pexels.com/photos/2802527/pexels-photo-2802527.jpeg?auto=compress&cs=tinysrgb&w=600"
-                            alt="Cinnamon Sticks">
-                    </div>
-                    <div class="spice-card-body">
-                        <h4 class="spice-card-title">Cinnamon Sticks</h4>
-                        <p class="spice-card-desc">Sweet and warm, authentic cinnamon sticks perfect for curries.</p>
-                        <div class="spice-card-footer">
-                            <a href="service-details.php" class="view-link">View Details <i
-                                    class="fa-solid fa-arrow-right"></i></a>
-                            <a href="contact.php" class="btn-quote">Get Quote</a>
+                    // Dynamically calculate transition delay (0s, 0.1s, 0.2s repeating for 3-column grid)
+                    $delay = ($counter % 3) * 0.1;
+            ?>
+                    <!-- Dynamic Service Card -->
+                    <div class="col-lg-4 col-md-6 reveal" style="transition-delay: <?php echo $delay; ?>s;">
+                        <div class="spice-card">
+                            <div class="card-img-wrapper">
+                                <span class="badge-premium">Premium</span>
+                                <img src="<?php echo htmlspecialchars($imagePath); ?>" alt="<?php echo htmlspecialchars($row['service_name']); ?>">
+                            </div>
+                            <div class="spice-card-body">
+                                <h4 class="spice-card-title"><?php echo htmlspecialchars($row['service_name']); ?></h4>
+                                <p class="spice-card-desc"><?php echo htmlspecialchars($row['short_desc']); ?></p>
+                                <div class="spice-card-footer">
+                                    <a href="service-details.php?id=<?php echo $row['id']; ?>" class="view-link">View Details <i class="fa-solid fa-arrow-right"></i></a>
+                                    <a href="contact.php" class="btn-quote">Get Quote</a>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>
-
-            <!-- Product 4 -->
-            <div class="col-lg-4 col-md-6 reveal">
-                <div class="spice-card">
-                    <div class="card-img-wrapper">
-                        <img src="assets/images/products/castor.webp" alt="castor">
-                    </div>
-                    <div class="spice-card-body">
-                        <h4 class="spice-card-title">Castor seeds</h4>
-                        <p class="spice-card-desc">Intensely warm and sweet, these cloves are rich in essential oils.
-                        </p>
-                        <div class="spice-card-footer">
-                            <a href="service-details.php" class="view-link">View Details <i
-                                    class="fa-solid fa-arrow-right"></i></a>
-                            <a href="contact.php" class="btn-quote">Get Quote</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Product 5 -->
-            <div class="col-lg-4 col-md-6 reveal" style="transition-delay: 0.1s;">
-                <div class="spice-card">
-                    <div class="card-img-wrapper">
-                        <img src="assets/images/products/chickpeas.webp" alt="Coriander Seeds">
-                    </div>
-                    <div class="spice-card-body">
-                        <h4 class="spice-card-title">Chickpeas Seeds</h4>
-                        <p class="spice-card-desc">Freshly harvested, bringing a mild citrusy and earthy flavor.</p>
-                        <div class="spice-card-footer">
-                            <a href="service-details.php" class="view-link">View Details <i
-                                    class="fa-solid fa-arrow-right"></i></a>
-                            <a href="contact.php" class="btn-quote">Get Quote</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Product 6 -->
-            <div class="col-lg-4 col-md-6 reveal" style="transition-delay: 0.2s;">
-                <div class="spice-card">
-                    <div class="card-img-wrapper">
-                        <span class="badge-premium">New Arrival</span>
-                        <img src="assets/images/products/cumin seeds.webp" alt="Cumin Seeds">
-                    </div>
-                    <div class="spice-card-body">
-                        <h4 class="spice-card-title">Premium Cumin Seeds</h4>
-                        <p class="spice-card-desc">Distinctive warm flavor, indispensable in authentic Indian cooking.
-                        </p>
-                        <div class="spice-card-footer">
-                            <a href="service-details.php" class="view-link">View Details <i
-                                    class="fa-solid fa-arrow-right"></i></a>
-                            <a href="contact.php" class="btn-quote">Get Quote</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <?php
+                    $counter++; // Increment counter
+                } // End While Loop
+            } else {
+                echo "<div class='col-12'><p class='text-center'>No services available at the moment.</p></div>";
+            }
+            ?>
         </div>
+
+        <!-- Bootstrap Pagination Section -->
+        <?php if ($total_pages > 1): ?>
+            <div class="row mt-5">
+                <div class="col-12">
+                    <nav aria-label="Page navigation">
+                        <ul class="pagination justify-content-center custom-pagination">
+
+                            <!-- Previous Button -->
+                            <li class="page-item <?php echo ($page <= 1) ? 'disabled' : ''; ?>">
+                                <a class="page-link" href="?page=<?php echo $page - 1; ?>" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo; Previous</span>
+                                </a>
+                            </li>
+
+                            <!-- Page Number Loops -->
+                            <?php for ($i = 1; $i <= $total_pages; $i++): ?>
+                                <li class="page-item <?php echo ($page == $i) ? 'active' : ''; ?>">
+                                    <a class="page-link" href="?page=<?php echo $i; ?>"><?php echo $i; ?></a>
+                                </li>
+                            <?php endfor; ?>
+
+                            <!-- Next Button -->
+                            <li class="page-item <?php echo ($page >= $total_pages) ? 'disabled' : ''; ?>">
+                                <a class="page-link" href="?page=<?php echo $page + 1; ?>" aria-label="Next">
+                                    <span aria-hidden="true">Next &raquo;</span>
+                                </a>
+                            </li>
+
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        <?php endif; ?>
+
     </div>
 </section>
 
 <!-- Scroll Animation Script -->
 <script>
-    document.addEventListener("DOMContentLoaded", function () {
+    document.addEventListener("DOMContentLoaded", function() {
         const reveals = document.querySelectorAll('.reveal');
-        const appearOnScroll = new IntersectionObserver(function (entries, observer) {
+        const appearOnScroll = new IntersectionObserver(function(entries, observer) {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('active');
                     observer.unobserve(entry.target);
                 }
             });
-        }, { threshold: 0.15 });
+        }, {
+            threshold: 0.15
+        });
         reveals.forEach(reveal => appearOnScroll.observe(reveal));
     });
 </script>

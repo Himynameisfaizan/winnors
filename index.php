@@ -1,4 +1,7 @@
-<?php include 'includes/header.php'; ?>
+<?php
+include 'includes/header.php';
+include 'admin/db-conn.php';
+?>
 
 <!-- Hero Section Start -->
 <section class="hero-slider">
@@ -117,87 +120,72 @@
 </section>
 <!-- About Section End -->
 
-<!-- Services / Products Section Start -->
+<?php
+// Assuming your database connection is stored in $conn
+// include 'db_connection.php'; 
+
+// Fetch 3 services from the services table
+$query = "SELECT * FROM services ORDER BY id DESC LIMIT 3";
+$result = mysqli_query($conn, $query);
+?>
+
+<!-- Services Section Start -->
 <section class="services-section">
     <div class="container">
         <!-- Section Header -->
         <div class="section-header">
             <span class="section-subtitle">Our Offerings</span>
-            <h2 class="section-title">Premium Whole Spices</h2>
+            <h2 class="section-title">Our Premium Services</h2>
         </div>
 
         <div class="row g-4">
 
-            <!-- Card 1: Black Pepper -->
-            <div class="col-lg-4 col-md-6">
-                <div class="spice-card">
-                    <div class="card-img-wrapper">
-                        <span class="badge-premium">Best Seller</span>
-                        <img src="assets/images/products/chickpeas.webp" alt="Black Pepper Whole">
-                    </div>
-                    <div class="spice-card-body">
-                        <h4 class="spice-card-title">Premium Chickpeas</h4>
-                        <p class="spice-card-desc">Bold, aromatic, and intense. Our sun-dried black peppercorns add a
-                            rich depth of flavor and heat to any culinary dish.</p>
+            <?php
+            // Check if services exist
+            if (mysqli_num_rows($result) > 0) {
+                // Loop through each service
+                while ($row = mysqli_fetch_assoc($result)) {
 
-                        <div class="spice-card-footer">
-                            <a href="service-details.php" class="view-link">View Details <i
-                                    class="fa-solid fa-arrow-right"></i></a>
-                            <a href="contact.php" class="btn-quote">Get Quote</a>
+                    // Construct the image path. Adjust 'uploads/' depending on where service images are stored
+                    $imagePath = "admin/assets/img/uploads/" . $row['img_path'];
+
+            ?>
+                    <!-- Dynamic Service Card -->
+                    <div class="col-lg-4 col-md-6">
+                        <!-- Maintained your original CSS classes ('spice-card' etc.) so the design doesn't break -->
+                        <div class="spice-card">
+                            <div class="card-img-wrapper">
+                                <span class="badge-premium">Premium</span>
+                                <img src="<?php echo htmlspecialchars($imagePath); ?>" alt="<?php echo htmlspecialchars($row['service_name']); ?>">
+                            </div>
+                            <div class="spice-card-body">
+                                <!-- Fetching service name -->
+                                <h4 class="spice-card-title"><?php echo htmlspecialchars($row['service_name']); ?></h4>
+
+                                <!-- Fetching short description directly from the table -->
+                                <p class="spice-card-desc"><?php echo htmlspecialchars($row['short_desc']); ?></p>
+
+                                <div class="spice-card-footer">
+                                    <!-- Passing the service 'id' in URL for the details page -->
+                                    <a href="service-details.php?id=<?php echo $row['id']; ?>" class="view-link">View Details <i class="fa-solid fa-arrow-right"></i></a>
+                                    <a href="contact.php" class="btn-quote">Get Quote</a>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>
-
-            <!-- Card 2: Green Cardamom -->
-            <div class="col-lg-4 col-md-6">
-                <div class="spice-card">
-                    <div class="card-img-wrapper">
-                        <span class="badge-premium">Export Quality</span>
-                        <img src="assets/images/products/mustard.webp" alt="Green Cardamom">
-                    </div>
-                    <div class="spice-card-body">
-                        <h4 class="spice-card-title">Green Cardamom</h4>
-                        <p class="spice-card-desc">Handpicked directly from organic farms, these vibrant green pods
-                            bring a sweet, floral, and highly aromatic essence.</p>
-
-                        <div class="spice-card-footer">
-                            <a href="service-details.php" class="view-link">View Details <i
-                                    class="fa-solid fa-arrow-right"></i></a>
-                            <a href="contact.php" class="btn-quote">Get Quote</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Card 3: Cinnamon Sticks -->
-            <div class="col-lg-4 col-md-6 offset-md-3 offset-lg-0">
-                <div class="spice-card">
-                    <div class="card-img-wrapper">
-                        <span class="badge-premium">Organic</span>
-                        <img src="https://images.pexels.com/photos/2802527/pexels-photo-2802527.jpeg?auto=compress&cs=tinysrgb&w=600"
-                            alt="Cinnamon Sticks">
-                    </div>
-                    <div class="spice-card-body">
-                        <h4 class="spice-card-title">Cinnamon Sticks</h4>
-                        <p class="spice-card-desc">Sweet and warm, our authentic cinnamon sticks are perfect for
-                            curries, desserts, and brewing premium spiced teas.</p>
-
-                        <div class="spice-card-footer">
-                            <a href="service-details.php" class="view-link">View Details <i
-                                    class="fa-solid fa-arrow-right"></i></a>
-                            <a href="contact.php" class="btn-quote">Get Quote</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <?php
+                } // End while loop
+            } else {
+                // Fallback message if no services are found
+                echo "<div class='col-12'><p class='text-center'>Services updating soon!</p></div>";
+            }
+            ?>
 
         </div>
 
         <!-- View All Button -->
         <div class="text-center mt-5">
-            <a href="services.php" class="btn btn-premium">Explore All Spices <i
-                    class="fa-solid fa-arrow-right ms-2"></i></a>
+            <a href="services.php" class="btn btn-premium">Explore All Services <i class="fa-solid fa-arrow-right ms-2"></i></a>
         </div>
 
     </div>
@@ -250,76 +238,50 @@
 </section>
 <!-- WHY CHOOSE US SECTION END -->
 
-<!-- PRODUCTS PRICING SECTION START -->
-<section class="products-section">
+<?php
+$query = "SELECT * FROM products WHERE status = 1 ORDER BY id DESC LIMIT 4";
+$result = mysqli_query($conn, $query);
+?>
+
+<section class="related-products-section">
     <div class="container">
         <!-- Section Header -->
-        <div class="section-header">
-            <span class="section-subtitle">Shop Spices</span>
-            <h2 class="section-title">Explore Our Pricing</h2>
+        <div class="section-header text-center mb-5">
+            <span class="section-subtitle" style="color: #E67E22; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;">Shop Spices</span>
+            <h2 class="section-title">Explore Our Products</h2>
+            <div style="width: 50px; height: 3px; background-color: #E67E22; margin: 10px auto 0;"></div>
         </div>
 
-        <div class="row g-4 mt-2">
-            <!-- Product 1 -->
-            <div class="col-lg-3 col-md-6 col-sm-6">
-                <div class="product-card">
-                    <div class="product-img-wrapper">
-                        <img src="assets/images/products/cumin seeds.webp" alt="Cumin Seeds">
+        <div class="row g-4">
+            <?php
+            // Check if products exist in the database
+            if (mysqli_num_rows($result) > 0) {
+                while ($row = mysqli_fetch_assoc($result)) {
+                    // Construct the image path. Adjust if necessary.
+                    $imagePath = "admin/assets/img/uploads/" . $row['pro_img'];
+            ?>
+                    <!-- Dynamic Product Card -->
+                    <div class="col-lg-3 col-md-6 col-sm-6">
+                        <div class="shop-card">
+                            <div class="shop-img-wrapper">
+                                <img src="<?php echo htmlspecialchars($imagePath); ?>" alt="<?php echo htmlspecialchars($row['pro_name']); ?>">
+                            </div>
+                            <div class="shop-card-body">
+                                <h4 class="shop-title-sm"><?php echo htmlspecialchars($row['pro_name']); ?></h4>
+                                <a href="product-details.php?slug=<?php echo urlencode($row['slug_url']); ?>" class="btn-view-details">View Details</a>
+                            </div>
+                        </div>
                     </div>
-                    <div class="product-body">
-                        <h4 class="product-title">Premium Cumin Seeds</h4>
-                        <!-- <div class="product-price">₹350 / kg <span>₹420</span></div> -->
-                        <a href="product-details.php?id=1" class="btn-details">View Details</a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Product 2 -->
-            <div class="col-lg-3 col-md-6 col-sm-6">
-                <div class="product-card">
-                    <div class="product-img-wrapper">
-                        <img src="assets/images/products/castor.webp" alt="Cloves">
-                    </div>
-                    <div class="product-body">
-                        <h4 class="product-title">Castor</h4>
-                        <!-- <div class="product-price">₹1,150 / kg <span>₹1,300</span></div> -->
-                        <a href="product-details.php?id=2" class="btn-details">View Details</a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Product 3 -->
-            <div class="col-lg-3 col-md-6 col-sm-6">
-                <div class="product-card">
-                    <div class="product-img-wrapper">
-                        <img src="assets/images/products/fennel.webp" alt="Coriander Seeds">
-                    </div>
-                    <div class="product-body">
-                        <h4 class="product-title">Fennel Seeds</h4>
-                        <!-- <div class="product-price">₹280 / kg <span>₹320</span></div> -->
-                        <a href="product-details.php?id=3" class="btn-details">View Details</a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Product 4 -->
-            <div class="col-lg-3 col-md-6 col-sm-6">
-                <div class="product-card">
-                    <div class="product-img-wrapper">
-                        <img src="assets/images/products/psyllium.webp" alt="Black Pepper">
-                    </div>
-                    <div class="product-body">
-                        <h4 class="product-title">Psyllium Husk</h4>
-                        <!-- <div class="product-price">₹750 / kg <span>₹850</span></div> -->
-                        <a href="product-details.php?id=4" class="btn-details">View Details</a>
-                    </div>
-                </div>
-            </div>
+            <?php
+                }
+            } else {
+                echo "<div class='col-12'><p class='text-center'>New products arriving soon!</p></div>";
+            }
+            ?>
         </div>
 
     </div>
 </section>
-<!-- PRODUCTS PRICING SECTION END -->
 
 <!-- =========================================
      TESTIMONIALS SECTION START
@@ -401,6 +363,15 @@
 <!-- =========================================
      BLOG SECTION START
 ========================================= -->
+<?php
+// Assuming your database connection is stored in $conn
+// include 'db_connection.php'; 
+
+// Fetch 3 latest published blogs from the database
+$blog_query = "SELECT * FROM blogs WHERE status = 'published' ORDER BY created_at DESC LIMIT 3";
+$blog_result = mysqli_query($conn, $blog_query);
+?>
+
 <section class="blog-section">
     <div class="container">
         <div class="section-header text-center mb-5">
@@ -409,59 +380,50 @@
         </div>
 
         <div class="row g-4">
-            <!-- Blog 1 -->
-            <div class="col-lg-4 col-md-6">
-                <div class="blog-card">
-                    <div class="blog-img">
-                        <span class="blog-date">12 Aug 2026</span>
-                        <img src="https://images.pexels.com/photos/1340116/pexels-photo-1340116.jpeg?auto=compress&cs=tinysrgb&w=600"
-                            alt="Turmeric Benefits">
-                    </div>
-                    <div class="blog-content">
-                        <h4 class="blog-title">The Hidden Health Benefits of Pure Spices</h4>
-                        <p class="blog-desc">Discover how authentic whole spices can boost your immunity and improve
-                            digestion naturally.</p>
-                        <a href="blog-details.php" class="blog-link">Read Article <i
-                                class="fa-solid fa-arrow-right"></i></a>
-                    </div>
-                </div>
-            </div>
 
-            <!-- Blog 2 -->
-            <div class="col-lg-4 col-md-6">
-                <div class="blog-card">
-                    <div class="blog-img">
-                        <span class="blog-date">05 Aug 2026</span>
-                        <img src="assets/images/products/mustard.webp" alt="Cooking with Whole Spices">
-                    </div>
-                    <div class="blog-content">
-                        <h4 class="blog-title">Why Whole Spices are Better Than Powdered</h4>
-                        <p class="blog-desc">Learn why chefs prefer whole spices for that perfect aroma and long-lasting
-                            flavor retention.</p>
-                        <a href="blog-details.php" class="blog-link">Read Article <i
-                                class="fa-solid fa-arrow-right"></i></a>
-                    </div>
-                </div>
-            </div>
+            <?php
+            // Check if published blogs exist
+            if (mysqli_num_rows($blog_result) > 0) {
+                while ($row = mysqli_fetch_assoc($blog_result)) {
 
-            <!-- Blog 3 -->
-            <div class="col-lg-4 col-md-6 offset-md-3 offset-lg-0">
-                <div class="blog-card">
-                    <div class="blog-img">
-                        <span class="blog-date">28 Jul 2026</span>
-                        <img src="https://images.pexels.com/photos/2802527/pexels-photo-2802527.jpeg?auto=compress&cs=tinysrgb&w=600"
-                            alt="Sourcing Spices">
+                    // 1. Format the date to match your design (e.g., "12 Aug 2026")
+                    $blogDate = date('d M Y', strtotime($row['created_at']));
+
+                    // 2. Construct the image path. Adjust 'admin/assets/img/uploads/blogs/' to your actual folder structure
+                    $imagePath = "admin/assets/img/uploads/" . $row['image'];
+
+                    // 3. Create a short excerpt from the main content
+                    $excerpt = strip_tags($row['content']);
+                    if (strlen($excerpt) > 90) {
+                        $excerpt = substr($excerpt, 0, 90) . '...';
+                    }
+            ?>
+                    <!-- Dynamic Blog Card -->
+                    <div class="col-lg-4 col-md-6">
+                        <div class="blog-card">
+                            <div class="blog-img">
+                                <span class="blog-date"><?php echo $blogDate; ?></span>
+                                <img src="<?php echo htmlspecialchars($imagePath); ?>" alt="<?php echo htmlspecialchars($row['title']); ?>">
+                            </div>
+                            <div class="blog-content">
+                                <h4 class="blog-title"><?php echo htmlspecialchars($row['title']); ?></h4>
+                                <p class="blog-desc"><?php echo htmlspecialchars($excerpt); ?></p>
+
+                                <!-- Using slug_url for SEO friendly routing -->
+                                <a href="blog-details.php?slug=<?php echo urlencode($row['slug_url']); ?>" class="blog-link">Read Article <i class="fa-solid fa-arrow-right"></i></a>
+                            </div>
+                        </div>
                     </div>
-                    <div class="blog-content">
-                        <h4 class="blog-title">From Farm to Kitchen: Our Sourcing Journey</h4>
-                        <p class="blog-desc">Take a look at how we handpick the finest spices directly from Indian
-                            farmers for you.</p>
-                        <a href="blog-details.php" class="blog-link">Read Article <i
-                                class="fa-solid fa-arrow-right"></i></a>
-                    </div>
-                </div>
-            </div>
+            <?php
+                } // End while loop
+            } else {
+                // Fallback message if no blogs are found
+                echo "<div class='col-12'><p class='text-center'>New articles coming soon!</p></div>";
+            }
+            ?>
+
         </div>
+
         <div class="text-center mt-5">
             <a href="blogs.php" class="btn btn-outline-premium text-dark border-dark">View All Posts</a>
         </div>
