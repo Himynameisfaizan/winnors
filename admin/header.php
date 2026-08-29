@@ -25,14 +25,14 @@ if (!isset($_SESSION['admin_logged_in'])) {
         <li><a href="index.php"><i class="fas fa-tachometer-alt" style="color: #3498db;"></i> <span>Dashboard</span></a>
         </li>
 
-        <li>
+        <!-- <li>
             <a class="has-arrow" href="#"><i class="fas fa-home" style="color: #e74c3c;"></i> <span>Home
                     Content</span></a>
             <ul>
                 <li><a href="home-items.php">Add Logo</a></li>
-                <!-- <li><a href="add-banner.php">Add Banners</a></li> -->
+                <!-- <li><a href="add-banner.php">Add Banners</a></li>
             </ul>
-        </li>
+        </li> -->
 
         <li>
             <a class="has-arrow" href="#"><i class="fas fa-layer-group" style="color: #2ecc71;"></i>
@@ -120,12 +120,12 @@ if (!isset($_SESSION['admin_logged_in'])) {
             </a>
         </li> -->
 
-        <li>
+        <!-- <li>
             <a href="add-gallery.php">
                 <i class="fas fa-images" style="color: #8e44ad;"></i>
                 <span>Gallery</span>
             </a>
-        </li>
+        </li> -->
 
         <li>
             <a class="has-arrow" href="#"><i class="fas fa-quote-left" style="color: #16a085;"></i>

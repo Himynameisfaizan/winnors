@@ -6,20 +6,20 @@ include "db-conn.php";
 
 // Handle form submission
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $company_name = trim($_POST['company_name'] ?? '');
-    $copyright = trim($_POST['copyright'] ?? '');
-    $address = trim($_POST['address'] ?? '');
-    $address2 = trim($_POST['address2'] ?? '');
-    $phone = trim($_POST['phone'] ?? '');
-    $wp_number = trim($_POST['wp_number'] ?? '');
-    $telephone = trim($_POST['telephone'] ?? '');
-    $email = trim($_POST['email'] ?? '');
+    $company_name  = trim($_POST['company_name'] ?? '');
+    $copyright     = trim($_POST['copyright'] ?? '');
+    $address       = trim($_POST['address'] ?? '');
+    $address2      = trim($_POST['address2'] ?? '');
+    $phone         = trim($_POST['phone'] ?? '');
+    $wp_number     = trim($_POST['wp_number'] ?? '');
+    $telephone     = trim($_POST['telephone'] ?? '');
+    $email         = trim($_POST['email'] ?? '');
     $working_hours = trim($_POST['working_hours'] ?? '');
-    $facebook = trim($_POST['facebook'] ?? '');
-    $instagram = trim($_POST['instagram'] ?? '');
-    $twitter = trim($_POST['twitter'] ?? '');
-    $linkdin = trim($_POST['linkdin'] ?? '');
-    $map = trim($_POST['map'] ?? '');
+    $facebook      = trim($_POST['facebook'] ?? '');
+    $instagram     = trim($_POST['instagram'] ?? '');
+    $twitter       = trim($_POST['twitter'] ?? '');
+    $linkdin       = trim($_POST['linkdin'] ?? '');
+    $map           = trim($_POST['map'] ?? '');
     $contact_email = trim($_POST['contact_email'] ?? '');
 
     // Check if contact record exists
@@ -27,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if ($check && $check->num_rows > 0) {
         $row = $check->fetch_assoc();
-        $contact_id = (int) $row['id'];
+        $contact_id = (int)$row['id'];
 
         $stmt = $conn->prepare("UPDATE contacts SET 
             company_name = ?, 
@@ -100,6 +100,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $_SESSION['error_message'] = "Error updating information: " . ($stmt ? $stmt->error : $conn->error);
     }
 }
+
+// Fetch existing data
+$result = $conn->query("SELECT * FROM contacts ORDER BY id ASC LIMIT 1");
+$data = ($result && $result->num_rows > 0) ? $result->fetch_assoc() : [];
+?>
 
 // Fetch existing data
 $result = $conn->query("SELECT * FROM contacts ORDER BY id ASC LIMIT 1");

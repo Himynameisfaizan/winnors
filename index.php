@@ -286,6 +286,12 @@ $result = mysqli_query($conn, $query);
 <!-- =========================================
      TESTIMONIALS SECTION START
 ========================================= -->
+<?php
+$testimonial_query = "SELECT * FROM testimonials ORDER BY id DESC LIMIT 3";
+// [cite: 1]
+$testimonial_result = mysqli_query($conn, $testimonial_query);
+?>
+
 <section class="testimonial-section">
     <div class="container">
         <div class="section-header text-center mb-5">
@@ -294,68 +300,51 @@ $result = mysqli_query($conn, $query);
         </div>
 
         <div class="row g-4">
-            <!-- Review 1 -->
+            <?php
+            if ($testimonial_result && mysqli_num_rows($testimonial_result) > 0) {
+                while ($row = mysqli_fetch_assoc($testimonial_result)) {
+                    $clientName = htmlspecialchars($row['client_name']);
+                    // [cite: 1]
+                    $clientRole = !empty($row['client_title']) ? htmlspecialchars($row['client_title']) : (!empty($row['client_company']) ? htmlspecialchars($row['client_company']) : 'Valued Customer');
+                    // [cite: 1]
+                    $reviewText = htmlspecialchars($row['testimonial_text']);
+                    // [cite: 1]
+                    $rating = isset($row['rating']) ? (int)$row['rating'] : 5;
+                    // [cite: 1]
+                    $firstLetter = strtoupper(substr($clientName, 0, 1));
+            ?>
+            <!-- Dynamic Review Card -->
             <div class="col-lg-4 col-md-6">
-                <div class="testimonial-card">
+                <div class="testimonial-card h-100 d-flex flex-column">
                     <i class="fa-solid fa-quote-right quote-icon"></i>
-                    <div class="rating">
-                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i
-                            class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i
-                            class="fa-solid fa-star"></i>
+                    <div class="rating mb-3">
+                        <?php for ($i = 1; $i <= 5; $i++): ?>
+                            <?php if ($i <= $rating): ?>
+                                <i class="fa-solid fa-star text-warning"></i>
+                            <?php else: ?>
+                                <i class="fa-regular fa-star text-warning"></i>
+                            <?php endif; ?>
+                        <?php endfor; ?>
                     </div>
-                    <p class="client-review">"The quality of their black pepper is unmatched. The aroma hits you as soon
-                        as you open the packet. Truly premium quality spices!"</p>
-                    <div class="client-info">
-                        <div class="client-avatar">R</div>
+                    <p class="client-review flex-grow-1"><?php echo $reviewText; ?></p>
+                    <!-- [cite: 1] -->
+                    <div class="client-info mt-4 d-flex align-items-center">
+                        <div class="client-avatar rounded-circle bg-warning text-dark fw-bold d-flex align-items-center justify-content-center me-3" style="width: 45px; height: 45px; font-size: 1.2rem;">
+                            <?php echo $firstLetter; ?>
+                        </div>
                         <div class="client-details">
-                            <h5>Rahul Sharma</h5>
-                            <span>Restaurant Owner</span>
+                            <h5 class="mb-0 fw-bold text-dark"><?php echo $clientName; ?></h5>
+                            <span class="text-muted small"><?php echo $clientRole; ?></span>
                         </div>
                     </div>
                 </div>
             </div>
-
-            <!-- Review 2 -->
-            <div class="col-lg-4 col-md-6">
-                <div class="testimonial-card">
-                    <i class="fa-solid fa-quote-right quote-icon"></i>
-                    <div class="rating">
-                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i
-                            class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i
-                            class="fa-solid fa-star-half-stroke"></i>
-                    </div>
-                    <p class="client-review">"I have been buying whole spices from Winnors for months now. The cinnamon
-                        sticks and cloves are incredibly fresh and flavorful."</p>
-                    <div class="client-info">
-                        <div class="client-avatar">A</div>
-                        <div class="client-details">
-                            <h5>Anjali Desai</h5>
-                            <span>Home Chef</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Review 3 -->
-            <div class="col-lg-4 col-md-6 offset-md-3 offset-lg-0">
-                <div class="testimonial-card">
-                    <i class="fa-solid fa-quote-right quote-icon"></i>
-                    <div class="rating">
-                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i
-                            class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i
-                            class="fa-solid fa-star"></i>
-                    </div>
-                    <p class="client-review">"Excellent packaging and timely delivery in Vadodara. You can easily tell
-                        the difference between store-bought and Winnors spices."</p>
-                    <div class="client-info">
-                        <div class="client-avatar">V</div>
-                        <div class="client-details">
-                            <h5>Vikram Patel</h5>
-                            <span>Regular Customer</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <?php 
+                }
+            } else {
+                echo "<div class='col-12 text-center'><p class='text-muted'>No testimonials available right now.</p></div>";
+            }
+            ?>
         </div>
     </div>
 </section>
@@ -364,10 +353,7 @@ $result = mysqli_query($conn, $query);
      BLOG SECTION START
 ========================================= -->
 <?php
-// Assuming your database connection is stored in $conn
-// include 'db_connection.php'; 
 
-// Fetch 3 latest published blogs from the database
 $blog_query = "SELECT * FROM blogs WHERE status = 'published' ORDER BY created_at DESC LIMIT 3";
 $blog_result = mysqli_query($conn, $blog_query);
 ?>
@@ -415,9 +401,8 @@ $blog_result = mysqli_query($conn, $blog_query);
                         </div>
                     </div>
             <?php
-                } // End while loop
+                } 
             } else {
-                // Fallback message if no blogs are found
                 echo "<div class='col-12'><p class='text-center'>New articles coming soon!</p></div>";
             }
             ?>

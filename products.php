@@ -1,115 +1,257 @@
 <?php
+include ("admin/db-conn.php");
 $pageTitle = "Shop Our Spices";
 include 'includes/header.php';
 include 'includes/breadcrumb.php';
+// include 'db_connection.php'; // Make sure your DB connection is active
+
+// --- Pagination Logic ---
+$limit = 12; // 12 products per page (perfect for a 4-column layout)
+$page = isset($_GET['page']) && is_numeric($_GET['page']) ? (int)$_GET['page'] : 1;
+$offset = ($page - 1) * $limit;
+
+// 1. Get total number of active products to calculate total pages
+$total_query = "SELECT COUNT(id) AS total FROM products WHERE status = 1"; //[cite: 1]
+$total_result = mysqli_query($conn, $total_query);
+$total_row = mysqli_fetch_assoc($total_result);
+$total_products = $total_row['total'];
+$total_pages = ceil($total_products / $limit);
+
+// 2. Fetch active products for the current page
+$product_query = "SELECT * FROM products WHERE status = 1 ORDER BY id DESC LIMIT $offset, $limit"; //[cite: 1]
+$product_result = mysqli_query($conn, $product_query);
+
+// 3. Fetch WhatsApp number from contacts table for the WhatsApp button
+$contact_query = "SELECT wp_number FROM contacts LIMIT 1"; //[cite: 1]
+$contact_result = mysqli_query($conn, $contact_query);
+$contact_row = mysqli_fetch_assoc($contact_result);
+
+// Formatting WhatsApp number
+$wa_number = !empty($contact_row['wp_number']) ? preg_replace('/[^0-9]/', '', $contact_row['wp_number']) : '';
+if (!empty($wa_number) && strlen($wa_number) == 10) {
+    $wa_number = "91" . $wa_number; // Add country code
+}
 ?>
+
+<!-- Add Custom CSS for Premium Redesign & Pagination -->
+<style>
+    .shop-section {
+        padding: 80px 0;
+        background-color: #FAFAFA;
+    }
+    
+    /* Premium Card Design */
+    .premium-product-card {
+        background: #ffffff;
+        border-radius: 12px;
+        border: 1px solid #EAE3D9;
+        overflow: hidden;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+        transition: all 0.4s ease;
+    }
+    
+    .premium-product-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 15px 30px rgba(230, 126, 34, 0.12);
+        border-color: #E67E22;
+    }
+    
+    /* Fixed Image Wrapper */
+    .card-img-box {
+        width: 100%;
+        height: 240px; 
+        overflow: hidden;
+        position: relative;
+    }
+    
+    .card-img-box img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.6s ease;
+    }
+    
+    .premium-product-card:hover .card-img-box img {
+        transform: scale(1.08);
+    }
+    
+    /* Card Body */
+    .card-content {
+        padding: 24px;
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+    }
+    
+    .product-title {
+        font-size: 1.3rem;
+        font-weight: 800;
+        color: #2C1E16;
+        margin-bottom: 12px;
+        line-height: 1.4;
+    }
+    
+    /* View Details Link */
+    .view-detail-link {
+        font-size: 0.95rem;
+        color: #7A6859;
+        font-weight: 600;
+        text-decoration: none;
+        transition: color 0.3s;
+        display: inline-block;
+        margin-bottom: 20px;
+    }
+    
+    .view-detail-link:hover {
+        color: #E67E22;
+    }
+    
+    /* Action Buttons Area */
+    .action-buttons .btn-quote {
+        background-color: #2C1E16;
+        color: #ffffff;
+        padding: 10px 15px;
+        border-radius: 8px;
+        text-align: center;
+        font-weight: 600;
+        font-size: 0.9rem;
+        text-decoration: none;
+        transition: all 0.3s;
+        border: 1px solid #2C1E16;
+    }
+    
+    .action-buttons .btn-quote:hover {
+        background-color: #E67E22;
+        border-color: #E67E22;
+    }
+    
+    .action-buttons .btn-whatsapp {
+        background-color: #25D366;
+        color: #ffffff;
+        width: 44px;
+        height: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 8px;
+        font-size: 1.4rem;
+        text-decoration: none;
+        transition: all 0.3s;
+    }
+    
+    .action-buttons .btn-whatsapp:hover {
+        background-color: #1EBE57;
+        transform: scale(1.05);
+        box-shadow: 0 5px 15px rgba(37, 211, 102, 0.3);
+    }
+    
+    /* Pagination Styling */
+    .custom-pagination .page-link {
+        color: #2C1E16;
+        border-color: #EAE3D9;
+        margin: 0 4px;
+        border-radius: 6px;
+    }
+    .custom-pagination .page-item.active .page-link {
+        background-color: #E67E22;
+        border-color: #E67E22;
+        color: white;
+    }
+</style>
 
 <section class="shop-section">
     <div class="container">
-
-        <div class="row g-4">
-            <!-- Product 1 -->
-            <div class="col-lg-3 col-md-6 col-sm-6 reveal">
-                <div class="shop-card">
-                    <div class="shop-img-wrapper">
-                        <img src="assets/images/products/fennel.webp" alt="Cumin Seeds">
-                    </div>
-                    <h4 class="shop-title">Premium Fennel Seeds</h4>
-                    <!-- <div class="shop-price">₹350 / kg <del>₹420</del></div> -->
-                    <a href="product-details.php" class="btn-view-details">View Details</a>
-                </div>
-            </div>
-
-            <!-- Product 2 -->
-            <div class="col-lg-3 col-md-6 col-sm-6 reveal" style="transition-delay: 0.1s;">
-                <div class="shop-card">
-                    <div class="shop-img-wrapper">
-                        <img src="assets/images/products/groundnut.webp" alt="Castor">
-                    </div>
-                    <h4 class="shop-title">Groundnut Seeds</h4>
-                    <!-- <div class="shop-price">₹1,150 / kg <del>₹1,300</del></div> -->
-                    <a href="product-details.php" class="btn-view-details">View Details</a>
-                </div>
-            </div>
-
-            <!-- Product 3 -->
-            <div class="col-lg-3 col-md-6 col-sm-6 reveal" style="transition-delay: 0.2s;">
-                <div class="shop-card">
-                    <div class="shop-img-wrapper">
-                        <img src="assets/images/products/mustard.webp" alt="Fennel Seeds">
-                    </div>
-                    <h4 class="shop-title">Mustard Seeds</h4>
-                    <!-- <div class="shop-price">₹280 / kg <del>₹320</del></div> -->
-                    <a href="product-details.php" class="btn-view-details">View Details</a>
-                </div>
-            </div>
-
-            <!-- Product 4 -->
-            <div class="col-lg-3 col-md-6 col-sm-6 reveal" style="transition-delay: 0.3s;">
-                <div class="shop-card">
-                    <div class="shop-img-wrapper">
-                        <img src="assets/images/products/psyllium.webp" alt="Psyllium Husk">
-                    </div>
-                    <h4 class="shop-title">Psyllium Husk</h4>
-                    <!-- <div class="shop-price">₹750 / kg <del>₹850</del></div> -->
-                    <a href="product-details.php" class="btn-view-details">View Details</a>
-                </div>
-            </div>
-
-            <!-- Aur products aise hi add kar sakte ho -->
+        
+        <!-- Showing Results Info -->
+        <div class="d-flex justify-content-between align-items-center mb-5 reveal">
+            <p class="text-muted mb-0">Showing page <?php echo $page; ?> of <?php echo $total_pages ?: 1; ?> (Total <?php echo $total_products; ?> products)</p>
         </div>
 
-        <div class="row g-4">
-            <!-- Product 1 -->
-            <div class="col-lg-3 col-md-6 col-sm-6 reveal">
-                <div class="shop-card">
-                    <div class="shop-img-wrapper">
-                        <img src="assets/images/products/chilli.webp" alt="Cumin Seeds">
+        <div class="row g-4 mb-5">
+            <?php
+            if (mysqli_num_rows($product_result) > 0) {
+                $counter = 0;
+                while ($row = mysqli_fetch_assoc($product_result)) {
+                    
+                    $imagePath = "admin/assets/img/uploads/" . $row['pro_img']; //[cite: 1]
+                    $delay = ($counter % 4) * 0.1; 
+                    
+                    // Pre-filled WhatsApp Message
+                    $wa_msg = urlencode("Hello, I am interested in knowing more about your " . $row['pro_name'] . ". Can you please share the quote?"); //[cite: 1]
+            ?>
+            
+            <!-- Dynamic Product Card -->
+            <div class="col-lg-3 col-md-6 col-sm-6 reveal" style="transition-delay: <?php echo $delay; ?>s;">
+                <div class="premium-product-card h-100 d-flex flex-column">
+                    <div class="card-img-box">
+                        <a href="product-details.php?slug=<?php echo urlencode($row['slug_url']); ?>" class="view-detail-link">
+                        <img src="<?php echo htmlspecialchars($imagePath); ?>" alt="<?php echo htmlspecialchars($row['pro_name']); ?>">
+                        </a> <!--[cite: 1] -->
                     </div>
-                    <h4 class="shop-title">Premium Chilli</h4>
-                    <!-- <div class="shop-price">₹350 / kg <del>₹420</del></div> -->
-                    <a href="product-details.php" class="btn-view-details">View Details</a>
+                    <div class="card-content">
+                    <a href="product-details.php?slug=<?php echo urlencode($row['slug_url']); ?>" class="view-detail-link">    
+                    <h4 class="product-title"><?php echo htmlspecialchars($row['pro_name']); ?></h4></a> <!--[cite: 1] -->
+                        
+                        <div class="mt-auto">
+                            <a href="product-details.php?slug=<?php echo urlencode($row['slug_url']); ?>" class="view-detail-link">View Details <i class="fa-solid fa-arrow-right-long ms-1"></i></a> <!--[cite: 1] -->
+                            
+                            <div class="action-buttons d-flex align-items-center gap-2">
+                                <a href="contact.php?product=<?php echo urlencode($row['pro_name']); ?>" class="btn-quote flex-grow-1">Request Quote</a> <!--[cite: 1] -->
+                                
+                                <?php if($wa_number): ?>
+                                <a href="https://wa.me/<?php echo $wa_number; ?>?text=<?php echo $wa_msg; ?>" target="_blank" class="btn-whatsapp" title="Chat on WhatsApp">
+                                    <i class="fa-brands fa-whatsapp"></i>
+                                </a>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                        
+                    </div>
                 </div>
             </div>
-
-            <!-- Product 2 -->
-            <div class="col-lg-3 col-md-6 col-sm-6 reveal" style="transition-delay: 0.1s;">
-                <div class="shop-card">
-                    <div class="shop-img-wrapper">
-                        <img src="assets/images/products/castor.webp" alt="Castor">
-                    </div>
-                    <h4 class="shop-title">Castor Seeds</h4>
-                    <!-- <div class="shop-price">₹1,150 / kg <del>₹1,300</del></div> -->
-                    <a href="product-details.php" class="btn-view-details">View Details</a>
-                </div>
-            </div>
-
-            <!-- Product 3 -->
-            <div class="col-lg-3 col-md-6 col-sm-6 reveal" style="transition-delay: 0.2s;">
-                <div class="shop-card">
-                    <div class="shop-img-wrapper">
-                        <img src="assets/images/products/carom.webp" alt="Fennel Seeds">
-                    </div>
-                    <h4 class="shop-title">Carom Seeds</h4>
-                    <!-- <div class="shop-price">₹280 / kg <del>₹320</del></div> -->
-                    <a href="product-details.php" class="btn-view-details">View Details</a>
-                </div>
-            </div>
-
-            <!-- Product 4 -->
-            <div class="col-lg-3 col-md-6 col-sm-6 reveal" style="transition-delay: 0.3s;">
-                <div class="shop-card">
-                    <div class="shop-img-wrapper">
-                        <img src="assets/images/products/ajwain.webp" alt="Psyllium Husk">
-                    </div>
-                    <h4 class="shop-title">Ajwain Husk</h4>
-                    <!-- <div class="shop-price">₹750 / kg <del>₹850</del></div> -->
-                    <a href="product-details.php" class="btn-view-details">View Details</a>
-                </div>
-            </div>
-
-            <!-- Aur products aise hi add kar sakte ho -->
+            
+            <?php
+                    $counter++;
+                }
+            } else {
+                echo "<div class='col-12'><p class='text-center'>Products will be updated soon!</p></div>";
+            }
+            ?>
         </div>
+
+        <!-- Pagination UI -->
+        <?php if ($total_pages > 1): ?>
+        <div class="row">
+            <div class="col-12">
+                <nav aria-label="Page navigation">
+                    <ul class="pagination justify-content-center custom-pagination reveal">
+                        
+                        <!-- Previous Button -->
+                        <li class="page-item <?php echo ($page <= 1) ? 'disabled' : ''; ?>">
+                            <a class="page-link" href="?page=<?php echo $page - 1; ?>" aria-label="Previous">
+                                <span aria-hidden="true">&laquo; Prev</span>
+                            </a>
+                        </li>
+                        
+                        <!-- Page Number Loops -->
+                        <?php for ($i = 1; $i <= $total_pages; $i++): ?>
+                            <li class="page-item <?php echo ($page == $i) ? 'active' : ''; ?>">
+                                <a class="page-link" href="?page=<?php echo $i; ?>"><?php echo $i; ?></a>
+                            </li>
+                        <?php endfor; ?>
+                        
+                        <!-- Next Button -->
+                        <li class="page-item <?php echo ($page >= $total_pages) ? 'disabled' : ''; ?>">
+                            <a class="page-link" href="?page=<?php echo $page + 1; ?>" aria-label="Next">
+                                <span aria-hidden="true">Next &raquo;</span>
+                            </a>
+                        </li>
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+        <?php endif; ?>
 
     </div>
 </section>

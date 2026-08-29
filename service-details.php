@@ -1,64 +1,84 @@
 <?php
-$pageTitle = "Bulk & Wholesale Supply";
+// Database connection and ID/slug handling
+include 'admin/db-conn.php';
+
+$service_id = isset($_GET['id']) && is_numeric($_GET['id']) ? (int)$_GET['id'] : 0;
+
+// 1. Fetch current service details based on ID
+if ($service_id > 0) {
+    $query = "SELECT * FROM services WHERE id = $service_id LIMIT 1";
+    // [cite: 1]
+} else {
+    // Fallback to the latest service if no ID is provided
+    $query = "SELECT * FROM services ORDER BY id DESC LIMIT 1";
+    // [cite: 1]
+}
+
+$result = mysqli_query($conn, $query);
+if ($result && mysqli_num_rows($result) > 0) {
+    $service = mysqli_fetch_assoc($result);
+} else {
+    echo "<div class='container py-5 text-center'><h2>Service not found.</h2><a href='services.php' class='btn btn-dark mt-3'>Back to Services</a></div>";
+    include 'includes/footer.php';
+    exit;
+}
+
+$pageTitle = $service['service_name'];
 include 'includes/header.php';
 include 'includes/breadcrumb.php';
+
+// 2. Fetch contact info for phone number widget
+$contact_query = "SELECT phone FROM contacts LIMIT 1";
+// [cite: 1]
+$contact_result = mysqli_query($conn, $contact_query);
+$contact_row = mysqli_fetch_assoc($contact_result);
+$phone_number = !empty($contact_row['phone']) ? $contact_row['phone'] : '8980401525';
 ?>
 
-<section class="service-details-section">
+<section class="service-details-section py-5">
     <div class="container">
         <div class="row gx-lg-5">
 
             <!-- Main Content Area -->
             <div class="col-lg-8 mb-5 mb-lg-0 reveal">
-                <img src="https://images.pexels.com/photos/1340116/pexels-photo-1340116.jpeg?auto=compress&cs=tinysrgb&w=1200"
-                    alt="Wholesale Spice Supply" class="service-main-img">
+                <?php if(!empty($service['img_path'])): ?>
+                <img src="admin/assets/img/uploads/<?php echo htmlspecialchars($service['img_path']); ?>" alt="<?php echo htmlspecialchars($service['service_name']); ?>" class="service-main-img img-fluid rounded-4 mb-4 shadow-sm" style="width: 100%; height: 420px; object-fit: cover;">[cite: 1]
+                <?php endif; ?>
 
-                <h2 class="service-title">Bulk & Wholesale Spice Supply</h2>
-                <p class="service-desc">
-                    At Winnors, we understand that consistency, purity, and timely delivery are the backbone of any food
-                    business. Our Bulk & Wholesale Supply service is exclusively designed for restaurants, caterers,
-                    hotels, and food manufacturers who refuse to compromise on the quality of their ingredients.
-                </p>
-                <p class="service-desc">
-                    We source our whole spices directly from certified organic farms, ensuring that every batch you
-                    receive is rich in essential oils and true to its authentic flavor profile. Whether you need 50kg or
-                    500kg, our state-of-the-art facility in Vadodara handles sorting, cleaning, and hygienic packaging
-                    with absolute precision.
-                </p>
+                <h2 class="service-title fw-bold text-dark mb-3"><?php echo htmlspecialchars($service['service_name']); ?></h2>[cite: 1]
+                
+                <div class="service-desc text-muted mb-4" style="line-height: 1.8;">
+                    <?php echo $service['long_desc']; ?>[cite: 1]
+                </div>
 
-                <h3 class="service-subtitle">Why Partner With Us?</h3>
-                <ul class="service-features">
-                    <li><i class="fa-solid fa-circle-check"></i> <strong>Unmatched Purity:</strong> 100% natural spices
-                        with no artificial colors, fillers, or preservatives.</li>
-                    <li><i class="fa-solid fa-circle-check"></i> <strong>Consistent Quality:</strong> Stringent quality
-                        checks guarantee the same aroma and flavor in every batch.</li>
-                    <li><i class="fa-solid fa-circle-check"></i> <strong>Competitive Pricing:</strong> Direct farm
-                        sourcing allows us to offer premium B2B rates without middlemen.</li>
-                    <li><i class="fa-solid fa-circle-check"></i> <strong>Custom Packaging:</strong> Available in 5kg,
-                        10kg, 25kg, and 50kg food-grade moisture-proof bags.</li>
+                <h3 class="service-subtitle fw-bold text-dark mt-4 mb-3">Why Partner With Us?</h3>
+                <ul class="service-features list-unstyled">
+                    <li class="mb-2"><i class="fa-solid fa-circle-check text-warning me-2"></i> <strong>Unmatched Quality:</strong> 100% genuine sourcing adhering to strict export parameters.</li>
+                    <li class="mb-2"><i class="fa-solid fa-circle-check text-warning me-2"></i> <strong>Reliable Execution:</strong> Professional handling to ensure safe and timely delivery.</li>
+                    <li class="mb-2"><i class="fa-solid fa-circle-check text-warning me-2"></i> <strong>Client-Centric Approach:</strong> Tailored solutions designed to fit your exact business goals.</li>
                 </ul>
 
-                <h3 class="service-subtitle mt-5">Our Simple Process</h3>
-                <div class="row g-4 mt-1">
+                <h3 class="service-subtitle fw-bold text-dark mt-5 mb-4">Our Simple Process</h3>
+                <div class="row g-4">
                     <div class="col-md-4">
-                        <div class="process-box">
-                            <div class="process-icon"><i class="fa-solid fa-comments"></i></div>
-                            <h5>1. Consultation</h5>
-                            <p>Discuss your spice requirements and quantities with our team.</p>
+                        <div class="process-box p-4 border rounded-4 bg-light text-center h-100">
+                            <div class="process-icon text-warning fs-2 mb-3"><i class="fa-solid fa-comments"></i></div>
+                            <h5 class="fw-bold">1. Consultation</h5>
+                            <p class="text-muted small mb-0">Discuss your requirements and specifications with our team.</p>
                         </div>
                     </div>
                     <div class="col-md-4">
-                        <div class="process-box">
-                            <div class="process-icon"><i class="fa-solid fa-box-open"></i></div>
-                            <h5>2. Sampling</h5>
-                            <p>We send you free samples to verify the quality and aroma.</p>
+                        <div class="process-box p-4 border rounded-4 bg-light text-center h-100">
+                            <div class="process-icon text-warning fs-2 mb-3"><i class="fa-solid fa-box-open"></i></div>
+                            <h5 class="fw-bold">2. Verification</h5>
+                            <p class="text-muted small mb-0">Review product standards and quality benchmarks prior to dispatch.</p>
                         </div>
                     </div>
                     <div class="col-md-4">
-                        <div class="process-box">
-                            <div class="process-icon"><i class="fa-solid fa-truck-fast"></i></div>
-                            <h5>3. Delivery</h5>
-                            <p>Fast and secure Pan-India dispatch of your bulk order.</p>
+                        <div class="process-box p-4 border rounded-4 bg-light text-center h-100">
+                            <div class="process-icon text-warning fs-2 mb-3"><i class="fa-solid fa-truck-fast"></i></div>
+                            <h5 class="fw-bold">3. Fulfillment</h5>
+                            <p class="text-muted small mb-0">Fast, secure packaging and delivery of your requested service order.</p>
                         </div>
                     </div>
                 </div>
@@ -68,34 +88,45 @@ include 'includes/breadcrumb.php';
             <div class="col-lg-4 reveal" style="transition-delay: 0.2s;">
 
                 <!-- Services Menu Widget -->
-                <div class="service-sidebar">
-                    <h4 class="sidebar-title">Our Services</h4>
-                    <div class="sidebar-services">
-                        <a href="#" class="active">Bulk & Wholesale Supply <i class="fa-solid fa-angle-right"></i></a>
-                        <a href="#">Private Label Packaging <i class="fa-solid fa-angle-right"></i></a>
-                        <a href="#">Custom Spice Blending <i class="fa-solid fa-angle-right"></i></a>
-                        <a href="#">Export & Global Shipping <i class="fa-solid fa-angle-right"></i></a>
+                <div class="service-sidebar p-4 border rounded-4 bg-white mb-4 shadow-sm">
+                    <h4 class="sidebar-title fw-bold mb-3 pb-2 border-bottom">All Services</h4>
+                    <div class="sidebar-services d-flex flex-column gap-2">
+                        <?php
+                        // Fetch all services for the dynamic sidebar menu
+                        $sidebar_query = "SELECT id, service_name FROM services ORDER BY id DESC";
+                        // [cite: 1]
+                        $sidebar_result = mysqli_query($conn, $sidebar_query);
+                        
+                        if ($sidebar_result && mysqli_num_rows($sidebar_result) > 0) {
+                            while ($side = mysqli_fetch_assoc($sidebar_result)) {
+                                $is_active = ($side['id'] == $service['id']) ? 'active fw-bold text-warning' : 'text-dark';
+                        ?>
+                        <a href="service-details.php?id=<?php echo $side['id']; ?>" class="d-flex justify-content-between align-items-center text-decoration-none p-2 rounded transition-all <?php echo $is_active; ?>" style="background: #F9F9F9;">
+                            <span><?php echo htmlspecialchars($side['service_name']); ?></span>
+                            <!-- [cite: 1] -->
+                            <i class="fa-solid fa-angle-right small"></i>
+                        </a>
+                        <?php 
+                            }
+                        } 
+                        ?>
                     </div>
                 </div>
 
-                <!-- Contact & Brochure Widget -->
-                <div class="service-sidebar" style="background-color: #2C1E16; color: #FFF; border: none;">
-                    <h4 class="sidebar-title" style="color: #FFF;">Need Assistance?</h4>
-                    <p style="color: #D1C7BD; font-size: 0.95rem; margin-bottom: 20px;">Get in touch with our experts
-                        for custom quotes and free samples.</p>
+                <!-- Contact & Assistance Widget -->
+                <div class="service-sidebar p-4 rounded-4 shadow-sm" style="background-color: #2C1E16; color: #FFF;">
+                    <h4 class="sidebar-title fw-bold mb-3" style="color: #FFF;">Need Assistance?</h4>
+                    <p style="color: #D1C7BD; font-size: 0.95rem; margin-bottom: 20px;">Get in touch with our experts for custom inquiries and professional support.</p>
 
-                    <div class="d-flex align-items-center mb-3">
+                    <div class="d-flex align-items-center mb-4">
                         <i class="fa-solid fa-phone fs-4 text-warning me-3"></i>
                         <div>
-                            <span style="font-size: 0.8rem; color: #A9A096; text-transform: uppercase;">Call Us
-                                Now</span><br>
-                            <a href="tel:+918980401525"
-                                style="color: #FFF; text-decoration: none; font-weight: 700; font-size: 1.1rem;">+91
-                                89804 01525</a>
+                            <span style="font-size: 0.8rem; color: #A9A096; text-transform: uppercase;">Call Us Now</span><br>
+                            <a href="tel:+91<?php echo preg_replace('/[^0-9]/', '', $phone_number); ?>" style="color: #FFF; text-decoration: none; font-weight: 700; font-size: 1.1rem;">+91 <?php echo htmlspecialchars($phone_number); ?></a>
                         </div>
                     </div>
 
-                    <a href="#" class="brochure-btn"><i class="fa-solid fa-file-pdf me-2"></i> Download Brochure</a>
+                    <a href="contact.php" class="btn btn-warning w-100 fw-bold py-2 text-dark"><i class="fa-solid fa-paper-plane me-2"></i> Get a Custom Quote</a>
                 </div>
 
             </div>
