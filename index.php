@@ -121,9 +121,6 @@ include 'admin/db-conn.php';
 <!-- About Section End -->
 
 <?php
-// Assuming your database connection is stored in $conn
-// include 'db_connection.php'; 
-
 // Fetch 3 services from the services table
 $query = "SELECT * FROM services ORDER BY id DESC LIMIT 3";
 $result = mysqli_query($conn, $query);
@@ -239,9 +236,126 @@ $result = mysqli_query($conn, $query);
 <!-- WHY CHOOSE US SECTION END -->
 
 <?php
-$query = "SELECT * FROM products WHERE status = 1 ORDER BY id DESC LIMIT 4";
-$result = mysqli_query($conn, $query);
+$product_query = "SELECT * FROM products WHERE status = 1 ORDER BY id DESC LIMIT 4";
+$product_result = mysqli_query($conn, $product_query);
+
+$contact_query = "SELECT wp_number FROM contacts LIMIT 1";
+$contact_result = mysqli_query($conn, $contact_query);
+$contact_row = mysqli_fetch_assoc($contact_result);
+
+$wa_number = !empty($contact_row['wp_number']) ? preg_replace('/[^0-9]/', '', $contact_row['wp_number']) : '';
+if (!empty($wa_number) && strlen($wa_number) == 10) {
+    $wa_number = "91" . $wa_number;
+}
 ?>
+
+<!-- Add Custom CSS for Premium Product Card Design -->
+<style>
+    .related-products-section {
+        padding: 80px 0;
+        background-color: #FAFAFA;
+    }
+
+    .premium-product-card {
+        background: #ffffff;
+        border-radius: 12px;
+        border: 1px solid #EAE3D9;
+        overflow: hidden;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+        transition: all 0.4s ease;
+    }
+
+    .premium-product-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 15px 30px rgba(230, 126, 34, 0.12);
+        border-color: #E67E22;
+    }
+
+    .card-img-box {
+        width: 100%;
+        height: 240px;
+        overflow: hidden;
+        position: relative;
+    }
+
+    .card-img-box img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.6s ease;
+    }
+
+    .premium-product-card:hover .card-img-box img {
+        transform: scale(1.08);
+    }
+
+    .card-content {
+        padding: 24px;
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+    }
+
+    .product-title {
+        font-size: 1.3rem;
+        font-weight: 800;
+        color: #2C1E16;
+        margin-bottom: 12px;
+        line-height: 1.4;
+    }
+
+    .view-detail-link {
+        font-size: 0.95rem;
+        color: #7A6859;
+        font-weight: 600;
+        text-decoration: none;
+        transition: color 0.3s;
+        display: inline-block;
+        margin-bottom: 20px;
+    }
+
+    .view-detail-link:hover {
+        color: #E67E22;
+    }
+
+    .action-buttons .btn-quote {
+        background-color: #2C1E16;
+        color: #ffffff;
+        padding: 10px 15px;
+        border-radius: 8px;
+        text-align: center;
+        font-weight: 600;
+        font-size: 0.9rem;
+        text-decoration: none;
+        transition: all 0.3s;
+        border: 1px solid #2C1E16;
+    }
+
+    .action-buttons .btn-quote:hover {
+        background-color: #E67E22;
+        border-color: #E67E22;
+    }
+
+    .action-buttons .btn-whatsapp {
+        background-color: #25D366;
+        color: #ffffff;
+        width: 44px;
+        height: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 8px;
+        font-size: 1.4rem;
+        text-decoration: none;
+        transition: all 0.3s;
+    }
+
+    .action-buttons .btn-whatsapp:hover {
+        background-color: #1EBE57;
+        transform: scale(1.05);
+        box-shadow: 0 5px 15px rgba(37, 211, 102, 0.3);
+    }
+</style>
 
 <section class="related-products-section">
     <div class="container">
@@ -255,24 +369,50 @@ $result = mysqli_query($conn, $query);
         <div class="row g-4">
             <?php
             // Check if products exist in the database
-            if (mysqli_num_rows($result) > 0) {
-                while ($row = mysqli_fetch_assoc($result)) {
-                    // Construct the image path. Adjust if necessary.
+            if ($product_result && mysqli_num_rows($product_result) > 0) {
+                $counter = 0;
+                while ($row = mysqli_fetch_assoc($product_result)) {
+                    // Construct the image path using your admin asset directory structure
                     $imagePath = "admin/assets/img/uploads/" . $row['pro_img'];
+                    // [cite: 1]
+                    $delay = ($counter % 4) * 0.1;
+
+                    // Pre-filled WhatsApp message
+                    $wa_msg = urlencode("Hello, I am interested in knowing more about your " . $row['pro_name'] . ". Can you please share the quote?");
+                    // [cite: 1]
             ?>
                     <!-- Dynamic Product Card -->
-                    <div class="col-lg-3 col-md-6 col-sm-6">
-                        <div class="shop-card">
-                            <div class="shop-img-wrapper">
+                    <div class="col-lg-3 col-md-6 col-sm-6 reveal" style="transition-delay: <?php echo $delay; ?>s;">
+                        <div class="premium-product-card h-100 d-flex flex-column">
+                            <div class="card-img-box">
                                 <img src="<?php echo htmlspecialchars($imagePath); ?>" alt="<?php echo htmlspecialchars($row['pro_name']); ?>">
+                                <!-- [cite: 1] -->
                             </div>
-                            <div class="shop-card-body">
-                                <h4 class="shop-title-sm"><?php echo htmlspecialchars($row['pro_name']); ?></h4>
-                                <a href="product-details.php?slug=<?php echo urlencode($row['slug_url']); ?>" class="btn-view-details">View Details</a>
+                            <div class="card-content">
+                                <h4 class="product-title"><?php echo htmlspecialchars($row['pro_name']); ?></h4>
+                                <!-- [cite: 1] -->
+
+                                <div class="mt-auto">
+                                    <a href="product-details.php?slug=<?php echo urlencode($row['slug_url']); ?>" class="view-detail-link">View Details <i class="fa-solid fa-arrow-right-long ms-1"></i></a>
+                                    <!-- [cite: 1] -->
+
+                                    <div class="action-buttons d-flex align-items-center gap-2">
+                                        <a href="contact.php?product=<?php echo urlencode($row['pro_name']); ?>" class="btn-quote flex-grow-1">Request Quote</a>
+                                        <!-- [cite: 1] -->
+
+                                        <?php if ($wa_number): ?>
+                                            <a href="https://wa.me/<?php echo $wa_number; ?>?text=<?php echo $wa_msg; ?>" target="_blank" class="btn-whatsapp" title="Chat on WhatsApp">
+                                                <i class="fa-brands fa-whatsapp"></i>
+                                            </a>
+                                        <?php endif; ?>
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
                     </div>
             <?php
+                    $counter++;
                 }
             } else {
                 echo "<div class='col-12'><p class='text-center'>New products arriving soon!</p></div>";
@@ -282,6 +422,24 @@ $result = mysqli_query($conn, $query);
 
     </div>
 </section>
+
+<!-- Scroll Animation Script -->
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const reveals = document.querySelectorAll('.reveal');
+        const appearOnScroll = new IntersectionObserver(function(entries, observer) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.15
+        });
+        reveals.forEach(reveal => appearOnScroll.observe(reveal));
+    });
+</script>
 
 <?php
 // Database connection check karo agar alag se file hai

@@ -1,5 +1,5 @@
 <?php
-include ('admin/db-conn.php');
+include('admin/db-conn.php');
 $current_page = basename($_SERVER['PHP_SELF']);
 ?>
 <!DOCTYPE html>
@@ -13,7 +13,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="assets/style/style.css">
+    <link rel="stylesheet" href="assets/style/style.css?v=<?php echo time() ?>">
     <link rel="stylesheet" href="assets/style/include.css">
     <link rel="stylesheet" href="assets/style/about.css">
     <link rel="stylesheet" href="assets/style/product.css">
@@ -25,49 +25,49 @@ $current_page = basename($_SERVER['PHP_SELF']);
 
 <body>
 
-   <?php
+    <?php
 
-$top_footer_query = "SELECT * FROM contacts ORDER BY id DESC LIMIT 1";
-// [cite: 1]
-$top_footer_result = mysqli_query($conn, $top_footer_query);
-$site_info = mysqli_fetch_assoc($top_footer_result);
+    $top_footer_query = "SELECT * FROM contacts ORDER BY id DESC LIMIT 1";
+    // [cite: 1]
+    $top_footer_result = mysqli_query($conn, $top_footer_query);
+    $site_info = mysqli_fetch_assoc($top_footer_result);
 
-// Fallback default variables if database table is empty
-$address = !empty($site_info['address']) ? $site_info['address'] : '56 Usha Nagar, Nr Iskon Temple, Gotri Road, Vadodara 390021';
-// [cite: 1]
-$phone = !empty($site_info['phone']) ? $site_info['phone'] : '8980401525';
-// [cite: 1]
-$email = !empty($site_info['email']) ? $site_info['email'] : 'ghatge.ghatge@gmail.com';
-// [cite: 1]
-$facebook = !empty($site_info['facebook']) ? $site_info['facebook'] : '#';
-// [cite: 1]
-$instagram = !empty($site_info['instagram']) ? $site_info['instagram'] : '#';
-// [cite: 1]
-$twitter = !empty($site_info['twitter']) ? $site_info['twitter'] : '#';
-// [cite: 1]
-$linkedin = !empty($site_info['linkdin']) ? $site_info['linkdin'] : '#';
-// [cite: 1]
-?>
+    // Fallback default variables if database table is empty
+    $address = !empty($site_info['address']) ? $site_info['address'] : '56 Usha Nagar, Nr Iskon Temple, Gotri Road, Vadodara 390021';
+    // [cite: 1]
+    $phone = !empty($site_info['phone']) ? $site_info['phone'] : '8980401525';
+    // [cite: 1]
+    $email = !empty($site_info['email']) ? $site_info['email'] : 'ghatge.ghatge@gmail.com';
+    // [cite: 1]
+    $facebook = !empty($site_info['facebook']) ? $site_info['facebook'] : '#';
+    // [cite: 1]
+    $instagram = !empty($site_info['instagram']) ? $site_info['instagram'] : '#';
+    // [cite: 1]
+    $twitter = !empty($site_info['twitter']) ? $site_info['twitter'] : '#';
+    // [cite: 1]
+    $linkedin = !empty($site_info['linkdin']) ? $site_info['linkdin'] : '#';
+    // [cite: 1]
+    ?>
 
-<!-- ================= Dynamic Topbar ================= -->
-<div class="topbar d-none d-lg-block">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-8 text-start">
-                <span class="me-4"><i class="fa-solid fa-location-dot me-2 text-warning"></i> <?php echo htmlspecialchars($address); ?></span>
-                <!-- [cite: 1] -->
-                <span><i class="fa-solid fa-envelope me-2 text-warning"></i> <a href="mailto:<?php echo htmlspecialchars($email); ?>"><?php echo htmlspecialchars($email); ?></a></span>
-                <!-- [cite: 1] -->
-            </div>
-            <div class="col-md-4 text-end">
-                <span><i class="fa-solid fa-phone me-2 text-warning"></i> <a href="tel:+91<?php echo preg_replace('/[^0-9]/', '', $phone); ?>">+91 <?php echo htmlspecialchars($phone); ?></a></span>
-                <!-- [cite: 1] -->
+    <!-- ================= Dynamic Topbar ================= -->
+    <div class="topbar d-none d-lg-block">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 text-start">
+                    <span class="me-4"><i class="fa-solid fa-location-dot me-2 text-warning"></i> <?php echo htmlspecialchars($address); ?></span>
+                    <!-- [cite: 1] -->
+                    <span><i class="fa-solid fa-envelope me-2 text-warning"></i> <a href="mailto:<?php echo htmlspecialchars($email); ?>"><?php echo htmlspecialchars($email); ?></a></span>
+                    <!-- [cite: 1] -->
+                </div>
+                <div class="col-md-4 text-end">
+                    <span><i class="fa-solid fa-phone me-2 text-warning"></i> <a href="tel:+91<?php echo preg_replace('/[^0-9]/', '', $phone); ?>">+91 <?php echo htmlspecialchars($phone); ?></a></span>
+                    <!-- [cite: 1] -->
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<!-- ================= Dynamic Footer ================= -->
+    <!-- ================= Dynamic Footer ================= -->
 
     <!-- Topbar End -->
 
