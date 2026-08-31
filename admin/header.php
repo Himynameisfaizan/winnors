@@ -72,13 +72,13 @@ if (!isset($_SESSION['admin_logged_in'])) {
             </ul>
         </li>
 
-        <!-- <li>
+        <li>
             <a class="has-arrow" href="#"><i class="fas fa-award" style="color: #1abc9c;"></i> <span>Country Export</span></a>
             <ul>
                 <li><a href="add-country.php">Add Country</a></li>
                 <li><a href="view-country.php">View Country</a></li>
             </ul>
-        </li> -->
+        </li>
 
         <!-- <li>
             <a class="has-arrow" href="#"><i class="fas fa-info-circle" style="color: #d35400;"></i> <span>About Us

@@ -846,3 +846,84 @@
 .cta-form .btn-subscribe:hover {
     background-color: #C36A1D;
 }
+
+
+/* ==========================
+    COUNTRY FLAG SECTION STYLING
+=============================*/
+
+.export-markets-section {
+    padding: 90px 0;
+    background-color: #FAFAFA;
+    position: relative;
+    overflow: hidden;
+}
+
+.market-card {
+    background: #FFFFFF;
+    border: 1px solid #EAE3D9;
+    border-radius: 16px;
+    padding: 30px 20px;
+    text-align: center;
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    height: 100%;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
+    cursor: pointer;
+    position: relative;
+}
+
+/* Highlight style matching the reference image for an active/featured card */
+.market-card.featured,
+.market-card:hover {
+    border-color: #E67E22;
+    transform: translateY(-8px);
+    box-shadow: 0 15px 35px rgba(230, 126, 34, 0.12);
+}
+
+.flag-wrapper {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 20px;
+    border-radius: 50%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+    border: 3px solid #FFF;
+    transition: transform 0.4s ease;
+}
+
+.market-card:hover .flag-wrapper {
+    transform: scale(1.08);
+}
+
+.flag-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.country-name {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #2C1E16;
+    margin-bottom: 0;
+    letter-spacing: 0.3px;
+}
+
+.market-card:hover .country-name {
+    color: #E67E22;
+}
+
+.export-footer-text {
+    font-size: 1rem;
+    color: #7A6859;
+    margin-top: 50px;
+    font-weight: 500;
+}
+
+.export-footer-text span {
+    color: #2C1E16;
+    font-weight: 700;
+}

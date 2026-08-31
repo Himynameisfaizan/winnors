@@ -283,6 +283,86 @@ $result = mysqli_query($conn, $query);
     </div>
 </section>
 
+<?php
+// Database connection check karo agar alag se file hai
+// include 'db_connection.php';
+
+// Fetch countries from the 'country' table
+$country_query = "SELECT * FROM country ORDER BY id ASC";
+// [cite: 1]
+$country_result = mysqli_query($conn, $country_query);
+?>
+
+<!-- ================= Global Export Markets Section Start ================= -->
+
+<section class="export-markets-section">
+    <div class="container">
+
+        <!-- Section Header -->
+        <div class="section-header text-center mb-5 reveal">
+            <h2 class="section-title fw-bold" style="color: #2C1E16; letter-spacing: 0.5px;">OUR GLOBAL EXPORT MARKETS</h2>
+            <div style="width: 60px; height: 3px; background-color: #E67E22; margin: 12px auto 0; border-radius: 2px;"></div>
+        </div>
+
+        <!-- Markets Grid -->
+        <div class="row g-4 justify-content-center">
+            <?php
+            if ($country_result && mysqli_num_rows($country_result) > 0) {
+                $counter = 0;
+                while ($country = mysqli_fetch_assoc($country_result)) {
+                    $flagPath = "admin/assets/img/uploads/" . $country['country_flag'];
+                    $delay = ($counter % 4) * 0.1;
+
+                    $is_featured = ($counter == 2) ? 'featured' : '';
+            ?>
+                    <div class="col-lg-3 col-md-4 col-sm-6 reveal" style="transition-delay: <?php echo $delay; ?>s;">
+                        <div class="market-card <?php echo $is_featured; ?>" title="<?php echo htmlspecialchars($country['country_desc']); ?>">
+                            <div class="flag-wrapper">
+                                <img src="<?php echo htmlspecialchars($flagPath); ?>" alt="<?php echo htmlspecialchars($country['country_name']); ?> Flag">
+                            </div>
+                            <h4 class="country-name"><?php echo htmlspecialchars($country['country_name']); ?></h4>
+                        </div>
+                    </div>
+            <?php
+                    $counter++;
+                }
+            } else {
+                echo "<div class='col-12 text-center'><p class='text-muted'>Export markets data will be updated soon.</p></div>";
+            }
+            ?>
+        </div>
+
+        <!-- Footer Footprint Text -->
+        <div class="row mt-4">
+            <div class="col-12 text-center reveal" style="transition-delay: 0.4s;">
+                <p class="export-footer-text mb-0">
+                    And <span>many more countries</span> across the globe. We are constantly expanding our footprint!
+                </p>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- Scroll Animation Script -->
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const reveals = document.querySelectorAll('.reveal');
+        const appearOnScroll = new IntersectionObserver(function(entries, observer) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.15
+        });
+        reveals.forEach(reveal => appearOnScroll.observe(reveal));
+    });
+</script>
+<!-- ================= Global Export Markets Section End ================= -->
+
 <!-- =========================================
      TESTIMONIALS SECTION START
 ========================================= -->
@@ -313,33 +393,33 @@ $testimonial_result = mysqli_query($conn, $testimonial_query);
                     // [cite: 1]
                     $firstLetter = strtoupper(substr($clientName, 0, 1));
             ?>
-            <!-- Dynamic Review Card -->
-            <div class="col-lg-4 col-md-6">
-                <div class="testimonial-card h-100 d-flex flex-column">
-                    <i class="fa-solid fa-quote-right quote-icon"></i>
-                    <div class="rating mb-3">
-                        <?php for ($i = 1; $i <= 5; $i++): ?>
-                            <?php if ($i <= $rating): ?>
-                                <i class="fa-solid fa-star text-warning"></i>
-                            <?php else: ?>
-                                <i class="fa-regular fa-star text-warning"></i>
-                            <?php endif; ?>
-                        <?php endfor; ?>
-                    </div>
-                    <p class="client-review flex-grow-1"><?php echo $reviewText; ?></p>
-                    <!-- [cite: 1] -->
-                    <div class="client-info mt-4 d-flex align-items-center">
-                        <div class="client-avatar rounded-circle bg-warning text-dark fw-bold d-flex align-items-center justify-content-center me-3" style="width: 45px; height: 45px; font-size: 1.2rem;">
-                            <?php echo $firstLetter; ?>
+                    <!-- Dynamic Review Card -->
+                    <div class="col-lg-4 col-md-6">
+                        <div class="testimonial-card h-100 d-flex flex-column">
+                            <i class="fa-solid fa-quote-right quote-icon"></i>
+                            <div class="rating mb-3">
+                                <?php for ($i = 1; $i <= 5; $i++): ?>
+                                    <?php if ($i <= $rating): ?>
+                                        <i class="fa-solid fa-star text-warning"></i>
+                                    <?php else: ?>
+                                        <i class="fa-regular fa-star text-warning"></i>
+                                    <?php endif; ?>
+                                <?php endfor; ?>
+                            </div>
+                            <p class="client-review flex-grow-1"><?php echo $reviewText; ?></p>
+                            <!-- [cite: 1] -->
+                            <div class="client-info mt-4 d-flex align-items-center">
+                                <div class="client-avatar rounded-circle bg-warning text-dark fw-bold d-flex align-items-center justify-content-center me-3" style="width: 45px; height: 45px; font-size: 1.2rem;">
+                                    <?php echo $firstLetter; ?>
+                                </div>
+                                <div class="client-details">
+                                    <h5 class="mb-0 fw-bold text-dark"><?php echo $clientName; ?></h5>
+                                    <span class="text-muted small"><?php echo $clientRole; ?></span>
+                                </div>
+                            </div>
                         </div>
-                        <div class="client-details">
-                            <h5 class="mb-0 fw-bold text-dark"><?php echo $clientName; ?></h5>
-                            <span class="text-muted small"><?php echo $clientRole; ?></span>
-                        </div>
                     </div>
-                </div>
-            </div>
-            <?php 
+            <?php
                 }
             } else {
                 echo "<div class='col-12 text-center'><p class='text-muted'>No testimonials available right now.</p></div>";
@@ -401,7 +481,7 @@ $blog_result = mysqli_query($conn, $blog_query);
                         </div>
                     </div>
             <?php
-                } 
+                }
             } else {
                 echo "<div class='col-12'><p class='text-center'>New articles coming soon!</p></div>";
             }
