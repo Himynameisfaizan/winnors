@@ -1,25 +1,18 @@
   <?php
    include ('admin/db-conn.php');
 $top_footer_query = "SELECT * FROM contacts ORDER BY id DESC LIMIT 1";
-// [cite: 1]
 $top_footer_result = mysqli_query($conn, $top_footer_query);
 $site_info = mysqli_fetch_assoc($top_footer_result);
 
-// Fallback default variables if database table is empty
 $address = !empty($site_info['address']) ? $site_info['address'] : '56 Usha Nagar, Nr Iskon Temple, Gotri Road, Vadodara 390021';
-// [cite: 1]
+
 $phone = !empty($site_info['phone']) ? $site_info['phone'] : '8980401525';
-// [cite: 1]
 $email = !empty($site_info['email']) ? $site_info['email'] : 'ghatge.ghatge@gmail.com';
-// [cite: 1]
 $facebook = !empty($site_info['facebook']) ? $site_info['facebook'] : '#';
-// [cite: 1]
 $instagram = !empty($site_info['instagram']) ? $site_info['instagram'] : '#';
-// [cite: 1]
 $twitter = !empty($site_info['twitter']) ? $site_info['twitter'] : '#';
-// [cite: 1]
 $linkedin = !empty($site_info['linkdin']) ? $site_info['linkdin'] : '#';
-// [cite: 1]
+
 ?>
 
 <footer class="winnors-footer">
@@ -57,6 +50,8 @@ $linkedin = !empty($site_info['linkdin']) ? $site_info['linkdin'] : '#';
                     <a href="about.php" class="footer-link"><i class="fa-solid fa-chevron-right"></i> About Us</a>
                     <a href="products.php" class="footer-link"><i class="fa-solid fa-chevron-right"></i> Our Spices</a>
                     <a href="blogs.php" class="footer-link"><i class="fa-solid fa-chevron-right"></i> Latest News & Blogs</a>
+                    <a href="privacy-policy.php" class="footer-link"><i class="fa-solid fa-chevron-right"></i> Privacy Policy</a>
+                    <a href="refund-policy.php" class="footer-link"><i class="fa-solid fa-chevron-right"></i> Refund Policy</a>
                     <a href="contact.php" class="footer-link"><i class="fa-solid fa-chevron-right"></i> Contact Us</a>
                 </div>
             </div>
