@@ -221,10 +221,10 @@ include 'includes/header.php';
                 <?= htmlspecialchars($breadcrumb_name) ?></h2>
             <ul class="breadcrumb-menu"
                 style="list-style: none; padding: 0; margin: 0; display: flex; justify-content: center; align-items: center; gap: 10px; color: #6c757d; font-size: 15px;">
-                <li><a href="index.php"
-                        style="color: var(--winnors-orange); text-decoration: none; font-weight: 600;">Home</a> <i
-                        class="fa-solid fa-chevron-right" style="font-size: 11px; margin-left: 5px;"></i></li>
-                <li><a href="locations.php"
+                <li><a href="./" style="color: var(--winnors-orange); text-decoration: none; font-weight: 600;">Home</a>
+                    <i class="fa-solid fa-chevron-right" style="font-size: 11px; margin-left: 5px;"></i>
+                </li>
+                <li><a href="locations"
                         style="color: var(--winnors-orange); text-decoration: none; font-weight: 600;">Pages</a> <i
                         class="fa-solid fa-chevron-right" style="font-size: 11px; margin-left: 5px;"></i></li>
                 <li class="active"><?= htmlspecialchars($breadcrumb_name) ?></li>
@@ -281,7 +281,7 @@ include 'includes/header.php';
                                 $otherPagesQuery = mysqli_query($conn, "SELECT page_title, slug_url FROM custom_pages WHERE status = 1 AND slug_url != '$slug' ORDER BY id DESC LIMIT 5");
                                 if ($otherPagesQuery && mysqli_num_rows($otherPagesQuery) > 0) {
                                     while ($op = mysqli_fetch_assoc($otherPagesQuery)) {
-                                        echo '<li><a href="page.php?slug='.rawurlencode($op['slug_url']).'">'.htmlspecialchars($op['page_title']).' <i class="fa fa-angle-right"></i></a></li>';
+                                        echo '<li><a href="page/'.rawurlencode($op['slug_url']).'">'.htmlspecialchars($op['page_title']).' <i class="fa fa-angle-right"></i></a></li>';
                                     }
                                 } else {
                                     echo '<li class="text-muted">No other pages found.</li>';
@@ -313,7 +313,7 @@ include 'includes/header.php';
                                 Supply?</h4>
                             <p class="small text-light mb-4" style="color: #e3d5ca !important;">Partner with Winnors for
                                 premium quality whole spices and agricultural commodities globally.</p>
-                            <a href="contact.php" class="btn-custom-solid w-100">Get a Quote</a>
+                            <a href="contact" class="btn-custom-solid w-100">Get a Quote</a>
                         </div>
                     </aside>
                 </div>

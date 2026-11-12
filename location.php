@@ -177,8 +177,7 @@ include 'includes/header.php';
                 Our Custom Pages & Hubs</h2>
             <ul class="breadcrumb-menu"
                 style="list-style: none; padding: 0; margin: 0; display: flex; justify-content: center; align-items: center; gap: 10px; color: #6c757d; font-size: 15px;">
-                <li><a href="index.php"
-                        style="color: var(--winnors-orange); text-decoration: none; font-weight: 600;">Home</a>
+                <li><a href="./" style="color: var(--winnors-orange); text-decoration: none; font-weight: 600;">Home</a>
                     <i class="fa-solid fa-chevron-right" style="font-size: 11px; margin-left: 5px;"></i>
                 </li>
                 <li class="active">Pages</li>
@@ -227,7 +226,7 @@ include 'includes/header.php';
 
                     $slug = trim($customPage['slug_url']);
                     // Fixed URL creation - ensuring it directs to page.php
-                    $pageUrl = 'page.php?slug=' . rawurlencode($slug);
+                    $pageUrl = 'page/' . rawurlencode($slug);
                     $iconClass = $icons[$index % count($icons)];
                     $index++;
                 ?>
