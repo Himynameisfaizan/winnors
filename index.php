@@ -632,7 +632,7 @@ $blog_result = mysqli_query($conn, $blog_query);
                     $imagePath = "admin/assets/img/uploads/" . $row['image'];
 
                     // 3. Create a short excerpt from the main content
-                    $excerpt = strip_tags($row['content']);
+                    $excerpt = strip_tags($row['description']);
                     if (strlen($excerpt) > 90) {
                         $excerpt = substr($excerpt, 0, 90) . '...';
                     }
@@ -642,16 +642,21 @@ $blog_result = mysqli_query($conn, $blog_query);
                 <div class="blog-card">
                     <div class="blog-img">
                         <span class="blog-date"><?php echo $blogDate; ?></span>
-                        <img src="<?php echo htmlspecialchars($imagePath); ?>"
-                            alt="<?php echo htmlspecialchars($row['title']); ?>">
+                        <a href="blog-details.php?slug=<?php echo urlencode($row['slug']); ?>"> <img
+                                src="<?php echo htmlspecialchars($imagePath); ?>"
+                                alt="<?php echo htmlspecialchars($row['title']); ?>">
+                        </a>
                     </div>
                     <div class="blog-content">
-                        <h4 class="blog-title"><?php echo htmlspecialchars($row['title']); ?></h4>
+                        <a href="blog-details.php?slug=<?php echo urlencode($row['slug']); ?>"
+                            style="text-decoration:none;">
+                            <h4 class="blog-title"><?php echo htmlspecialchars($row['title']); ?></h4>
+                        </a>
                         <p class="blog-desc"><?php echo htmlspecialchars($excerpt); ?></p>
 
                         <!-- Using slug_url for SEO friendly routing -->
-                        <a href="blog-details.php?slug=<?php echo urlencode($row['slug_url']); ?>"
-                            class="blog-link">Read Article <i class="fa-solid fa-arrow-right"></i></a>
+                        <a href="blog-details.php?slug=<?php echo urlencode($row['slug']); ?>" class="blog-link">Read
+                            Article <i class="fa-solid fa-arrow-right"></i></a>
                     </div>
                 </div>
             </div>

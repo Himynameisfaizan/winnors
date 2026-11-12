@@ -16,7 +16,7 @@ if (!empty($search)) {
 }
 
 // 1. Total Count for Pagination
-$total_query = "SELECT COUNT(id) AS total FROM blogs $where_clause";
+$total_query = "SELECT COUNT(blog_id) AS total FROM blogs $where_clause";
 // [cite: 1]
 $total_result = mysqli_query($conn, $total_query);
 $total_row = mysqli_fetch_assoc($total_result);
@@ -48,30 +48,39 @@ include 'includes/breadcrumb.php';
                             // [cite: 1]
                             $imagePath = "admin/assets/img/uploads/" . $blog['image'];
                             // [cite: 1]
-                            $excerpt = strip_tags($blog['content']);
+                            $excerpt = strip_tags($blog['description']);
                             if (strlen($excerpt) > 100) {
                                 $excerpt = substr($excerpt, 0, 100) . '...';
                             }
                             $delay = ($counter % 2) * 0.1;
                     ?>
                     <div class="col-md-6 reveal" style="transition-delay: <?php echo $delay; ?>s;">
-                        <div class="blog-card h-100 d-flex flex-column border rounded-4 overflow-hidden shadow-sm bg-white">
+                        <div
+                            class="blog-card h-100 d-flex flex-column border rounded-4 overflow-hidden shadow-sm bg-white">
                             <div class="blog-img position-relative" style="height: 220px; overflow: hidden;">
-                                <span class="blog-category badge bg-warning text-dark position-absolute top-0 start-0 m-3 px-3 py-2 fw-bold">Journal</span>
-                                <img src="<?php echo htmlspecialchars($imagePath); ?>" alt="<?php echo htmlspecialchars($blog['title']); ?>" class="w-100 h-100 object-fit-cover">
+                                <span
+                                    class="blog-category badge bg-warning text-dark position-absolute top-0 start-0 m-3 px-3 py-2 fw-bold">Journal</span>
+                                <img src="<?php echo htmlspecialchars($imagePath); ?>"
+                                    alt="<?php echo htmlspecialchars($blog['title']); ?>"
+                                    class="w-100 h-100 object-fit-cover">
                                 <!-- [cite: 1] -->
                             </div>
                             <div class="blog-content p-4 d-flex flex-column flex-grow-1">
                                 <div class="blog-meta text-muted small mb-2">
-                                    <span class="me-3"><i class="fa-regular fa-calendar me-1"></i> <?php echo $blogDate; ?></span>
-                                    <span><i class="fa-regular fa-user me-1"></i> <?php echo !empty($blog['author']) ? htmlspecialchars($blog['author']) : 'Admin'; ?></span>
+                                    <span class="me-3"><i class="fa-regular fa-calendar me-1"></i>
+                                        <?php echo $blogDate; ?></span>
+                                    <span><i class="fa-regular fa-user me-1"></i>
+                                        <?php echo !empty($blog['author']) ? htmlspecialchars($blog['author']) : 'Admin'; ?></span>
                                     <!-- [cite: 1] -->
                                 </div>
-                                <a href="blog-details.php?slug=<?php echo urlencode($blog['slug_url']); ?>" class="blog-title fs-5 fw-bold text-dark text-decoration-none mb-2"><?php echo htmlspecialchars($blog['title']); ?></a>
+                                <a href="blog-details.php?slug=<?php echo urlencode($blog['slug']); ?>"
+                                    class="blog-title fs-5 fw-bold text-dark text-decoration-none mb-2"><?php echo htmlspecialchars($blog['title']); ?></a>
                                 <!-- [cite: 1] -->
                                 <p class="blog-desc text-muted small mb-4"><?php echo htmlspecialchars($excerpt); ?></p>
                                 <div class="mt-auto">
-                                    <a href="blog-details.php?slug=<?php echo urlencode($blog['slug_url']); ?>" class="blog-link text-decoration-none fw-bold text-warning">Read Article <i class="fa-solid fa-arrow-right ms-1"></i></a>
+                                    <a href="blog-details.php?slug=<?php echo urlencode($blog['slug']); ?>"
+                                        class="blog-link text-decoration-none fw-bold text-warning">Read Article <i
+                                            class="fa-solid fa-arrow-right ms-1"></i></a>
                                     <!-- [cite: 1] -->
                                 </div>
                             </div>
@@ -91,19 +100,22 @@ include 'includes/breadcrumb.php';
                 <nav aria-label="Blog pagination" class="mt-5 reveal">
                     <ul class="pagination justify-content-center custom-pagination">
                         <li class="page-item <?php echo ($page <= 1) ? 'disabled' : ''; ?>">
-                            <a class="page-link" href="?page=<?php echo $page - 1; ?><?php echo !empty($search) ? '&search='.urlencode($search) : ''; ?>">
+                            <a class="page-link"
+                                href="?page=<?php echo $page - 1; ?><?php echo !empty($search) ? '&search='.urlencode($search) : ''; ?>">
                                 <i class="fa-solid fa-angle-left"></i>
                             </a>
                         </li>
-                        
+
                         <?php for ($i = 1; $i <= $total_pages; $i++): ?>
-                            <li class="page-item <?php echo ($page == $i) ? 'active' : ''; ?>">
-                                <a class="page-link" href="?page=<?php echo $i; ?><?php echo !empty($search) ? '&search='.urlencode($search) : ''; ?>"><?php echo $i; ?></a>
-                            </li>
+                        <li class="page-item <?php echo ($page == $i) ? 'active' : ''; ?>">
+                            <a class="page-link"
+                                href="?page=<?php echo $i; ?><?php echo !empty($search) ? '&search='.urlencode($search) : ''; ?>"><?php echo $i; ?></a>
+                        </li>
                         <?php endfor; ?>
 
                         <li class="page-item <?php echo ($page >= $total_pages) ? 'disabled' : ''; ?>">
-                            <a class="page-link" href="?page=<?php echo $page + 1; ?><?php echo !empty($search) ? '&search='.urlencode($search) : ''; ?>">
+                            <a class="page-link"
+                                href="?page=<?php echo $page + 1; ?><?php echo !empty($search) ? '&search='.urlencode($search) : ''; ?>">
                                 <i class="fa-solid fa-angle-right"></i>
                             </a>
                         </li>
@@ -120,8 +132,10 @@ include 'includes/breadcrumb.php';
                     <div class="sidebar-widget p-4 border rounded-4 bg-white mb-4 shadow-sm">
                         <h4 class="widget-title fw-bold mb-3 pb-2 border-bottom">Search</h4>
                         <form action="blogs.php" method="GET" class="search-form position-relative">
-                            <input type="text" name="search" value="<?php echo htmlspecialchars($search); ?>" class="form-control pe-5 py-2" placeholder="Search articles...">
-                            <button type="submit" class="btn position-absolute top-50 end-0 translate-middle-y border-0 text-muted bg-transparent pe-3">
+                            <input type="text" name="search" value="<?php echo htmlspecialchars($search); ?>"
+                                class="form-control pe-5 py-2" placeholder="Search articles...">
+                            <button type="submit"
+                                class="btn position-absolute top-50 end-0 translate-middle-y border-0 text-muted bg-transparent pe-3">
                                 <i class="fa-solid fa-magnifying-glass"></i>
                             </button>
                         </form>
@@ -131,10 +145,18 @@ include 'includes/breadcrumb.php';
                     <div class="sidebar-widget p-4 border rounded-4 bg-white mb-4 shadow-sm">
                         <h4 class="widget-title fw-bold mb-3 pb-2 border-bottom">Categories</h4>
                         <ul class="category-list list-unstyled mb-0 d-flex flex-column gap-2">
-                            <li><a href="#" class="text-decoration-none text-dark d-flex justify-content-between p-2 rounded bg-light"><span>Health & Wellness</span> <span class="text-muted">(12)</span></a></li>
-                            <li><a href="#" class="text-decoration-none text-dark d-flex justify-content-between p-2 rounded bg-light"><span>Cooking Tips</span> <span class="text-muted">(8)</span></a></li>
-                            <li><a href="#" class="text-decoration-none text-dark d-flex justify-content-between p-2 rounded bg-light"><span>Spice Origins</span> <span class="text-muted">(15)</span></a></li>
-                            <li><a href="#" class="text-decoration-none text-dark d-flex justify-content-between p-2 rounded bg-light"><span>Authentic Recipes</span> <span class="text-muted">(20)</span></a></li>
+                            <li><a href="#"
+                                    class="text-decoration-none text-dark d-flex justify-content-between p-2 rounded bg-light"><span>Health
+                                        & Wellness</span> <span class="text-muted">(12)</span></a></li>
+                            <li><a href="#"
+                                    class="text-decoration-none text-dark d-flex justify-content-between p-2 rounded bg-light"><span>Cooking
+                                        Tips</span> <span class="text-muted">(8)</span></a></li>
+                            <li><a href="#"
+                                    class="text-decoration-none text-dark d-flex justify-content-between p-2 rounded bg-light"><span>Spice
+                                        Origins</span> <span class="text-muted">(15)</span></a></li>
+                            <li><a href="#"
+                                    class="text-decoration-none text-dark d-flex justify-content-between p-2 rounded bg-light"><span>Authentic
+                                        Recipes</span> <span class="text-muted">(20)</span></a></li>
                         </ul>
                     </div>
 
@@ -153,12 +175,18 @@ include 'includes/breadcrumb.php';
                                 // [cite: 1]
                         ?>
                         <div class="recent-post-item d-flex align-items-center mb-3 pb-3 border-bottom">
-                            <img src="<?php echo htmlspecialchars($recImg); ?>" alt="Recent" class="recent-post-img rounded me-3" style="width: 70px; height: 70px; object-fit: cover;">
+                            <img src="<?php echo htmlspecialchars($recImg); ?>" alt="Recent"
+                                class="recent-post-img rounded me-3"
+                                style="width: 70px; height: 70px; object-fit: cover;">
                             <!-- [cite: 1] -->
                             <div class="recent-post-info">
-                                <h6 class="mb-1"><a href="blog-details.php?slug=<?php echo urlencode($rec['slug_url']); ?>" class="text-decoration-none text-dark fw-bold small"><?php echo htmlspecialchars($rec['title']); ?></a></h6>
+                                <h6 class="mb-1"><a
+                                        href="blog-details.php?slug=<?php echo urlencode($rec['slug_url']); ?>"
+                                        class="text-decoration-none text-dark fw-bold small"><?php echo htmlspecialchars($rec['title']); ?></a>
+                                </h6>
                                 <!-- [cite: 1] -->
-                                <span class="recent-post-date text-muted" style="font-size: 0.75rem;"><i class="fa-regular fa-calendar me-1"></i> <?php echo $recDate; ?></span>
+                                <span class="recent-post-date text-muted" style="font-size: 0.75rem;"><i
+                                        class="fa-regular fa-calendar me-1"></i> <?php echo $recDate; ?></span>
                                 <!-- [cite: 1] -->
                             </div>
                         </div>
@@ -177,18 +205,20 @@ include 'includes/breadcrumb.php';
 
 <!-- Scroll Animation Script -->
 <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const reveals = document.querySelectorAll('.reveal');
-        const appearOnScroll = new IntersectionObserver(function (entries, observer) {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('active');
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.15 });
-        reveals.forEach(reveal => appearOnScroll.observe(reveal));
+document.addEventListener("DOMContentLoaded", function() {
+    const reveals = document.querySelectorAll('.reveal');
+    const appearOnScroll = new IntersectionObserver(function(entries, observer) {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('active');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, {
+        threshold: 0.15
     });
+    reveals.forEach(reveal => appearOnScroll.observe(reveal));
+});
 </script>
 
 <?php include 'includes/footer.php'; ?>

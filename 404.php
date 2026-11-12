@@ -3,8 +3,8 @@
 http_response_code(404);
 include 'admin/db-conn.php';
 
-if (file_exists('include/header.php')) {
-    include 'include/header.php';
+if (file_exists('includes/header.php')) {
+    include 'includes/header.php';
 }
 
 ?>
@@ -244,17 +244,17 @@ if (file_exists('include/header.php')) {
 
             <div class="ktc-quick-links">
                 <span>Quick Links:</span>
-                <a href="<?php echo isset($site) ? $site . 'about.php' : 'about.php'; ?>">About Us</a>
-                <a href="<?php echo isset($site) ? $site . 'products.php' : 'products.php'; ?>">Spices & Seeds</a>
-                <a href="<?php echo isset($site) ? $site . 'blog.php' : 'blog.php'; ?>">Latest News</a>
-                <a href="<?php echo isset($site) ? $site . 'contact.php' : 'contact.php'; ?>">Request a Quote</a>
+                <a href="<?php echo isset($site) ? $site . 'about' : 'about'; ?>">About Us</a>
+                <a href="<?php echo isset($site) ? $site . 'products' : 'products'; ?>">Spices & Seeds</a>
+                <a href="<?php echo isset($site) ? $site . 'blog' : 'blog'; ?>">Latest News</a>
+                <a href="<?php echo isset($site) ? $site . 'contact' : 'contact'; ?>">Request a Quote</a>
             </div>
         </div>
     </div>
 
     <?php 
-    if (file_exists('include/footer.php')) {
-        include 'include/footer.php';
+    if (file_exists('includes/footer.php')) {
+        include 'includes/footer.php';
     }
     ?>
 

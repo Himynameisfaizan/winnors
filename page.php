@@ -58,7 +58,7 @@ $schema_code = $page_schema;
 
 // 4. NOW WE CAN INCLUDE HEADER
 // Use the updated header.php which defines $base_url
-include 'include/header.php';
+include 'includes/header.php';
 ?>
 
 <style>
@@ -321,4 +321,4 @@ include 'include/header.php';
     </section>
 </main>
 
-<?php include 'include/footer.php'; ?>
+<?php include 'includes/footer.php'; ?>
