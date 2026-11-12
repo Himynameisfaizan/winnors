@@ -5,12 +5,16 @@
     RewriteBase /projects/winnors/
 
     # =========================================================
-    # 1. DYNAMIC ROUTING FOR PRODUCTS, CATEGORIES & PAGES
+    # 1. SITEMAP & DYNAMIC ROUTING (PRODUCTS, SERVICES, BLOGS, PAGES)
     # =========================================================
     RewriteRule ^sitemap\.xml$ sitemap.php [L,QSA]
+
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteRule ^product/([^/]+)/?$ product-details.php?slug=$1 [L,QSA]
+
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
     RewriteRule ^service/([^/]+)/?$ service-details.php?slug=$1 [L,QSA]
     
     RewriteCond %{REQUEST_FILENAME} !-f
@@ -29,27 +33,25 @@
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteRule ^blog/([^/]+)/?$ blog-details.php?slug=$1 [L,QSA]
 
-    # 4. Rewrite rule for CUSTOM PAGES (Isse aapka /page/slug wala 404 theek hoga)
+    # Custom Pages Routing (/page/slug or /page/slug/)
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteRule ^page/([a-zA-Z0-9_-]+)$ page.php?slug=$1 [L,QSA]
+    RewriteRule ^page/([^/]+)/?$ page.php?slug=$1 [L,QSA]
 
     # =========================================================
-    # 2. REMOVE .PHP EXTENSION (e.g., /about/ -> /about.php)
+    # 2. REMOVE .PHP EXTENSION (e.g., /about/ -> about.php)
     # =========================================================
-    # Agar request ki gayi file ya folder directly exist nahi karta, 
-    # aur URL ke end mein .php nahi laga hai, toh internally .php append karke route karo.
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteCond %{REQUEST_URI} !\.php$
-    RewriteRule ^(.+?)/?$ $1.php [L,QSA]
+    RewriteCond %{REQUEST_URI} !\.php$ [NC]
+    RewriteCond %{REQUEST_URI} !\.(css|js|jpg|jpeg|png|webp|gif|svg|ico|jfif|woff|woff2|ttf)$ [NC]
+    RewriteRule ^([^/]+)/?$ $1.php [L,QSA]
 
     # =========================================================
-    # 3. FALLBACK FOR 404 (YE HAMESHA SABSE LAST MEIN RAHEGA)
+    # 3. FALLBACK FOR 404 (HAMESHA SABSE LAST MEIN)
     # =========================================================
-    # Agar upar ka koi bhi rule match na ho aur file/folder server par na mile, 
-    # toh proper 404 page dikhaye.
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_URI} !\.(css|js|jpg|jpeg|png|webp|gif|svg|ico|jfif|woff|woff2|ttf)$ [NC]
     RewriteRule ^(.*)$ 404.php [L]
 </IfModule>

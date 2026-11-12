@@ -3,57 +3,64 @@ include_once('admin/db-conn.php');
 $current_page = basename($_SERVER['PHP_SELF']);
 
 // =========================================================================
-// 1. DYNAMIC CANONICAL URL WITH 'www.' (Localhost & Live Server Ready)
+// 1. DYNAMIC BASE URL & CANONICAL URL WITH 'www.' (Localhost & Live Ready)
 // =========================================================================
 $is_https = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') || $_SERVER['SERVER_PORT'] == 443;
 $is_localhost = in_array($_SERVER['HTTP_HOST'], ['localhost', '127.0.0.1']) || strpos($_SERVER['HTTP_HOST'], 'localhost:') === 0;
 
-// Live server par hamesha https:// रखेगा, localhost par current protocol
-$protocol = (!$is_localhost) ? "https://" : ($is_https ? "https://" : "http://");
+// Current protocol for loading assets (CSS/JS/Images)
+$http_protocol = $is_https ? "https://" : "http://";
 
-// Hostname mein agar 'www.' nahi hai to automatically 'www.' add karega
+// Base folder path (Localhost pe '/projects/winnors/' aur Live server pe '/' automatically lega)
+$script_dir = str_replace('\\', '/', dirname($_SERVER['SCRIPT_NAME']));
+$base_path = ($script_dir === '/') ? '/' : rtrim($script_dir, '/') . '/';
+$base_url = $http_protocol . $_SERVER['HTTP_HOST'] . $base_path;
+
+// Canonical Protocol & Host (with 'www.')
+$canonical_protocol = (!$is_localhost) ? "https://" : $http_protocol;
 $raw_host = $_SERVER['HTTP_HOST'];
 $canonical_host = (stripos($raw_host, 'www.') === 0) ? $raw_host : 'www.' . $raw_host;
 
-// Request URI ko clean karna (index.php hatana aur फालतू tracking params hatana)
+// Request URI ko clean karna (Canonical ke liye)
 $request_uri = $_SERVER['REQUEST_URI'];
 $uri_parts = explode('?', $request_uri, 2);
 $clean_path = $uri_parts[0];
 
-// Agar home page (index.php) hai to canonical URL ke end se 'index.php' hata dein
+// Agar URL ke end mein 'index.php' hai to hata dein
 if (basename($clean_path) === 'index.php') {
     $clean_path = substr($clean_path, 0, -strlen('index.php'));
 }
 
-// Zaroori SEO query parameters (jaise slug ya id) ko canonical mein retain karna (agar clean URL nahi hai)
-$allowed_params = ['slug', 'slug_url', 'id', 'pro_id', 'cate_id'];
-$query_Array = [];
-if (!empty($_GET)) {
+// Agar URL mein .php laga hai (purana URL), tabhi query params (slug/id) canonical mein lagayein.
+// Clean URL (jaise /product/green-chilli) mein ?slug= dubara nahi judega.
+$query_string = '';
+if (stripos($clean_path, '.php') !== false && !empty($_GET)) {
+    $allowed_params = ['slug', 'slug_url', 'id', 'pro_id', 'cate_id'];
+    $query_Array = [];
     foreach ($allowed_params as $param) {
         if (!empty($_GET[$param])) {
             $query_Array[$param] = $_GET[$param];
         }
     }
+    $query_string = !empty($query_Array) ? '?' . http_build_query($query_Array) : '';
 }
-$query_string = !empty($query_Array) ? '?' . http_build_query($query_Array) : '';
-$canonical_url = $protocol . $canonical_host . $clean_path . $query_string;
+
+$canonical_url = $canonical_protocol . $canonical_host . $clean_path . $query_string;
 
 // =========================================================================
 // 2. DYNAMIC META & SCHEMA FETCHING LOGIC
 // =========================================================================
-// Default Fallback Values
 $meta_title = isset($meta_title) ? $meta_title : 'Winnors - Premium Whole Spices';
 $meta_desc  = isset($meta_desc)  ? $meta_desc  : 'Winnors is a trusted exporter of premium quality whole spices, seeds, and agricultural products from India to global markets.';
 $meta_key   = isset($meta_key)   ? $meta_key   : 'whole spices export, indian spices supplier, agricultural products export, Winnors';
-$schema_markup = isset($schema_markup) ? $schema_markup : '';
+$schema_markup = isset($schema_markup) ? $schema_markup : (isset($schema_code) ? $schema_code : '');
 
-// URL Parameters Check (Detail Pages ke liye)
-$slug   = isset($_GET['slug']) ? mysqli_real_escape_string($conn, trim($_GET['slug'])) : (isset($_GET['slug_url']) ? mysqli_real_escape_string($conn, trim($_GET['slug_url'])) : '');
+$slug    = isset($_GET['slug']) ? mysqli_real_escape_string($conn, trim($_GET['slug'])) : (isset($_GET['slug_url']) ? mysqli_real_escape_string($conn, trim($_GET['slug_url'])) : '');
 $item_id = isset($_GET['id']) ? (int)$_GET['id'] : (isset($_GET['pro_id']) ? (int)$_GET['pro_id'] : 0);
 
 $seo_matched = false;
 
-// A. Check Dynamic Detail Pages (Products, Blogs, Services, Custom Pages, Categories, Policies)
+// A. Check Dynamic Detail Pages
 if (!empty($slug) || $item_id > 0) {
 
     // 1. Product Detail Page
@@ -70,14 +77,14 @@ if (!empty($slug) || $item_id > 0) {
         }
     }
 
-    // 2. Blog Detail Page
+    // 2. Blog Detail Page (Updated for blogs.sql structure)
     if (!$seo_matched && stripos($current_page, 'blog') !== false && !in_array($current_page, ['blog.php', 'blogs.php'])) {
-        $where = !empty($slug) ? "slug = '$slug'" : "id = $item_id";
+        $where = !empty($slug) ? "slug = '$slug'" : "blog_id = $item_id";
         $res = mysqli_query($conn, "SELECT * FROM blogs WHERE $where LIMIT 1");
         if ($res && mysqli_num_rows($res) > 0) {
             $row = mysqli_fetch_assoc($res);
             $meta_title    = !empty($row['meta_title']) ? $row['meta_title'] : $row['title'] . ' | Winnors';
-            $meta_desc     = !empty($row['meta_desc'])  ? $row['meta_desc']  : mb_substr(trim(strip_tags($row['content'] ?? '')), 0, 160);
+            $meta_desc     = !empty($row['meta_desc'])  ? $row['meta_desc']  : mb_substr(trim(strip_tags($row['description'] ?? '')), 0, 160);
             $meta_key      = !empty($row['meta_key'])   ? $row['meta_key']   : $row['title'];
             $schema_markup = $row['schema_markup'] ?? '';
             $seo_matched   = true;
@@ -111,64 +118,13 @@ if (!empty($slug) || $item_id > 0) {
             $seo_matched   = true;
         }
     }
-
-    // 5. Fallback: Agar clean URL routing se slug direct kisi product/blog/service/policy ka hai
-    if (!$seo_matched && !empty($slug)) {
-        // Check Products by slug
-        $res = mysqli_query($conn, "SELECT * FROM products WHERE slug_url = '$slug' LIMIT 1");
-        if ($res && mysqli_num_rows($res) > 0) {
-            $row = mysqli_fetch_assoc($res);
-            $meta_title    = !empty($row['meta_title']) ? $row['meta_title'] : $row['pro_name'] . ' | Winnors';
-            $meta_desc     = !empty($row['meta_desc'])  ? $row['meta_desc']  : strip_tags($row['short_desc'] ?? '');
-            $meta_key      = !empty($row['meta_key'])   ? $row['meta_key']   : $row['pro_name'];
-            $schema_markup = $row['schema_markup'] ?? '';
-            $seo_matched   = true;
-        }
-        // Check Blogs by slug
-        if (!$seo_matched) {
-            $res = mysqli_query($conn, "SELECT * FROM blogs WHERE slug_url = '$slug' LIMIT 1");
-            if ($res && mysqli_num_rows($res) > 0) {
-                $row = mysqli_fetch_assoc($res);
-                $meta_title    = !empty($row['meta_title']) ? $row['meta_title'] : $row['title'] . ' | Winnors';
-                $meta_desc     = !empty($row['meta_desc'])  ? $row['meta_desc']  : mb_substr(trim(strip_tags($row['content'] ?? '')), 0, 160);
-                $meta_key      = !empty($row['meta_key'])   ? $row['meta_key']   : $row['title'];
-                $schema_markup = $row['schema_markup'] ?? '';
-                $seo_matched   = true;
-            }
-        }
-        // Check Categories by slug
-        if (!$seo_matched) {
-            $res = mysqli_query($conn, "SELECT * FROM categories WHERE slug_url = '$slug' LIMIT 1");
-            if ($res && mysqli_num_rows($res) > 0) {
-                $row = mysqli_fetch_assoc($res);
-                $meta_title    = !empty($row['meta_title']) ? $row['meta_title'] : $row['categories'] . ' | Winnors';
-                $meta_desc     = !empty($row['meta_desc'])  ? $row['meta_desc']  : $row['categories'];
-                $meta_key      = !empty($row['meta_key'])   ? $row['meta_key']   : $row['categories'];
-                $schema_markup = $row['schema_markup'] ?? '';
-                $seo_matched   = true;
-            }
-        }
-        // Check Policies by slug
-        if (!$seo_matched) {
-            $res = mysqli_query($conn, "SELECT * FROM policies WHERE slug = '$slug' LIMIT 1");
-            if ($res && mysqli_num_rows($res) > 0) {
-                $row = mysqli_fetch_assoc($res);
-                $meta_title    = $row['title'] . ' | Winnors';
-                $meta_desc     = !empty($row['meta_description']) ? $row['meta_description'] : $row['title'];
-                $meta_key      = !empty($row['meta_keywords'])    ? $row['meta_keywords']    : $row['title'];
-                $seo_matched   = true;
-            }
-        }
-    }
 }
 
 // B. Check Static Pages (`meta` & `page_schemas` tables)
 if (!$seo_matched) {
     $escaped_page = mysqli_real_escape_string($conn, $current_page);
-    // Note: Database mein 'blog.php' hai aur file 'blogs.php' hai, isliye dono check karenge
     $alt_page = ($current_page === 'blogs.php') ? 'blog.php' : $escaped_page;
 
-    // Fetch Meta from `meta` table
     $meta_q = "SELECT * FROM meta WHERE page_url IN ('$escaped_page', '$alt_page') LIMIT 1";
     $meta_res = mysqli_query($conn, $meta_q);
     if ($meta_res && mysqli_num_rows($meta_res) > 0) {
@@ -178,7 +134,6 @@ if (!$seo_matched) {
         if (!empty($m_row['meta_key']))   $meta_key   = $m_row['meta_key'];
     }
 
-    // Fetch Schema from `page_schemas` table
     $schema_q = "SELECT schema_markup FROM page_schemas WHERE page_url IN ('$escaped_page', '$alt_page') LIMIT 1";
     $schema_res = mysqli_query($conn, $schema_q);
     if ($schema_res && mysqli_num_rows($schema_res) > 0) {
@@ -195,6 +150,9 @@ if (!$seo_matched) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Base URL Tag: Isse /product/slug ya /about/ par CSS aur Images nahi tootengi -->
+    <base href="<?php echo htmlspecialchars($base_url); ?>">
 
     <!-- Dynamic SEO Meta Tags -->
     <title><?php echo htmlspecialchars($meta_title); ?></title>
@@ -215,12 +173,9 @@ if (!$seo_matched) {
     <?php
     if (!empty(trim($schema_markup))) {
         $trimmed_schema = trim($schema_markup);
-        // Agar admin panel se <script> tag ke sath daala gaya hai to direct print karega
         if (stripos($trimmed_schema, '<script') !== false) {
             echo $trimmed_schema . "\n";
-        } 
-        // Agar raw JSON daala gaya hai (starts with { or [), to <script type="application/ld+json"> mein wrap karega
-        elseif ($trimmed_schema[0] === '{' || $trimmed_schema[0] === '[') {
+        } elseif ($trimmed_schema[0] === '{' || $trimmed_schema[0] === '[') {
             echo '<script type="application/ld+json">' . "\n" . $trimmed_schema . "\n" . '</script>' . "\n";
         }
     }
@@ -237,7 +192,6 @@ if (!$seo_matched) {
     <link rel="stylesheet" href="assets/style/services.css">
     <link rel="stylesheet" href="assets/style/blogs.css">
     <link rel="stylesheet" href="assets/style/contact.css">
-
 </head>
 
 <body>
@@ -247,10 +201,9 @@ if (!$seo_matched) {
     $top_footer_result = mysqli_query($conn, $top_footer_query);
     $site_info = mysqli_fetch_assoc($top_footer_result);
 
-    // Fallback default variables if database table is empty
-    $address   = !empty($site_info['address'])   ? $site_info['address']   : '56 Usha Nagar, Nr Iskon Temple, Gotri Road, Vadodara 390021';
-    $phone     = !empty($site_info['phone'])     ? $site_info['phone']     : '8980401525';
-    $email     = !empty($site_info['email'])     ? $site_info['email']     : 'ghatge.ghatge@gmail.com';
+    $address   = !empty($site_info['address'])   ? $site_info['address']   : '3, Plot No 23, Sasouli Rd, Yamuna Nagar, Haryana 135002, India';
+    $phone     = !empty($site_info['phone'])     ? $site_info['phone']     : '8448401339';
+    $email     = !empty($site_info['email'])     ? $site_info['email']     : 'info@digitalwebtrackers.com';
     $facebook  = !empty($site_info['facebook'])  ? $site_info['facebook']  : '#';
     $instagram = !empty($site_info['instagram']) ? $site_info['instagram'] : '#';
     $twitter   = !empty($site_info['twitter'])   ? $site_info['twitter']   : '#';
@@ -281,7 +234,7 @@ if (!$seo_matched) {
     <nav class="navbar navbar-expand-lg sticky-top">
         <div class="container">
             <!-- Logo -->
-            <a class="navbar-brand" href="index.php">
+            <a class="navbar-brand" href="<?php echo htmlspecialchars($base_url); ?>">
                 Winnors<span class="brand-dot">.</span>
             </a>
 
@@ -291,32 +244,32 @@ if (!$seo_matched) {
                 <span class="fa-solid fa-bars fs-3 text-dark"></span>
             </button>
 
-            <!-- Nav Links -->
+            <!-- Nav Links (Clean URLs with Trailing Slash) -->
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                     <li class="nav-item">
                         <a class="nav-link <?= ($current_page == 'index.php') ? 'active' : ''; ?>"
-                            href="index.php">Home</a>
+                            href="<?php echo htmlspecialchars($base_url); ?>">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link <?= ($current_page == 'about.php') ? 'active' : ''; ?>"
-                            href="about.php">About Us</a>
+                        <a class="nav-link <?= ($current_page == 'about.php') ? 'active' : ''; ?>" href="about/">About
+                            Us</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link <?= ($current_page == 'services.php') ? 'active' : ''; ?>"
-                            href="services.php">Our Services</a>
+                            href="services/">Our Services</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link <?= ($current_page == 'products.php') ? 'active' : ''; ?>"
-                            href="products.php">Products</a>
+                            href="products/">Products</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link <?= ($current_page == 'blogs.php') ? 'active' : ''; ?>"
-                            href="blogs.php">Blogs</a>
+                            href="blogs/">Blogs</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link <?= ($current_page == 'contact.php') ? 'active' : ''; ?>"
-                            href="contact.php">Contact</a>
+                            href="contact/">Contact</a>
                     </li>
                 </ul>
             </div>
@@ -324,5 +277,5 @@ if (!$seo_matched) {
     </nav>
     <!-- Navbar End -->
 
-    <!-- Bootstrap JS CDN (Required for mobile toggle to work) -->
+    <!-- Bootstrap JS CDN -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
