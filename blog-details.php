@@ -141,16 +141,16 @@ $articleImage = "admin/assets/img/uploads/" . $blog['image'];
                     <div class="sidebar-widget p-4 border rounded-4 bg-white mb-4 shadow-sm">
                         <h4 class="widget-title fw-bold mb-3 pb-2 border-bottom">Categories</h4>
                         <ul class="category-list list-unstyled mb-0 d-flex flex-column gap-2">
-                            <li><a href="blogs.php"
+                            <li><a href="blogs"
                                     class="text-decoration-none text-dark d-flex justify-content-between p-2 rounded bg-light"><span>Health
                                         & Wellness</span> <span class="text-muted">(12)</span></a></li>
-                            <li><a href="blogs.php"
+                            <li><a href="blogs"
                                     class="text-decoration-none text-dark d-flex justify-content-between p-2 rounded bg-light"><span>Cooking
                                         Tips</span> <span class="text-muted">(8)</span></a></li>
-                            <li><a href="blogs.php"
+                            <li><a href="blogs"
                                     class="text-decoration-none text-dark d-flex justify-content-between p-2 rounded bg-light"><span>Spice
                                         Origins</span> <span class="text-muted">(15)</span></a></li>
-                            <li><a href="blogs.php"
+                            <li><a href="blogs"
                                     class="text-decoration-none text-dark d-flex justify-content-between p-2 rounded bg-light"><span>Authentic
                                         Recipes</span> <span class="text-muted">(20)</span></a></li>
                         </ul>
@@ -202,7 +202,7 @@ $articleImage = "admin/assets/img/uploads/" . $blog['image'];
                             <div style="position: relative; z-index: 2; color: #FFF;">
                                 <h4 style="font-weight: 700; margin-bottom: 10px;">Premium Spices</h4>
                                 <p style="font-size: 0.9rem; color: #E67E22;">Export Quality Worldwide Supply</p>
-                                <a href="products.php"
+                                <a href="products"
                                     class="btn btn-outline-light btn-sm rounded-pill mt-2 px-4 fw-bold">Shop Now</a>
                             </div>
                         </div>

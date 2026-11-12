@@ -60,10 +60,10 @@ include 'includes/breadcrumb.php';
                             <div class="blog-img position-relative" style="height: 220px; overflow: hidden;">
                                 <span
                                     class="blog-category badge bg-warning text-dark position-absolute top-0 start-0 m-3 px-3 py-2 fw-bold">Journal</span>
-                                <img src="<?php echo htmlspecialchars($imagePath); ?>"
-                                    alt="<?php echo htmlspecialchars($blog['title']); ?>"
-                                    class="w-100 h-100 object-fit-cover">
-                                <!-- [cite: 1] -->
+                                <a href="blog/<?php echo urlencode($blog['slug']); ?>"> <img
+                                        src="<?php echo htmlspecialchars($imagePath); ?>"
+                                        alt="<?php echo htmlspecialchars($blog['title']); ?>"
+                                        class="w-100 h-100 object-fit-cover"></a>
                             </div>
                             <div class="blog-content p-4 d-flex flex-column flex-grow-1">
                                 <div class="blog-meta text-muted small mb-2">
@@ -73,12 +73,14 @@ include 'includes/breadcrumb.php';
                                         <?php echo !empty($blog['author']) ? htmlspecialchars($blog['author']) : 'Admin'; ?></span>
                                     <!-- [cite: 1] -->
                                 </div>
-                                <a href="blog-details.php?slug=<?php echo urlencode($blog['slug']); ?>"
+                                <a href="blog/<?php echo urlencode($blog['slug']); ?>"
                                     class="blog-title fs-5 fw-bold text-dark text-decoration-none mb-2"><?php echo htmlspecialchars($blog['title']); ?></a>
                                 <!-- [cite: 1] -->
-                                <p class="blog-desc text-muted small mb-4"><?php echo htmlspecialchars($excerpt); ?></p>
+                                <p class="blog-desc text-muted small mb-4">
+                                    <?php echo htmlspecialchars_decode($excerpt); ?>
+                                </p>
                                 <div class="mt-auto">
-                                    <a href="blog-details.php?slug=<?php echo urlencode($blog['slug']); ?>"
+                                    <a href="blog/<?php echo urlencode($blog['slug']); ?>"
                                         class="blog-link text-decoration-none fw-bold text-warning">Read Article <i
                                             class="fa-solid fa-arrow-right ms-1"></i></a>
                                     <!-- [cite: 1] -->
@@ -164,7 +166,7 @@ include 'includes/breadcrumb.php';
                     <div class="sidebar-widget p-4 border rounded-4 bg-white shadow-sm">
                         <h4 class="widget-title fw-bold mb-3 pb-2 border-bottom">Recent Posts</h4>
                         <?php
-                        $recent_query = "SELECT title, slug_url, image, created_at FROM blogs WHERE status = 'published' ORDER BY created_at DESC LIMIT 3";
+                        $recent_query = "SELECT title, slug, image, created_at FROM blogs WHERE status = 'published' ORDER BY created_at DESC LIMIT 3";
                         // [cite: 1]
                         $recent_result = mysqli_query($conn, $recent_query);
                         if ($recent_result && mysqli_num_rows($recent_result) > 0) {
@@ -180,8 +182,7 @@ include 'includes/breadcrumb.php';
                                 style="width: 70px; height: 70px; object-fit: cover;">
                             <!-- [cite: 1] -->
                             <div class="recent-post-info">
-                                <h6 class="mb-1"><a
-                                        href="blog-details.php?slug=<?php echo urlencode($rec['slug_url']); ?>"
+                                <h6 class="mb-1"><a href="blog/<?php echo urlencode($rec['slug']); ?>"
                                         class="text-decoration-none text-dark fw-bold small"><?php echo htmlspecialchars($rec['title']); ?></a>
                                 </h6>
                                 <!-- [cite: 1] -->
