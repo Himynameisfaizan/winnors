@@ -147,29 +147,31 @@ $result = mysqli_query($conn, $query);
                     $imagePath = "admin/assets/img/uploads/" . $row['img_path'];
 
             ?>
-                    <!-- Dynamic Service Card -->
-                    <div class="col-lg-4 col-md-6">
-                        <!-- Maintained your original CSS classes ('spice-card' etc.) so the design doesn't break -->
-                        <div class="spice-card">
-                            <div class="card-img-wrapper">
-                                <span class="badge-premium">Premium</span>
-                                <img src="<?php echo htmlspecialchars($imagePath); ?>" alt="<?php echo htmlspecialchars($row['service_name']); ?>">
-                            </div>
-                            <div class="spice-card-body">
-                                <!-- Fetching service name -->
-                                <h4 class="spice-card-title"><?php echo htmlspecialchars($row['service_name']); ?></h4>
+            <!-- Dynamic Service Card -->
+            <div class="col-lg-4 col-md-6">
+                <!-- Maintained your original CSS classes ('spice-card' etc.) so the design doesn't break -->
+                <div class="spice-card">
+                    <div class="card-img-wrapper">
+                        <span class="badge-premium">Premium</span>
+                        <img src="<?php echo htmlspecialchars($imagePath); ?>"
+                            alt="<?php echo htmlspecialchars($row['service_name']); ?>">
+                    </div>
+                    <div class="spice-card-body">
+                        <!-- Fetching service name -->
+                        <h4 class="spice-card-title"><?php echo htmlspecialchars($row['service_name']); ?></h4>
 
-                                <!-- Fetching short description directly from the table -->
-                                <p class="spice-card-desc"><?php echo htmlspecialchars($row['short_desc']); ?></p>
+                        <!-- Fetching short description directly from the table -->
+                        <p class="spice-card-desc"><?php echo htmlspecialchars($row['short_desc']); ?></p>
 
-                                <div class="spice-card-footer">
-                                    <!-- Passing the service 'id' in URL for the details page -->
-                                    <a href="service-details.php?id=<?php echo $row['id']; ?>" class="view-link">View Details <i class="fa-solid fa-arrow-right"></i></a>
-                                    <a href="contact.php" class="btn-quote">Get Quote</a>
-                                </div>
-                            </div>
+                        <div class="spice-card-footer">
+                            <!-- Passing the service 'id' in URL for the details page -->
+                            <a href="service-details.php?id=<?php echo $row['id']; ?>" class="view-link">View Details <i
+                                    class="fa-solid fa-arrow-right"></i></a>
+                            <a href="contact.php" class="btn-quote">Get Quote</a>
                         </div>
                     </div>
+                </div>
+            </div>
             <?php
                 } // End while loop
             } else {
@@ -182,7 +184,8 @@ $result = mysqli_query($conn, $query);
 
         <!-- View All Button -->
         <div class="text-center mt-5">
-            <a href="services.php" class="btn btn-premium">Explore All Services <i class="fa-solid fa-arrow-right ms-2"></i></a>
+            <a href="services.php" class="btn btn-premium">Explore All Services <i
+                    class="fa-solid fa-arrow-right ms-2"></i></a>
         </div>
 
     </div>
@@ -251,117 +254,119 @@ if (!empty($wa_number) && strlen($wa_number) == 10) {
 
 <!-- Add Custom CSS for Premium Product Card Design -->
 <style>
-    .related-products-section {
-        padding: 80px 0;
-        background-color: #FAFAFA;
-    }
+.related-products-section {
+    padding: 80px 0;
+    background-color: #FAFAFA;
+}
 
-    .premium-product-card {
-        background: #ffffff;
-        border-radius: 12px;
-        border: 1px solid #EAE3D9;
-        overflow: hidden;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
-        transition: all 0.4s ease;
-    }
+.premium-product-card {
+    background: #ffffff;
+    border-radius: 12px;
+    border: 1px solid #EAE3D9;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+    transition: all 0.4s ease;
+}
 
-    .premium-product-card:hover {
-        transform: translateY(-8px);
-        box-shadow: 0 15px 30px rgba(230, 126, 34, 0.12);
-        border-color: #E67E22;
-    }
+.premium-product-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 30px rgba(230, 126, 34, 0.12);
+    border-color: #E67E22;
+}
 
-    .card-img-box {
-        width: 100%;
-        height: 240px;
-        overflow: hidden;
-        position: relative;
-    }
+.card-img-box {
+    width: 100%;
+    height: 240px;
+    overflow: hidden;
+    position: relative;
+}
 
-    .card-img-box img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        transition: transform 0.6s ease;
-    }
+.card-img-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+}
 
-    .premium-product-card:hover .card-img-box img {
-        transform: scale(1.08);
-    }
+.premium-product-card:hover .card-img-box img {
+    transform: scale(1.08);
+}
 
-    .card-content {
-        padding: 24px;
-        display: flex;
-        flex-direction: column;
-        flex-grow: 1;
-    }
+.card-content {
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
 
-    .product-title {
-        font-size: 1.3rem;
-        font-weight: 800;
-        color: #2C1E16;
-        margin-bottom: 12px;
-        line-height: 1.4;
-    }
+.product-title {
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: #2C1E16;
+    margin-bottom: 12px;
+    line-height: 1.4;
+}
 
-    .view-detail-link {
-        font-size: 0.95rem;
-        color: #7A6859;
-        font-weight: 600;
-        text-decoration: none;
-        transition: color 0.3s;
-        display: inline-block;
-        margin-bottom: 20px;
-    }
+.view-detail-link {
+    font-size: 0.95rem;
+    color: #7A6859;
+    font-weight: 600;
+    text-decoration: none;
+    transition: color 0.3s;
+    display: inline-block;
+    margin-bottom: 20px;
+}
 
-    .view-detail-link:hover {
-        color: #E67E22;
-    }
+.view-detail-link:hover {
+    color: #E67E22;
+}
 
-    .action-buttons .btn-quote {
-        background-color: #2C1E16;
-        color: #ffffff;
-        padding: 10px 15px;
-        border-radius: 8px;
-        text-align: center;
-        font-weight: 600;
-        font-size: 0.9rem;
-        text-decoration: none;
-        transition: all 0.3s;
-        border: 1px solid #2C1E16;
-    }
+.action-buttons .btn-quote {
+    background-color: #2C1E16;
+    color: #ffffff;
+    padding: 10px 15px;
+    border-radius: 8px;
+    text-align: center;
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-decoration: none;
+    transition: all 0.3s;
+    border: 1px solid #2C1E16;
+}
 
-    .action-buttons .btn-quote:hover {
-        background-color: #E67E22;
-        border-color: #E67E22;
-    }
+.action-buttons .btn-quote:hover {
+    background-color: #E67E22;
+    border-color: #E67E22;
+}
 
-    .action-buttons .btn-whatsapp {
-        background-color: #25D366;
-        color: #ffffff;
-        width: 44px;
-        height: 44px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: 8px;
-        font-size: 1.4rem;
-        text-decoration: none;
-        transition: all 0.3s;
-    }
+.action-buttons .btn-whatsapp {
+    background-color: #25D366;
+    color: #ffffff;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    font-size: 1.4rem;
+    text-decoration: none;
+    transition: all 0.3s;
+}
 
-    .action-buttons .btn-whatsapp:hover {
-        background-color: #1EBE57;
-        transform: scale(1.05);
-        box-shadow: 0 5px 15px rgba(37, 211, 102, 0.3);
-    }
+.action-buttons .btn-whatsapp:hover {
+    background-color: #1EBE57;
+    transform: scale(1.05);
+    box-shadow: 0 5px 15px rgba(37, 211, 102, 0.3);
+}
 </style>
 
 <section class="related-products-section">
     <div class="container">
         <!-- Section Header -->
         <div class="section-header text-center mb-5">
-            <span class="section-subtitle" style="color: #E67E22; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;">Shop Spices</span>
+            <span class="section-subtitle"
+                style="color: #E67E22; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;">Shop
+                Spices</span>
             <h2 class="section-title">Explore Our Products</h2>
             <div style="width: 50px; height: 3px; background-color: #E67E22; margin: 10px auto 0;"></div>
         </div>
@@ -381,36 +386,41 @@ if (!empty($wa_number) && strlen($wa_number) == 10) {
                     $wa_msg = urlencode("Hello, I am interested in knowing more about your " . $row['pro_name'] . ". Can you please share the quote?");
                     // [cite: 1]
             ?>
-                    <!-- Dynamic Product Card -->
-                    <div class="col-lg-3 col-md-6 col-sm-6 reveal" style="transition-delay: <?php echo $delay; ?>s;">
-                        <div class="premium-product-card h-100 d-flex flex-column">
-                            <div class="card-img-box">
-                                <img src="<?php echo htmlspecialchars($imagePath); ?>" alt="<?php echo htmlspecialchars($row['pro_name']); ?>">
+            <!-- Dynamic Product Card -->
+            <div class="col-lg-3 col-md-6 col-sm-6 reveal" style="transition-delay: <?php echo $delay; ?>s;">
+                <div class="premium-product-card h-100 d-flex flex-column">
+                    <div class="card-img-box">
+                        <img src="<?php echo htmlspecialchars($imagePath); ?>"
+                            alt="<?php echo htmlspecialchars($row['pro_name']); ?>">
+                        <!-- [cite: 1] -->
+                    </div>
+                    <div class="card-content">
+                        <h4 class="product-title"><?php echo htmlspecialchars($row['pro_name']); ?></h4>
+                        <!-- [cite: 1] -->
+
+                        <div class="mt-auto">
+                            <a href="product-details.php?slug=<?php echo urlencode($row['slug_url']); ?>"
+                                class="view-detail-link">View Details <i
+                                    class="fa-solid fa-arrow-right-long ms-1"></i></a>
+                            <!-- [cite: 1] -->
+
+                            <div class="action-buttons d-flex align-items-center gap-2">
+                                <a href="contact.php?product=<?php echo urlencode($row['pro_name']); ?>"
+                                    class="btn-quote flex-grow-1">Request Quote</a>
                                 <!-- [cite: 1] -->
-                            </div>
-                            <div class="card-content">
-                                <h4 class="product-title"><?php echo htmlspecialchars($row['pro_name']); ?></h4>
-                                <!-- [cite: 1] -->
 
-                                <div class="mt-auto">
-                                    <a href="product-details.php?slug=<?php echo urlencode($row['slug_url']); ?>" class="view-detail-link">View Details <i class="fa-solid fa-arrow-right-long ms-1"></i></a>
-                                    <!-- [cite: 1] -->
-
-                                    <div class="action-buttons d-flex align-items-center gap-2">
-                                        <a href="contact.php?product=<?php echo urlencode($row['pro_name']); ?>" class="btn-quote flex-grow-1">Request Quote</a>
-                                        <!-- [cite: 1] -->
-
-                                        <?php if ($wa_number): ?>
-                                            <a href="https://wa.me/<?php echo $wa_number; ?>?text=<?php echo $wa_msg; ?>" target="_blank" class="btn-whatsapp" title="Chat on WhatsApp">
-                                                <i class="fa-brands fa-whatsapp"></i>
-                                            </a>
-                                        <?php endif; ?>
-                                    </div>
-                                </div>
-
+                                <?php if ($wa_number): ?>
+                                <a href="https://wa.me/<?php echo $wa_number; ?>?text=<?php echo $wa_msg; ?>"
+                                    target="_blank" class="btn-whatsapp" title="Chat on WhatsApp">
+                                    <i class="fa-brands fa-whatsapp"></i>
+                                </a>
+                                <?php endif; ?>
                             </div>
                         </div>
+
                     </div>
+                </div>
+            </div>
             <?php
                     $counter++;
                 }
@@ -425,20 +435,20 @@ if (!empty($wa_number) && strlen($wa_number) == 10) {
 
 <!-- Scroll Animation Script -->
 <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        const reveals = document.querySelectorAll('.reveal');
-        const appearOnScroll = new IntersectionObserver(function(entries, observer) {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('active');
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, {
-            threshold: 0.15
+document.addEventListener("DOMContentLoaded", function() {
+    const reveals = document.querySelectorAll('.reveal');
+    const appearOnScroll = new IntersectionObserver(function(entries, observer) {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('active');
+                observer.unobserve(entry.target);
+            }
         });
-        reveals.forEach(reveal => appearOnScroll.observe(reveal));
+    }, {
+        threshold: 0.15
     });
+    reveals.forEach(reveal => appearOnScroll.observe(reveal));
+});
 </script>
 
 <?php
@@ -458,8 +468,10 @@ $country_result = mysqli_query($conn, $country_query);
 
         <!-- Section Header -->
         <div class="section-header text-center mb-5 reveal">
-            <h2 class="section-title fw-bold" style="color: #2C1E16; letter-spacing: 0.5px;">OUR GLOBAL EXPORT MARKETS</h2>
-            <div style="width: 60px; height: 3px; background-color: #E67E22; margin: 12px auto 0; border-radius: 2px;"></div>
+            <h2 class="section-title fw-bold" style="color: #2C1E16; letter-spacing: 0.5px;">OUR GLOBAL EXPORT MARKETS
+            </h2>
+            <div style="width: 60px; height: 3px; background-color: #E67E22; margin: 12px auto 0; border-radius: 2px;">
+            </div>
         </div>
 
         <!-- Markets Grid -->
@@ -473,14 +485,16 @@ $country_result = mysqli_query($conn, $country_query);
 
                     $is_featured = ($counter == 2) ? 'featured' : '';
             ?>
-                    <div class="col-lg-3 col-md-4 col-sm-6 reveal" style="transition-delay: <?php echo $delay; ?>s;">
-                        <div class="market-card <?php echo $is_featured; ?>" title="<?php echo htmlspecialchars($country['country_desc']); ?>">
-                            <div class="flag-wrapper">
-                                <img src="<?php echo htmlspecialchars($flagPath); ?>" alt="<?php echo htmlspecialchars($country['country_name']); ?> Flag">
-                            </div>
-                            <h4 class="country-name"><?php echo htmlspecialchars($country['country_name']); ?></h4>
-                        </div>
+            <div class="col-lg-3 col-md-4 col-sm-6 reveal" style="transition-delay: <?php echo $delay; ?>s;">
+                <div class="market-card <?php echo $is_featured; ?>"
+                    title="<?php echo htmlspecialchars($country['country_desc']); ?>">
+                    <div class="flag-wrapper">
+                        <img src="<?php echo htmlspecialchars($flagPath); ?>"
+                            alt="<?php echo htmlspecialchars($country['country_name']); ?> Flag">
                     </div>
+                    <h4 class="country-name"><?php echo htmlspecialchars($country['country_name']); ?></h4>
+                </div>
+            </div>
             <?php
                     $counter++;
                 }
@@ -504,20 +518,20 @@ $country_result = mysqli_query($conn, $country_query);
 
 <!-- Scroll Animation Script -->
 <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        const reveals = document.querySelectorAll('.reveal');
-        const appearOnScroll = new IntersectionObserver(function(entries, observer) {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('active');
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, {
-            threshold: 0.15
+document.addEventListener("DOMContentLoaded", function() {
+    const reveals = document.querySelectorAll('.reveal');
+    const appearOnScroll = new IntersectionObserver(function(entries, observer) {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('active');
+                observer.unobserve(entry.target);
+            }
         });
-        reveals.forEach(reveal => appearOnScroll.observe(reveal));
+    }, {
+        threshold: 0.15
     });
+    reveals.forEach(reveal => appearOnScroll.observe(reveal));
+});
 </script>
 <!-- ================= Global Export Markets Section End ================= -->
 
@@ -551,32 +565,33 @@ $testimonial_result = mysqli_query($conn, $testimonial_query);
                     // [cite: 1]
                     $firstLetter = strtoupper(substr($clientName, 0, 1));
             ?>
-                    <!-- Dynamic Review Card -->
-                    <div class="col-lg-4 col-md-6">
-                        <div class="testimonial-card h-100 d-flex flex-column">
-                            <i class="fa-solid fa-quote-right quote-icon"></i>
-                            <div class="rating mb-3">
-                                <?php for ($i = 1; $i <= 5; $i++): ?>
-                                    <?php if ($i <= $rating): ?>
-                                        <i class="fa-solid fa-star text-warning"></i>
-                                    <?php else: ?>
-                                        <i class="fa-regular fa-star text-warning"></i>
-                                    <?php endif; ?>
-                                <?php endfor; ?>
-                            </div>
-                            <p class="client-review flex-grow-1"><?php echo $reviewText; ?></p>
-                            <!-- [cite: 1] -->
-                            <div class="client-info mt-4 d-flex align-items-center">
-                                <div class="client-avatar rounded-circle bg-warning text-dark fw-bold d-flex align-items-center justify-content-center me-3" style="width: 45px; height: 45px; font-size: 1.2rem;">
-                                    <?php echo $firstLetter; ?>
-                                </div>
-                                <div class="client-details">
-                                    <h5 class="mb-0 fw-bold text-dark"><?php echo $clientName; ?></h5>
-                                    <span class="text-muted small"><?php echo $clientRole; ?></span>
-                                </div>
-                            </div>
+            <!-- Dynamic Review Card -->
+            <div class="col-lg-4 col-md-6">
+                <div class="testimonial-card h-100 d-flex flex-column">
+                    <i class="fa-solid fa-quote-right quote-icon"></i>
+                    <div class="rating mb-3">
+                        <?php for ($i = 1; $i <= 5; $i++): ?>
+                        <?php if ($i <= $rating): ?>
+                        <i class="fa-solid fa-star text-warning"></i>
+                        <?php else: ?>
+                        <i class="fa-regular fa-star text-warning"></i>
+                        <?php endif; ?>
+                        <?php endfor; ?>
+                    </div>
+                    <p class="client-review flex-grow-1"><?php echo $reviewText; ?></p>
+                    <!-- [cite: 1] -->
+                    <div class="client-info mt-4 d-flex align-items-center">
+                        <div class="client-avatar rounded-circle bg-warning text-dark fw-bold d-flex align-items-center justify-content-center me-3"
+                            style="width: 45px; height: 45px; font-size: 1.2rem;">
+                            <?php echo $firstLetter; ?>
+                        </div>
+                        <div class="client-details">
+                            <h5 class="mb-0 fw-bold text-dark"><?php echo $clientName; ?></h5>
+                            <span class="text-muted small"><?php echo $clientRole; ?></span>
                         </div>
                     </div>
+                </div>
+            </div>
             <?php
                 }
             } else {
@@ -622,22 +637,24 @@ $blog_result = mysqli_query($conn, $blog_query);
                         $excerpt = substr($excerpt, 0, 90) . '...';
                     }
             ?>
-                    <!-- Dynamic Blog Card -->
-                    <div class="col-lg-4 col-md-6">
-                        <div class="blog-card">
-                            <div class="blog-img">
-                                <span class="blog-date"><?php echo $blogDate; ?></span>
-                                <img src="<?php echo htmlspecialchars($imagePath); ?>" alt="<?php echo htmlspecialchars($row['title']); ?>">
-                            </div>
-                            <div class="blog-content">
-                                <h4 class="blog-title"><?php echo htmlspecialchars($row['title']); ?></h4>
-                                <p class="blog-desc"><?php echo htmlspecialchars($excerpt); ?></p>
-
-                                <!-- Using slug_url for SEO friendly routing -->
-                                <a href="blog-details.php?slug=<?php echo urlencode($row['slug_url']); ?>" class="blog-link">Read Article <i class="fa-solid fa-arrow-right"></i></a>
-                            </div>
-                        </div>
+            <!-- Dynamic Blog Card -->
+            <div class="col-lg-4 col-md-6">
+                <div class="blog-card">
+                    <div class="blog-img">
+                        <span class="blog-date"><?php echo $blogDate; ?></span>
+                        <img src="<?php echo htmlspecialchars($imagePath); ?>"
+                            alt="<?php echo htmlspecialchars($row['title']); ?>">
                     </div>
+                    <div class="blog-content">
+                        <h4 class="blog-title"><?php echo htmlspecialchars($row['title']); ?></h4>
+                        <p class="blog-desc"><?php echo htmlspecialchars($excerpt); ?></p>
+
+                        <!-- Using slug_url for SEO friendly routing -->
+                        <a href="blog-details.php?slug=<?php echo urlencode($row['slug_url']); ?>"
+                            class="blog-link">Read Article <i class="fa-solid fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
             <?php
                 }
             } else {
