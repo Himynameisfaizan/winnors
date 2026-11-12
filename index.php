@@ -27,8 +27,8 @@ include 'admin/db-conn.php';
                     <p class="hero-subtitle">Bringing nature's finest and most authentic flavors directly to your
                         kitchen.</p>
                     <div class="hero-buttons">
-                        <a href="products.php" class="btn btn-premium">Explore Spices</a>
-                        <a href="contact.php" class="btn btn-outline-premium">Contact Us</a>
+                        <a href="products" class="btn btn-premium">Explore Spices</a>
+                        <a href="contact" class="btn btn-outline-premium">Contact Us</a>
                     </div>
                 </div>
             </div>
@@ -41,7 +41,7 @@ include 'admin/db-conn.php';
                     <p class="hero-subtitle">Carefully handpicked, sun-dried, and packed to preserve the true essence.
                     </p>
                     <div class="hero-buttons">
-                        <a href="about.php" class="btn btn-premium">Our Story</a>
+                        <a href="about" class="btn btn-premium">Our Story</a>
                     </div>
                 </div>
             </div>
@@ -55,7 +55,7 @@ include 'admin/db-conn.php';
                     <p class="hero-subtitle">Top-grade whole spices for businesses and homes. Quality that speaks for
                         itself.</p>
                     <div class="hero-buttons">
-                        <a href="contact.php" class="btn btn-premium">Get a Quote</a>
+                        <a href="contact" class="btn btn-premium">Get a Quote</a>
                     </div>
                 </div>
             </div>
@@ -110,7 +110,7 @@ include 'admin/db-conn.php';
                     </ul>
 
                     <!-- Button (Uses the premium button class from Hero Section) -->
-                    <a href="about.php" class="btn btn-premium mt-2">Discover Our Story <i
+                    <a href="about" class="btn btn-premium mt-2">Discover Our Story <i
                             class="fa-solid fa-arrow-right ms-2"></i></a>
                 </div>
             </div>
@@ -153,21 +153,24 @@ $result = mysqli_query($conn, $query);
                 <div class="spice-card">
                     <div class="card-img-wrapper">
                         <span class="badge-premium">Premium</span>
-                        <img src="<?php echo htmlspecialchars($imagePath); ?>"
-                            alt="<?php echo htmlspecialchars($row['service_name']); ?>">
+                        <a href="service/<?php echo $row['slug_url']; ?>"> <img
+                                src="<?php echo htmlspecialchars($imagePath); ?>"
+                                alt="<?php echo htmlspecialchars($row['service_name']); ?>">
+                        </a>
                     </div>
                     <div class="spice-card-body">
                         <!-- Fetching service name -->
-                        <h4 class="spice-card-title"><?php echo htmlspecialchars($row['service_name']); ?></h4>
-
-                        <!-- Fetching short description directly from the table -->
+                        <a href="service/<?php echo $row['slug_url']; ?>" style="text-decoration: none">
+                            <h4 class="spice-card-title"><?php echo htmlspecialchars($row['service_name']); ?></h4>
+                        </a> <!-- Fetching short description directly from the table -->
                         <p class="spice-card-desc"><?php echo htmlspecialchars($row['short_desc']); ?></p>
 
                         <div class="spice-card-footer">
                             <!-- Passing the service 'id' in URL for the details page -->
-                            <a href="service-details.php?id=<?php echo $row['id']; ?>" class="view-link">View Details <i
-                                    class="fa-solid fa-arrow-right"></i></a>
-                            <a href="contact.php" class="btn-quote">Get Quote</a>
+                            <a href="service/<?php echo $row['slug_url']; ?>" class="view-link">View
+                                Details
+                                <i class="fa-solid fa-arrow-right"></i></a>
+                            <a href="contact" class="btn-quote">Get Quote</a>
                         </div>
                     </div>
                 </div>
@@ -184,7 +187,7 @@ $result = mysqli_query($conn, $query);
 
         <!-- View All Button -->
         <div class="text-center mt-5">
-            <a href="services.php" class="btn btn-premium">Explore All Services <i
+            <a href="services" class="btn btn-premium">Explore All Services <i
                     class="fa-solid fa-arrow-right ms-2"></i></a>
         </div>
 
@@ -379,45 +382,62 @@ if (!empty($wa_number) && strlen($wa_number) == 10) {
                 while ($row = mysqli_fetch_assoc($product_result)) {
                     // Construct the image path using your admin asset directory structure
                     $imagePath = "admin/assets/img/uploads/" . $row['pro_img'];
-                    // [cite: 1]
                     $delay = ($counter % 4) * 0.1;
+
+                    // Fetch and clean the short description
+                    $short_desc = !empty($row['short_desc']) ? strip_tags($row['short_desc']) : '';
 
                     // Pre-filled WhatsApp message
                     $wa_msg = urlencode("Hello, I am interested in knowing more about your " . $row['pro_name'] . ". Can you please share the quote?");
-                    // [cite: 1]
             ?>
             <!-- Dynamic Product Card -->
             <div class="col-lg-3 col-md-6 col-sm-6 reveal" style="transition-delay: <?php echo $delay; ?>s;">
-                <div class="premium-product-card h-100 d-flex flex-column">
-                    <div class="card-img-box">
-                        <img src="<?php echo htmlspecialchars($imagePath); ?>"
-                            alt="<?php echo htmlspecialchars($row['pro_name']); ?>">
-                        <!-- [cite: 1] -->
+                <div class="premium-product-card h-100 d-flex flex-column"
+                    style="box-shadow: 0 4px 15px rgba(0,0,0,0.05); border-radius: 8px; overflow: hidden; background: #fff;">
+                    <div class="card-img-box" style="height: 200px; overflow: hidden;">
+                        <a href="product/<?php echo urlencode($row['slug_url']); ?>">
+                            <img src="<?php echo htmlspecialchars($imagePath); ?>"
+                                alt="<?php echo htmlspecialchars($row['pro_name']); ?>"
+                                style="width: 100%; height: 100%; object-fit: cover;">
+                        </a>
                     </div>
-                    <div class="card-content">
-                        <h4 class="product-title"><?php echo htmlspecialchars($row['pro_name']); ?></h4>
-                        <!-- [cite: 1] -->
+                    <div class="card-content d-flex flex-column flex-grow-1 p-3">
+                        <a href="product/<?php echo urlencode($row['slug_url']); ?>" style="text-decoration:none;">
+                            <h4 class="product-title fw-bold mb-2" style="color: #231911; font-size: 1.1rem;">
+                                <?php echo htmlspecialchars($row['pro_name']); ?></h4>
+                        </a>
+
+                        <!-- Short Description (Restricted to 2-3 lines) -->
+                        <?php if (!empty($short_desc)): ?>
+                        <p class="product-short-desc text-muted mb-3"
+                            style="font-size: 0.85rem; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis; line-height: 1.4;">
+                            <?php echo htmlspecialchars($short_desc); ?>
+                        </p>
+                        <?php endif; ?>
 
                         <div class="mt-auto">
-                            <a href="product-details.php?slug=<?php echo urlencode($row['slug_url']); ?>"
-                                class="view-detail-link">View Details <i
-                                    class="fa-solid fa-arrow-right-long ms-1"></i></a>
-                            <!-- [cite: 1] -->
+                            <a href="product/<?php echo urlencode($row['slug_url']); ?>"
+                                class="view-detail-link fw-bold mb-3 d-inline-block"
+                                style="color: #6c757d; font-size: 0.85rem; text-decoration: none;">View
+                                Details <i class="fa-solid fa-arrow-right-long ms-1"></i></a>
 
                             <div class="action-buttons d-flex align-items-center gap-2">
                                 <a href="contact.php?product=<?php echo urlencode($row['pro_name']); ?>"
-                                    class="btn-quote flex-grow-1">Request Quote</a>
-                                <!-- [cite: 1] -->
+                                    class="btn-quote flex-grow-1 text-center text-white"
+                                    style="background-color: #231911; padding: 8px 12px; border-radius: 4px; text-decoration: none; font-size: 0.9rem; font-weight: 600;">Request
+                                    Quote</a>
 
-                                <?php if ($wa_number): ?>
-                                <a href="https://wa.me/<?php echo $wa_number; ?>?text=<?php echo $wa_msg; ?>"
-                                    target="_blank" class="btn-whatsapp" title="Chat on WhatsApp">
-                                    <i class="fa-brands fa-whatsapp"></i>
+                                <?php if (isset($wa_number) && !empty($wa_number)): ?>
+                                <a href="https://wa.me/<?php echo htmlspecialchars($wa_number); ?>?text=<?php echo $wa_msg; ?>"
+                                    target="_blank"
+                                    class="btn-whatsapp text-white d-flex justify-content-center align-items-center"
+                                    title="Chat on WhatsApp"
+                                    style="background-color: #25D366; width: 40px; height: 40px; border-radius: 4px; text-decoration: none;">
+                                    <i class="fa-brands fa-whatsapp fs-5"></i>
                                 </a>
                                 <?php endif; ?>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -429,7 +449,6 @@ if (!empty($wa_number) && strlen($wa_number) == 10) {
             }
             ?>
         </div>
-
     </div>
 </section>
 
@@ -642,20 +661,19 @@ $blog_result = mysqli_query($conn, $blog_query);
                 <div class="blog-card">
                     <div class="blog-img">
                         <span class="blog-date"><?php echo $blogDate; ?></span>
-                        <a href="blog-details.php?slug=<?php echo urlencode($row['slug']); ?>"> <img
+                        <a href="blog/<?php echo urlencode($row['slug']); ?>"> <img
                                 src="<?php echo htmlspecialchars($imagePath); ?>"
                                 alt="<?php echo htmlspecialchars($row['title']); ?>">
                         </a>
                     </div>
                     <div class="blog-content">
-                        <a href="blog-details.php?slug=<?php echo urlencode($row['slug']); ?>"
-                            style="text-decoration:none;">
+                        <a href="blog/<?php echo urlencode($row['slug']); ?>" style="text-decoration:none;">
                             <h4 class="blog-title"><?php echo htmlspecialchars($row['title']); ?></h4>
                         </a>
-                        <p class="blog-desc"><?php echo htmlspecialchars($excerpt); ?></p>
+                        <p class="blog-desc"><?php echo htmlspecialchars_decode($excerpt); ?></p>
 
                         <!-- Using slug_url for SEO friendly routing -->
-                        <a href="blog-details.php?slug=<?php echo urlencode($row['slug']); ?>" class="blog-link">Read
+                        <a href="blog/<?php echo urlencode($row['slug']); ?>" class="blog-link">Read
                             Article <i class="fa-solid fa-arrow-right"></i></a>
                     </div>
                 </div>
@@ -670,7 +688,7 @@ $blog_result = mysqli_query($conn, $blog_query);
         </div>
 
         <div class="text-center mt-5">
-            <a href="blogs.php" class="btn btn-outline-premium text-dark border-dark">View All Posts</a>
+            <a href="blogs" class="btn btn-outline-premium text-dark border-dark">View All Posts</a>
         </div>
     </div>
 </section>
