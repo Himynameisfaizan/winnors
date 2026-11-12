@@ -56,16 +56,21 @@ $result = mysqli_query($conn, $query);
                 <div class="spice-card">
                     <div class="card-img-wrapper">
                         <span class="badge-premium">Premium</span>
-                        <img src="<?php echo htmlspecialchars($imagePath); ?>"
-                            alt="<?php echo htmlspecialchars($row['service_name']); ?>">
+                        <a href="service/<?php echo $row['slug_url']; ?>"> <img
+                                src="<?php echo htmlspecialchars($imagePath); ?>"
+                                alt="<?php echo htmlspecialchars($row['service_name']); ?>">
+                        </a>
                     </div>
                     <div class="spice-card-body">
-                        <h4 class="spice-card-title"><?php echo htmlspecialchars($row['service_name']); ?></h4>
+                        <a href="service/<?php echo $row['slug_url']; ?>" style="text-decoration: none;">
+                            <h4 class="spice-card-title">
+                                <?php echo htmlspecialchars($row['service_name']); ?></h4>
+                        </a>
                         <p class="spice-card-desc"><?php echo htmlspecialchars($row['short_desc']); ?></p>
                         <div class="spice-card-footer">
-                            <a href="service-details.php?slug=<?php echo $row['slug_url']; ?>" class="view-link">View
+                            <a href="service/<?php echo $row['slug_url']; ?>" class="view-link">View
                                 Details <i class="fa-solid fa-arrow-right"></i></a>
-                            <a href="contact.php" class="btn-quote">Get Quote</a>
+                            <a href="contact" class="btn-quote">Get Quote</a>
                         </div>
                     </div>
                 </div>

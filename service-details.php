@@ -112,7 +112,7 @@ $phone_number = !empty($contact_row['phone']) ? $contact_row['phone'] : '8980401
                             while ($side = mysqli_fetch_assoc($sidebar_result)) {
                                 $is_active = ($side['slug_url'] == $service['slug_url']) ? 'active fw-bold text-warning' : 'text-dark';
                         ?>
-                        <a href="service-details.php?slug=<?php echo $side['slug_url']; ?>"
+                        <a href="service/<?php echo $side['slug_url']; ?>"
                             class="d-flex justify-content-between align-items-center text-decoration-none p-2 rounded transition-all <?php echo $is_active; ?>"
                             style="background: #F9F9F9;">
                             <span><?php echo htmlspecialchars($side['service_name']); ?></span>
@@ -143,7 +143,7 @@ $phone_number = !empty($contact_row['phone']) ? $contact_row['phone'] : '8980401
                         </div>
                     </div>
 
-                    <a href="contact.php" class="btn btn-warning w-100 fw-bold py-2 text-dark"><i
+                    <a href="contact" class="btn btn-warning w-100 fw-bold py-2 text-dark"><i
                             class="fa-solid fa-paper-plane me-2"></i> Get a Custom Quote</a>
                 </div>
 
