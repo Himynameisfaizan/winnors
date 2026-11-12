@@ -72,7 +72,7 @@ if (!empty($slug) || $item_id > 0) {
 
     // 2. Blog Detail Page
     if (!$seo_matched && stripos($current_page, 'blog') !== false && !in_array($current_page, ['blog.php', 'blogs.php'])) {
-        $where = !empty($slug) ? "slug_url = '$slug'" : "id = $item_id";
+        $where = !empty($slug) ? "slug = '$slug'" : "id = $item_id";
         $res = mysqli_query($conn, "SELECT * FROM blogs WHERE $where LIMIT 1");
         if ($res && mysqli_num_rows($res) > 0) {
             $row = mysqli_fetch_assoc($res);
