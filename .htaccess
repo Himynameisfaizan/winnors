@@ -1,0 +1,57 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    
+    # LOCALHOST base path (Hostinger pe deploy karte waqt isse '/' kar dena)
+    RewriteBase /projects/winnors/
+
+    # =========================================================
+    # 1. SITEMAP & DYNAMIC ROUTING (PRODUCTS, SERVICES, BLOGS, PAGES)
+    # =========================================================
+    RewriteRule ^sitemap\.xml$ sitemap.php [L,QSA]
+
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^product/([^/]+)/?$ product-details.php?slug=$1 [L,QSA]
+
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^service/([^/]+)/?$ service-details.php?slug=$1 [L,QSA]
+    
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^category/([^/]+)/?$ category.php?slug=$1 [L,QSA]
+    
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^subcategory/([^/]+)/?$ subcategory.php?slug=$1 [L,QSA]
+    
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^blogs/?$ blogs.php [L,QSA]
+    
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^blog/([^/]+)/?$ blog-details.php?slug=$1 [L,QSA]
+
+    # Custom Pages Routing (/page/slug or /page/slug/)
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^page/([^/]+)/?$ page.php?slug=$1 [L,QSA]
+
+    # =========================================================
+    # 2. REMOVE .PHP EXTENSION (e.g., /about/ -> about.php)
+    # =========================================================
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_URI} !\.php$ [NC]
+    RewriteCond %{REQUEST_URI} !\.(css|js|jpg|jpeg|png|webp|gif|svg|ico|jfif|woff|woff2|ttf)$ [NC]
+    RewriteRule ^([^/]+)/?$ $1.php [L,QSA]
+
+    # =========================================================
+    # 3. FALLBACK FOR 404 (HAMESHA SABSE LAST MEIN)
+    # =========================================================
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_URI} !\.(css|js|jpg|jpeg|png|webp|gif|svg|ico|jfif|woff|woff2|ttf)$ [NC]
+    RewriteRule ^(.*)$ 404.php [L]
+</IfModule>
