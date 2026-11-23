@@ -2,7 +2,7 @@
     RewriteEngine On
     
     # LOCALHOST base path (Hostinger pe deploy karte waqt isse '/' kar dena)
-    RewriteBase /projects/winnors/
+    RewriteBase /office_php_project/winnors/
 
     # =========================================================
     # 1. SITEMAP & DYNAMIC ROUTING (PRODUCTS, SERVICES, BLOGS, PAGES)
